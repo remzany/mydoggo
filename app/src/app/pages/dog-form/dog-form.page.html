@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Vnesite podatke o psu</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-card>
+    <ion-card-header (click)="enableDisableBreadCard()" >
+        <ion-label>Pasma: {{selectedBread}}
+        </ion-label>
+    </ion-card-header>
+
+    <ion-card-content [hidden]=breadCardHidden >
+        <ion-searchbar showCancelButton="focus" (ionChange)="filterDogsBread($event)" (ionFocus)="emptyBreadSelection()"></ion-searchbar>
+        <div *ngFor="let item of breed; let i = index">
+            <p (click)="selectBread(i)">{{item}}</p>
+        </div>
+    </ion-card-content>
+ 
+
+
+  </ion-card>
+
+  <ion-card>
+      <ion-item>
+          <ion-label>Ime: </ion-label>
+          <ion-input [(ngModel)]="dogData.name"></ion-input>
+        </ion-item>
+  </ion-card>
+
+  <ion-card>
+      <ion-item>
+          <ion-label>Datum rojstva: </ion-label>
+          <ion-input [(ngModel)]="dogData.date"></ion-input>
+        </ion-item>
+  </ion-card>
+</ion-content>
+
+<ion-footer>
+    <ion-button (click)="next()" expand="full" fill="clear"> Nadaljuj
+        <ion-icon name="arrow-forward"></ion-icon>
+    </ion-button>
+  </ion-footer>

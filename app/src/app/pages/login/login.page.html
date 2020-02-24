@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Ionic Blank
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <h2>Create Account</h2>
+
+  <ion-input [(ngModel)]="createEmail" type="text" placeholder="email"></ion-input>
+
+  <ion-input [(ngModel)]="createPassword" type="password" placeholder="password"></ion-input>
+  
+  <ion-button (click)="createAccount()" color="primary">Test Create Account</ion-button>
+
+  <h2>Sign In</h2>
+
+  <ion-input [(ngModel)]="signInEmail" type="text" placeholder="email"></ion-input>
+
+  <ion-input [(ngModel)]="signInPassword" type="password" placeholder="password"></ion-input>
+
+  <ion-button (click)="signIn()" color="primary">Sign In</ion-button>
+
+  <ion-button (click)="logout()" color="light">Logout</ion-button>
+
+</ion-content>
