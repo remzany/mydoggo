@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NavController } from '@ionic/angular';
 
 import {HttpRequestService} from '../../services/http-request.service';
+import {ProtectLoginService} from '../../services/protect-login.service';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,9 @@ export class LoginPage implements OnInit{
   public signInPassword: string = "new";
   public jwt: string;
 
-  constructor(private http: HttpClient, private navCtrl:NavController, private httpReq:HttpRequestService){
+  register:boolean = false;
+
+  constructor(private http: HttpClient, private navCtrl:NavController, private httpReq:HttpRequestService, private protectLogin:ProtectLoginService){
 
   }
 
@@ -26,19 +29,23 @@ export class LoginPage implements OnInit{
 
   }
 
+  segmentChanged(ev:any){
+
+    this.register = !this.register;
+    console.log(ev);
+  }
+
   createAccount(){
-
-    this.httpReq.createAccount(this.createEmail, this.createPassword).subscribe(a =>{
-      console.log(a);
-    })
-
+    if(this.createEmail != "email"){
+      this.httpReq.createAccount(this.createEmail, this.createPassword).subscribe(a =>{
+        console.log(a);
+      })
+    }
 
   }
 
   signIn(){
-
     this.httpReq.signin(this.signInEmail, this.signInPassword);
-
   }
 
   testRoute(){
@@ -56,7 +63,10 @@ export class LoginPage implements OnInit{
     });
   }
 
-
+  checkIfUserKnowsSecretPassphase(){
+    if(this.createEmail == "email" && this.createPassword == "bernski_plansar1")
+      this.protectLogin.setPassphase(true);
+  }
 
   logout(){
     this.jwt = null;

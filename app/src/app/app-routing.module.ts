@@ -2,24 +2,29 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 import { AuthGuardGuard } from './guards/auth-guard.guard';
+import { AuthGuard } from './guards/auth.guard';
 
-const routes1: Routes = 
+const routes: Routes = 
 [
   {
     path: '',
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
   },
   {
+    path: 'login',
+    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+  },
+  {
     path: 'tabs',
-    loadChildren: () => import('./pages/tabs/tabs.module').then(m => m.TabsPageModule)
+    loadChildren: () => import('./pages/tabs/tabs.module').then(m => m.TabsPageModule), canActivate:[AuthGuard]
   },
   {
     path: 'dog-form',
-    loadChildren: () => import('./pages/dog-form/dog-form.module').then( m => m.DogFormPageModule)
+    loadChildren: () => import('./pages/dog-form/dog-form.module').then( m => m.DogFormPageModule), canActivate:[AuthGuard]
   }
 ];
 
-const routes: Routes = [
+const old_routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'home',
    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule),
@@ -40,7 +45,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes1, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
   ],
   exports: [RouterModule]
 })

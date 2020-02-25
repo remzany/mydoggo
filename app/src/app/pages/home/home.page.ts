@@ -5,6 +5,9 @@ import {HttpRequestService} from '../../services/http-request.service';
 import { ModalController } from '@ionic/angular';
 
 import {TodoComponent} from '../../components/todo/todo.component';
+
+import { Router } from "@angular/router";
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -16,7 +19,7 @@ export class HomePage {
   dogBreed:string = "/";
   todos:Array<string> = [];
 
-  constructor(private httpReq: HttpRequestService, private modalController: ModalController){
+  constructor(private httpReq: HttpRequestService, private modalController: ModalController, private router:Router){
     this.todos = this.httpReq.getTodos();
   }
 
@@ -43,6 +46,10 @@ export class HomePage {
     this.httpReq.saveUserTodo(this.todos).subscribe(res => {
       console.log(res);
     });
+  }
+
+  logOut(){
+    this.router.navigate(['login']);
   }
 
 
