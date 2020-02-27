@@ -1,10 +1,13 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title class="ion-text-wrap" (click)="openSelection()">{{title}}</ion-title>
+  <ion-toolbar (click)="openModal()">
+    <ion-title class="ion-text-wrap" >{{title}}</ion-title>
+    <ion-select multiple="true" cancelText="Cancel" okText="Confirm" >
+      <ion-select-option *ngFor="let breed of dogBreed" value="{{breed}}"> {{breed}} </ion-select-option>
+    </ion-select>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content> 
 
   <ion-card>
     <ion-card-header class="ion-padding">

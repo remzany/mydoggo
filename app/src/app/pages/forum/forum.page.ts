@@ -3,7 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { HttpRequestService} from '../../services/http-request.service';
 
 import { ModalController } from '@ionic/angular';
-import {BreedSelectionComponent} from '../../components/breed-selection/breed-selection.component';
+import { Observable } from 'rxjs';
+
+import { DogStats } from '../../interfaces/dog.interface';
 @Component({
   selector: 'app-forum',
   templateUrl: './forum.page.html',
@@ -12,19 +14,24 @@ import {BreedSelectionComponent} from '../../components/breed-selection/breed-se
 export class ForumPage implements OnInit {
 
   title:string = "";
+  dog:Observable<DogStats[]>;
+  dogBreed:Array<string> = [];
+
 
   constructor(private httpReq:HttpRequestService, private modal:ModalController) { }
 
   ngOnInit() {
     this.title = this.httpReq.getDogData().dogBreed;
-
   }
 
-  async openSelection() {
-    const modal = await this.modal.create({
-      component: BreedSelectionComponent
+  openModal(){
+    this.dog = this.httpReq.getDogsBreed();
+    
+    this.dog.subscribe( a => {
+      a.forEach(element => {
+        this.dogBreed.push(element.name);
+      });
     });
-    return await modal.present();
-  }
 
+  }
 }
