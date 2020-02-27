@@ -5,6 +5,7 @@
   "author": "zan.remskar8@gmail.com",
   "license": "MIT",
   "scripts": {
+    "dev": "nodemon",
     "build": "tsc -p tsconfig.build.json",
     "format": "prettier --write \"src/**/*.ts\"",
     "start": "ts-node -r tsconfig-paths/register src/main.ts",
@@ -29,7 +30,7 @@
     "@typegoose/typegoose": "^6.2.2",
     "bcryptjs": "^2.4.3",
     "mongo-express": "^0.54.0",
-    "mongoose": "^5.8.10",
+    "mongoose": "^5.9.2",
     "nestjs-typegoose": "^7.1.0",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",

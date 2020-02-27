@@ -4,7 +4,7 @@ import { CreateUserDto, UpdateUserDto, UpdateTOdo } from './dto/create-user.dto'
 import { UsersService } from './users.service';
 import { AuthGuard } from '@nestjs/passport';
 
-@Controller('users')
+@Controller('api/users')
 export class UsersController {
 
     constructor(private usersService: UsersService) {
@@ -29,7 +29,6 @@ export class UsersController {
     // This route will require successfully passing our default auth strategy (JWT) in order
     // to access the route
     @Get('test')
-    @UseGuards(AuthGuard())
     async testAuthRoute(){
         return await {
             message: "this shit works"

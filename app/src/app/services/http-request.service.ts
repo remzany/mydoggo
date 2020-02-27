@@ -20,7 +20,7 @@ export class HttpRequestService {
 
   constructor(private http: HttpClient, private navCtrl:NavController) {}
   getDogsBreed(): Observable<Array<DogStats>> {
-    return this.http.get('http://localhost:3000/breed/getBreeds').pipe(map((response: Array<DogStats>) => response));
+    return this.http.get('api/breed/getBreeds').pipe(map((response: Array<DogStats>) => response));
   }
 
   signin(email:string, password: string){
@@ -30,7 +30,7 @@ export class HttpRequestService {
       password: password
     }
 
-    this.http.post('http://localhost:3000/auth', credentials).subscribe((res: any) => {
+    this.http.post('api/auth', credentials).subscribe((res: any) => {
       console.log(res);
 
       this.dogName = res.dogName;
@@ -61,7 +61,7 @@ export class HttpRequestService {
       userTodos: []
     }
 
-    return this.http.post('http://localhost:3000/users', credentials).pipe(map((response: any) => {
+    return this.http.post('api/users', credentials).pipe(map((response: any) => {
       this.uid = response.id;
       return response;
     }));
@@ -79,7 +79,7 @@ export class HttpRequestService {
     };
 
     console.log(data);
-    return this.http.post('http://localhost:3000/users/updateUser', data).pipe(map((response: any) => {
+    return this.http.post('api/users/updateUser', data).pipe(map((response: any) => {
       return response;
     }));
   }
@@ -106,7 +106,7 @@ export class HttpRequestService {
     console.log("console of saveUserTOdo");
     console.log(data);
 
-    return this.http.post('http://localhost:3000/users/updateUserTodos', data).pipe(map((res: any) => {
+    return this.http.post('api/users/updateUserTodos', data).pipe(map((res: any) => {
       return res;
     })) 
 

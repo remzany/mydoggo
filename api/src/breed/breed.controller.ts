@@ -2,7 +2,7 @@ import {Controller, Get} from '@nestjs/common';
 import {BreedService} from './breed.service';
 import {Breed} from './breed';
 
-@Controller('breed')
+@Controller('api/breed')
 export class BreedController {
 
     constructor(private readonly breedService: BreedService) { }

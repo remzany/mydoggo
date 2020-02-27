@@ -10,9 +10,8 @@ import {TypegooseModule} from 'nestjs-typegoose';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost/myDoggo'),
-    TypegooseModule.forRoot("mongodb://localhost/myDoggo", {
-      useNewUrlParser: true
+    MongooseModule.forRoot('mongodb://mongodb/myDoggo'),
+    TypegooseModule.forRoot("mongodb://mongodb/myDoggo", {
     }),
     UsersModule,
     AuthModule,
