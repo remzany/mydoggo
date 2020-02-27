@@ -1,0 +1,104 @@
+version: "3.4"
+services:
+
+  api:
+    restart: unless-stopped
+    build:
+      context: ./api
+      dockerfile: dockerfile
+    environment:
+      - NODE_ENV=development
+    user: ${CURRENT_UID}
+    volumes:
+      - ./api:/var/server
+      - /var/server/node_modules
+    depends_on:
+      - mongodb
+    healthcheck:
+      test: ["CMD", "curl", "-sSG", "http://localhost:8080"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    networks:
+      - main
+
+  app:
+    restart: unless-stopped
+    build:
+      context: ./app
+      dockerfile: dockerfile
+    environment:
+      - ENV=development
+    user: ${CURRENT_UID}
+    volumes:
+      - ./app:/var/server
+      - /var/server/node_modules
+    healthcheck:
+      test: ["CMD", "curl", "-sSG", "http://localhost:8080"]
+      interval: 45s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    networks:
+      - main
+
+  nginx: 
+    restart: unless-stopped
+    image: nginx:latest
+    volumes:
+      - ./nginx/nginx.dev.conf:/etc/nginx/nginx.conf
+      # - ./nginx/ssl/:/etc/nginx/ssl/
+    ports:
+      - 80:80
+      # - 443:443
+    depends_on:
+      - api
+      - app
+      - mongopanel
+    healthcheck:
+      test: ["CMD", "curl", "-sSG", "http://localhost/nginxcheck"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    networks:
+      - main
+      
+  mongodb:
+    restart: unless-stopped
+    image: mongo
+    volumes:
+      - ./_mongodbDev:/data/db
+    healthcheck:
+      test: ["CMD", "echo", "'db.runCommand(\"ping\").ok'", "|", "mongodb", "localhost:27017/test", "--quiet"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    networks: 
+      - main
+      
+  mongopanel:
+    restart: unless-stopped
+    image: mongo-express
+    environment:
+      - ME_CONFIG_BASICAUTH_USERNAME=admin
+      - ME_CONFIG_BASICAUTH_PASSWORD=admin
+      - ME_CONFIG_MONGODB_ENABLE_ADMIN=true
+      - ME_CONFIG_MONGODB_PORT=27017
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+      - ME_CONFIG_SITE_BASEURL=/mongopanel
+      - ME_CONFIG_OPTIONS_EDITORTHEME=base16-dark
+      - ME_CONFIG_SITE_COOKIESECRET=a1e27a0912e98
+      - ME_CONFIG_SITE_SESSIONSECRET=a1e27a0912e98
+      - VCAP_APP_HOST=0.0.0.0
+    links:
+      - mongodb
+    depends_on:
+      - mongodb
+    networks: 
+      - main
+
+networks:
+  main:
