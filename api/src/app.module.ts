@@ -7,9 +7,14 @@ import { AuthModule } from './auth/auth.module';
 import {BreedModule} from './breed/breed.module';
 
 import {TypegooseModule} from 'nestjs-typegoose';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      expandVariables: true
+    }),
     MongooseModule.forRoot('mongodb://mongodb/myDoggo'),
     TypegooseModule.forRoot("mongodb://mongodb/myDoggo", {
     }),
