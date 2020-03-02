@@ -1,16 +1,5 @@
 <ion-header>
 
-  <ion-item lines="none">
-    <ion-segment (ionChange)="segmentChanged($event)" color="secondary" value="login">
-      <ion-segment-button value="login" (click)="checkIfUserKnowsSecretPassphase()">
-        <ion-icon name="log-in"></ion-icon>
-      </ion-segment-button>
-      <ion-segment-button value="register">
-        <ion-icon name="person-add"></ion-icon>
-      </ion-segment-button>
-    </ion-segment>
-  </ion-item>
-
 </ion-header>
 
 <ion-content class="ion-padding">
@@ -37,3 +26,17 @@
 
 
 </ion-content>
+
+<ion-footer>
+  <ion-item lines="none">
+    <ion-segment (ionChange)="segmentChanged($event)" color="secondary" value="login">
+      <ion-segment-button value="login" (click)="checkIfUserKnowsSecretPassphase()">
+        <ion-icon name="log-in"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="register">
+        <ion-icon name="person-add"></ion-icon>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-item>
+  
+</ion-footer>

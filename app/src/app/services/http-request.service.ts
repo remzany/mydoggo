@@ -6,6 +6,10 @@ import { map } from 'rxjs/operators';
 
 import { NavController } from '@ionic/angular';
 
+import { SecureStorage, SecureStorageObject } from '@ionic-native/secure-storage/ngx';
+
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { Platform } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +22,13 @@ export class HttpRequestService {
   dogBreed:string = "";
   todos:Array<string> = [];
 
-  constructor(private http: HttpClient, private navCtrl:NavController) {}
+  constructor(
+      private http: HttpClient,
+      private navCtrl:NavController,
+      private secureStorage:SecureStorage,
+      private nativeStorage: NativeStorage,
+      private platform: Platform) {}
+
   getDogsBreed(): Observable<Array<DogStats>> {
     return this.http.get('api/breed/getBreeds').pipe(map((response: Array<DogStats>) => response));
   }
@@ -39,7 +49,17 @@ export class HttpRequestService {
       this.uid = res._id;
       this.jwt = res.token;
       let x = this.jwt.split('.')[1];
-      
+
+      let userData = atob(x);
+
+      this.platform.ready().then(() => {
+        this.nativeStorage.setItem('userItem', {property: userData})
+          .then(
+            () => console.log('Stored item!'),
+            error => console.error('Error storing item', error)
+          );
+      })
+
       if(!res.dogOwner)
         this.navCtrl.navigateRoot('dog-form');
       else

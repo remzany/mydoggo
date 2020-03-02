@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 
 import { HomePage } from './home.page';
 import {ComponentsModule} from '../../components/components.module';
+import { SecureStorage} from '@ionic-native/secure-storage/ngx';
 
 @NgModule({
   imports: [
@@ -19,6 +20,9 @@ import {ComponentsModule} from '../../components/components.module';
         component: HomePage
       }
     ])
+  ],
+  providers:[
+    SecureStorage
   ],
   declarations: [HomePage]
 })

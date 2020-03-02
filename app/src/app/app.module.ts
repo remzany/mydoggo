@@ -11,6 +11,10 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { HttpClientModule } from '@angular/common/http';
+
+import { SecureStorage} from '@ionic-native/secure-storage/ngx';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
+
 const config: SocketIoConfig = { url: 'http://localhost:3000', options: {}};
 
 
@@ -21,7 +25,8 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {}};
   providers: [
     StatusBar,
     SplashScreen,
-
+    SecureStorage,
+    NativeStorage,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     
   ],

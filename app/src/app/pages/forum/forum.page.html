@@ -1,10 +1,14 @@
-<ion-header>
-  <ion-toolbar (click)="openModal()">
+<ion-header (click)="openModal()">
+  <!-- <ion-toolbar>
     <ion-title class="ion-text-wrap" >{{title}}</ion-title>
-    <ion-select multiple="true" cancelText="Cancel" okText="Confirm" >
-      <ion-select-option *ngFor="let breed of dogBreed" value="{{breed}}"> {{breed}} </ion-select-option>
+  </ion-toolbar> -->
+
+  <ion-item>
+    <ion-select class="ion-padding-end" cancelText="Cancel" okText="Confirm">
+      <ion-select-option *ngFor="let breed of dogBreed" value="{{breed.name}}"> {{breed.name}} </ion-select-option>
     </ion-select>
-  </ion-toolbar>
+  </ion-item>
+
 </ion-header>
 
 <ion-content> 

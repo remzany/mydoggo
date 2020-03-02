@@ -320,6 +320,20 @@
   dependencies:
     "@types/cordova" latest
 
+"@ionic-native/native-storage@^5.22.0":
+  version "5.22.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/native-storage/-/native-storage-5.22.0.tgz#eaf4d16dfe25d4d5231082a7358627398d02367a"
+  integrity sha512-jk4Pwe1ruS7aQ2/fZSrUc3viMeMHoOkbpmeMn6Ht+A7qQk/krItxlhW3QzT0EAhvrrgNy+70fOlGKvLkwItBbg==
+  dependencies:
+    "@types/cordova" latest
+
+"@ionic-native/secure-storage@^5.22.0":
+  version "5.22.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/secure-storage/-/secure-storage-5.22.0.tgz#ebb115df0c73b9db2aadc738744739f5b51500d3"
+  integrity sha512-7GUIv0Z/F9AfmeJE6tFlu+GPMflXdWO+EMNxTnhEClXeswLtYrkb7ZC4b4AyNRRkpB2hH5bADtOflsaBWi7dNQ==
+  dependencies:
+    "@types/cordova" latest
+
 "@ionic-native/splash-screen@^5.0.0":
   version "5.20.0"
   resolved "https://registry.yarnpkg.com/@ionic-native/splash-screen/-/splash-screen-5.20.0.tgz#5b0f8c4dd563f8f16995e5d5507f237543405b5b"

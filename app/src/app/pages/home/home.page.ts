@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 
 import {HttpRequestService} from '../../services/http-request.service';
 
-import { ModalController } from '@ionic/angular';
-
-import {TodoComponent} from '../../components/todo/todo.component';
+import { ModalController, AlertController } from '@ionic/angular';
 
 import { Router } from "@angular/router";
+
+import { SecureStorage, SecureStorageObject } from '@ionic-native/secure-storage/ngx';
+
 
 @Component({
   selector: 'app-home',
@@ -19,39 +20,47 @@ export class HomePage {
   dogBreed:string = "/";
   todos:Array<string> = [];
 
-  constructor(private httpReq: HttpRequestService, private modalController: ModalController, private router:Router){
+  constructor(private alert:AlertController, private httpReq: HttpRequestService, private modalController: ModalController, private router:Router, private secureStorage: SecureStorage){
     this.todos = this.httpReq.getTodos();
   }
 
   ngOnInit(){
+    console.log("hello from home page");
+
     this.dogName = this.httpReq.getDogData().dogName;
     this.dogBreed = this.httpReq.getDogData().dogBreed;
-    console.log("hello from home page");
+    
   }
 
   async openTOdo(){
-    const modal = await this.modalController.create({
-      component: TodoComponent,
-      componentProps: { value: this.todos},
-      backdropDismiss: true,
-    });
-    modal.onDidDismiss().then(() => {
-      this.saveTodos();
-    })
-    return await modal.present();
 
-  }
-
-  saveTodos(){
-    this.httpReq.saveUserTodo(this.todos).subscribe(res => {
-      console.log(res);
-    });
+      const alert = await this.alert.create({
+        header: `Please add task`,
+        inputs:[
+          {
+            name: "todo",
+            type: "text"
+          }
+        ],
+          buttons: [
+            {
+              text: 'Ok',
+              handler: (a) => {
+                this.todos.push(a.todo);
+                this.httpReq.saveUserTodo(this.todos);
+              }
+            }
+          ]})
+          await alert.present();
   }
 
   logOut(){
     this.router.navigate(['login']);
   }
 
+  delete(i:number){
+    this.todos.splice(i, 1);
+  }
 
   
 
