@@ -8,6 +8,9 @@ build:
         - echo "bulding"
         - mkdir build
         - touch build/info.txt
+    artifacts:
+        paths:
+            - build/
         
 test:
     stage: test
