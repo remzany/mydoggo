@@ -2,6 +2,8 @@
 build apk:
   stage: build
   script:
+    - cd app
+    - yarn global add @ionic/cli@^6.2.0
     - ionic cordova platform add android
     - ionic cordova build android
   artifacts:
