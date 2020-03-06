@@ -4,9 +4,10 @@ build apk:
   image: node:12
   script:
     - cd app
+    - yarn
     - yarn global add @ionic/cli@^6.2.0
-    - ionic cordova platform add android
-    - ionic cordova build android
+    - ionic cordova platform add android --no-confirm
+    - ionic cordova build android --no-confirm
     - cd ..
     - mkdir APK
     - cp -r app/build/* APK
