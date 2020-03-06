@@ -1,6 +1,7 @@
 
 build apk:
   stage: build
+  image: node:12
   script:
     - cd app
     - yarn global add @ionic/cli@^6.2.0
