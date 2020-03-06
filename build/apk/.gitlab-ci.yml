@@ -4,6 +4,6 @@ build apk:
   script:
     - ionic cordova platform add android
     - ionic cordova build android
-artifacts:
-  paths:
-    - build/
+  artifacts:
+    paths:
+      - build/
