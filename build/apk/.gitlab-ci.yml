@@ -7,6 +7,7 @@ build apk:
     - yarn
     - yarn global add @ionic/cli@^6.2.0
     - yarn global add cordova
+    - yarn global add typescript@3.8.3
     - ionic cordova prepare android --no-interactive --confirm
     - ionic cordova build android --no-interactive --confirm
     - cd ..
