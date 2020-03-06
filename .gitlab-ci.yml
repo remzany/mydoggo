@@ -1,19 +1,12 @@
 stages:
-    - build
-    - test
+  - build
+  - test
 
-build:
-    stage: build
-    script:
-        - echo "Building"
-        - mkdir build
-        - touch build/info.txt
-    artifacts:
-        paths:
-            - build/
+include:
+  - local: '/build/apk/.gitlab-ci.yml'
 
 test:
-    stage: test
-    script:
-        - echo "Testing"
-        - test -f "build/info.txt"
+  stage: test
+  script:
+    - echo "Testing"
+    - test -f "build/info.txt"
