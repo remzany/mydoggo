@@ -7,6 +7,9 @@ build apk:
     - yarn global add @ionic/cli@^6.2.0
     - ionic cordova platform add android
     - ionic cordova build android
+    - cd ..
+    - mkdir APK
+    - cp -r app/build/* APK
   artifacts:
     paths:
-      - build/
+      - APK
