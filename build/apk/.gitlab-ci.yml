@@ -1,7 +1,6 @@
 build apk:
   stage: build
   image: node:12
-  image: openjdk:8-jdk
   script:
     - cd app
     - yarn
