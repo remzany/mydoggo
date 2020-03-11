@@ -1,5 +1,5 @@
     image: openjdk:8-jdk
-    image: gradle
+    image: deadolus/android-studio
     
     variables:
       ANDROID_COMPILE_SDK: "28"
@@ -7,6 +7,7 @@
       ANDROID_SDK_TOOLS:   "4333796"
     
     before_script:
+      - ./build.sh
       - apt-get --quiet update --yes
       - apt-get --quiet install --yes wget tar unzip lib32stdc++6 lib32z1
       - wget --quiet --output-document=android-sdk.zip https://dl.google.com/android/repository/sdk-tools-linux-${ANDROID_SDK_TOOLS}.zip
