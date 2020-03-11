@@ -5,7 +5,7 @@ build apk:
     - cd app
     - yarn
     - sudo apt-get install openjdk-8-jre
-    - sudo apt install android-sdk
+    - sudo apt-get install android-sdk
     - yarn global add @ionic/cli@^6.2.0
     - yarn global add cordova
     - yarn global add typescript@3.8.3
