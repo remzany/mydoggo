@@ -3,9 +3,10 @@ build apk:
   image: node:12
   script:
     - cd app
-    - yarn
+    - lsb_release -a
     - apt-get install openjdk-8-jre
     - apt-get install android-sdk
+    - yarn
     - yarn global add @ionic/cli@^6.2.0
     - yarn global add cordova
     - yarn global add typescript@3.8.3
