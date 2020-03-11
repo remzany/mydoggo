@@ -1,0 +1,9 @@
+build android:
+  stage: build
+  script:   
+    - uname -r
+    - su -c "yum install java-1.8.0-openjdk"
+    - apt-get install android-sdk
+  artifacts:
+    paths:
+      - APK
