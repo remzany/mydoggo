@@ -1,4 +1,5 @@
     image: openjdk:8-jdk
+    image: gradle
     
     variables:
       ANDROID_COMPILE_SDK: "28"
