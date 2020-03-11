@@ -1,4 +1,4 @@
-build apk:
+
     image: openjdk:8-jdk
     
     variables:
