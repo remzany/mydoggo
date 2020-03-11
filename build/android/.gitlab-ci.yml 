@@ -6,4 +6,4 @@ build android:
     - apt-get install android-sdk
   artifacts:
     paths:
-      - APK
+      - android
