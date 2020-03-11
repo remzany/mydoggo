@@ -4,6 +4,8 @@ build apk:
   script:
     - cd app
     - uname -r
+    - yum update -y
+    - yum upgrade -y
     - su -c "yum install java-1.8.0-openjdk"
     - apt-get install android-sdk
     - yarn
