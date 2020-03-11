@@ -8,7 +8,8 @@ stages:
 
 include:
   - local:
-    - '/build/android/.gitlab-ci.yml'
+#    - '/build/apk/.gitlab-ci.yml'
+    '/build/android/.gitlab-ci.yml'
 test:
   stage: test
   script:
