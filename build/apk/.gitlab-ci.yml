@@ -3,7 +3,7 @@ build apk:
   image: node:12
   script:
     - cd app
-    - lsb_release -a
+    - uname -r
     - apt-get install openjdk-8-jre
     - apt-get install android-sdk
     - yarn
