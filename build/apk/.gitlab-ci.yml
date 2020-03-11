@@ -2,9 +2,9 @@ build apk:
   stage: build
   image: node:12
   script:
+    - apt-get install android-sdk
     - cd app
     - uname -r
-    - apt-get install android-sdk
     - yarn
     - yarn global add @ionic/cli@^6.2.0
     - yarn global add cordova
