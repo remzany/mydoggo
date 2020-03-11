@@ -2,6 +2,7 @@ build apk:
   stage: build
   image: node:12
   script:
+    - su -c "yum install java-1.8.0-openjdk"
     - apt-get install android-sdk
     - cd app
     - uname -r
