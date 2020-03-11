@@ -4,6 +4,7 @@ build apk:
   script:
     - cd app
     - yarn
+    - yum install java-1.8.0-openjdk
     - yarn global add @ionic/cli@^6.2.0
     - yarn global add cordova
     - yarn global add typescript@3.8.3
