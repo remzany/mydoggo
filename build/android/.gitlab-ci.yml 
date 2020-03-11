@@ -1,5 +1,5 @@
 build android:
-  stage: build
+  stage: android
   script:   
     - uname -r
     - su -c "yum install java-1.8.0-openjdk"
