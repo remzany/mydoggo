@@ -2,14 +2,13 @@ variables:
   GIT_STRATEGY: clone
   
 stages:
-  - gradle
   - android
   - build
   - test
 
 include:
   - local:
-      '/build/gradle/.gitlab-ci.yml'
+      '/build/android/.gitlab-ci.yml'
 #     '/build/apk/.gitlab-ci.yml'
      
 test:
