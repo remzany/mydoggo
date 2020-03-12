@@ -1,0 +1,11 @@
+build android:
+  stage: build
+  image: centos:7
+  cache:
+    key: "$CI_COMMIT_SHA-$CI_PIPELINE_IID"
+    paths:
+      - app/node_modules/
+  script:
+    - cd gitlab-ci/build/android
+    - chmod a+x build.sh
+    - ./build.sh
