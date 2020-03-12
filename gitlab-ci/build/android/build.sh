@@ -67,6 +67,11 @@ echo "--> RUN . . .             . . . app yarn install"
 cd ${CI_ROOT}/app
 yarn 1> /dev/null
 
+
+echo "--> RUN . . .             . . . SHOW WHERE IS SDK INSTALLED"
+rpm -ql java-1.8.0-openjdk-devel
+echo "--> RUN . . .             . . . SHOW WHERE IS SDK INSTALLED"
+
 # ANDROIDSDK installation
 
 echo "--> RUN . . .             . . . creating folder androidsdk"
