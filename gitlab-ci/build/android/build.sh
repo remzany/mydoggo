@@ -97,17 +97,16 @@ echo "--> RUN . . .             . . . sets commands"
 cp -rf /opt/androidsdk/tools/bin/* /usr/lib/
 echo "--> RUN . . .             . . . sets commands"
 
-JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.242.b08-0.el7_7.x86_64/bin
-echo "--> RUN . . .             . . . setting java_home variable"
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.242.b08-0.el7_7.x86_64/bin
+echo "--> Setting env var . . . . . . JAVA_HOME . . .         . . . $JAVA_HOME"
 # Gradle installation
 
 wget https://services.gradle.org/distributions/gradle-6.2.2-bin.zip -P /tmp
 sudo unzip -d /opt/gradle /tmp/gradle-6.2.2-bin.zip 
-sudo nano /etc/profile.d/gradle.sh
-echo 'export GRADLE_HOME=/opt/gradle/gradle-6.2.2' >> /etc/profile.d/gradle.sh
-echo 'export PATH=${GRADLE_HOME}/bin:${PATH}' >> /etc/profile.d/gradle.sh
-sudo chmod +x /etc/profile.d/gradle.sh
-source /etc/profile.d/gradle.sh
+export GRADLE_HOME=/opt/gradle/gradle-6.2.2
+echo "--> Setting env var . . . . . . GRADLE_HOME . . .       . . . $GRADLE_HOME"
+export PATH=${GRADLE_HOME}/bin:${PATH}
+echo "--> Setting env var . . . . . . PATH . . .              . . . $PATH"
 gradle -v
 
 echo "--> RUN . . .             . . . app yarn global add @ionic/cli"
