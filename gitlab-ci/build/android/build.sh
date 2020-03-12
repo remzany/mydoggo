@@ -14,6 +14,12 @@ echo "--> Installing . . .      . . . gcc-c++"
 yum install -y gcc-c++ 1> /dev/null
 echo "--> Installing . . .      . . . make"
 yum install -y make 1> /dev/null
+echo "--> RUN . . .             . . . installing wget"
+yum install wget -y 1> /dev/null
+echo "--> RUN . . .             . . . installing unzip"
+yum install unzip -y 1> /dev/null
+echo "--> RUN . . .             . . . install java 8 devel"
+yum install java-1.8.0-openjdk-devel -y 1> /dev/null
 
 echo "--> Adding repository . . . . . NodeJS 12.x"
 curl -sL https://rpm.nodesource.com/setup_12.x | sudo bash - 1> /dev/null
@@ -61,37 +67,19 @@ echo "--> RUN . . .             . . . app yarn install"
 cd ${CI_ROOT}/app
 yarn 1> /dev/null
 
-#DEPENDENCIES
-
-yum install wget -y 1> /dev/null
-echo "--> RUN . . .             . . . installing wget"
-yum install unzip -y 1> /dev/null
-echo "--> RUN . . .             . . . installing unzip"
-yum install nano -y 1> /dev/null
-echo "--> RUN . . .             . . . installing nano"
-
-
-# OPENJDK 8 installation
-
-yum install java-1.8.0-openjdk-devel -y 1> /dev/null
-echo "--> RUN . . .             . . . install java 8"
-java -version
-echo "--> RUN . . .             . . . printing java version"
-rpm -ql htop
-echo "--> RUN . . .             . . . display installation path"
-
 # ANDROIDSDK installation
 
+echo "--> RUN . . .             . . . creating folder androidsdk"
 mkdir -p /opt/androidsdk
-echo "--> RUN . . .             . . . creating file androidsdk"
-cd /opt/androidsdk
+
 echo "--> RUN . . .             . . . cd into it"
-wget --quiet https://dl.google.com/android/repository/commandlinetools-linux-6200805_latest.zip
+cd /opt/androidsdk
 echo "--> RUN . . .             . . . downloading android zip file"
-unzip -q commandlinetools-linux-6200805_latest.zip
+wget --quiet https://dl.google.com/android/repository/commandlinetools-linux-6200805_latest.zip
 echo "--> RUN . . .             . . . unzip file"
-cd /opt
+unzip -q commandlinetools-linux-6200805_latest.zip
 echo "--> RUN . . .             . . . sets permission to androidsdk folder"
+cd /opt
 chown -R root:root androidsdk
 
 cp -rf /opt/androidsdk/tools/bin/* /usr/bin/
@@ -125,6 +113,11 @@ ionic cordova prepare android --no-interactive --confirm
 echo "--> RUN . . .             . . . app ionic cordova build android"
 ionic cordova build android --no-interactive --confirm
 
+if [ ! -d "${CI_ROOT}/app/platforms/android/app/build/outputs/apk/debug/" ]; then
+  echo "failed to build apk"
+  exit 1
+fi
+
 
 mkdir ${CI_ROOT}/APK
-cp -r ${CI_ROOT}/app/build/* ${CI_ROOT}/APK
+cp -r ${CI_ROOT}/app/platforms/android/app/build/outputs/apk/debug/* ${CI_ROOT}/APK
