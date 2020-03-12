@@ -9,4 +9,4 @@ stages:
 include:
   - local: '/gitlab-ci/prep/.gitlab-ci.yml'
   - local: '/gitlab-ci/build/android/.gitlab-ci.yml'
-  - local: '/gitlab-ci/test/android/.gitlab-ci.yml'
+  # - local: '/gitlab-ci/test/android/.gitlab-ci.yml'
