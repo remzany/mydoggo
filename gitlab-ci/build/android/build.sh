@@ -97,6 +97,8 @@ echo "--> RUN . . .             . . . sets commands"
 cp -rf /opt/androidsdk/tools/bin/* /usr/lib/
 echo "--> RUN . . .             . . . sets commands"
 
+JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.242.b08-0.el7_7.x86_64/bin
+echo "--> RUN . . .             . . . setting java_home variable"
 # Gradle installation
 
 wget https://services.gradle.org/distributions/gradle-6.2.2-bin.zip -P /tmp
