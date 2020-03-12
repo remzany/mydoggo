@@ -61,14 +61,27 @@ echo "--> RUN . . .             . . . app yarn install"
 cd ${CI_ROOT}/app
 yarn 1> /dev/null
 
-echo "--> RUN . . .             . . . add android studio"
-mkdir -p /tmp/andrioidsdk
-wget https://dl.google.com/android/repository/commandlinetools-linux-6200805_latest.zip -P /tmp/andrioidsdk
-cp -rf /tmp/andrioidsdk/tools/bin/* /usr/bin/
-cp -rf /tmp/andrioidsdk/tools/lib/* /usr/lib/
-echo "--> RUN . . .             . . . add android studio"
-sudo unzip -d /opt/gradle /tmp/commandlinetools-linux-6200805_latest.zip
 
+yum install wget
+echo "--> RUN . . .             . . . installing wget"
+yum install unzip
+echo "--> RUN . . .             . . . installing unzip"
+mkdir -p /opt/androidsdk
+echo "--> RUN . . .             . . . creating file androidsdk"
+cd /opt/androidsdk
+echo "--> RUN . . .             . . . cd into it"
+wget https://dl.google.com/android/repository/commandlinetools-linux-6200805_latest.zip
+echo "--> RUN . . .             . . . downloading android zip file"
+unzip commandlinetools-linux-6200805_latest.zip
+echo "--> RUN . . .             . . . unzip file"
+cd /opt
+echo "--> RUN . . .             . . . sets permission to androidsdk folder"
+chown -R root:root androidsdk
+
+cp -rf /opt/androidsdk/tools/bin/* /usr/bin/
+echo "--> RUN . . .             . . . sets commands"
+cp -rf /opt/androidsdk/tools/bin/* /usr/lib/
+echo "--> RUN . . .             . . . sets commands"
 
 echo "--> RUN . . .             . . . app yarn global add @ionic/cli"
 yarn global add @ionic/cli@^6.2.0
