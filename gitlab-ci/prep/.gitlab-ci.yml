@@ -1,0 +1,21 @@
+prep app:
+  stage: prep
+  image: node:12
+  cache:
+    key: "$CI_COMMIT_SHA-$CI_PIPELINE_IID"
+    paths:
+      - app/node_modules/
+  script:
+    - cd app
+    - yarn
+
+prep api:
+  stage: prep
+  image: node:12
+  cache:
+    key: "$CI_COMMIT_SHA-$CI_PIPELINE_IID"
+    paths:
+      - api/node_modules/
+  script:
+    - cd api
+    - yarn
