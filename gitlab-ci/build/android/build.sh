@@ -62,15 +62,15 @@ cd ${CI_ROOT}/app
 yarn 1> /dev/null
 
 
-yum install wget
+yum install wget -y 1> /dev/null
 echo "--> RUN . . .             . . . installing wget"
-yum install unzip
+yum install unzip -y 1> /dev/null
 echo "--> RUN . . .             . . . installing unzip"
 mkdir -p /opt/androidsdk
 echo "--> RUN . . .             . . . creating file androidsdk"
 cd /opt/androidsdk
 echo "--> RUN . . .             . . . cd into it"
-wget https://dl.google.com/android/repository/commandlinetools-linux-6200805_latest.zip
+wget --quiet https://dl.google.com/android/repository/commandlinetools-linux-6200805_latest.zip
 echo "--> RUN . . .             . . . downloading android zip file"
 unzip commandlinetools-linux-6200805_latest.zip
 echo "--> RUN . . .             . . . unzip file"
