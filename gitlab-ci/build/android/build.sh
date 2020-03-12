@@ -61,11 +61,25 @@ echo "--> RUN . . .             . . . app yarn install"
 cd ${CI_ROOT}/app
 yarn 1> /dev/null
 
+#DEPENDENCIES
 
 yum install wget -y 1> /dev/null
 echo "--> RUN . . .             . . . installing wget"
 yum install unzip -y 1> /dev/null
 echo "--> RUN . . .             . . . installing unzip"
+yum install nano -y 1> /dev/null
+echo "--> RUN . . .             . . . installing nano"
+
+
+# OPENJDK 8 installation
+
+yum install java-1.8.0-openjdk-devel -y 1> /dev/null
+echo "--> RUN . . .             . . . install java 8"
+java -version
+echo "--> RUN . . .             . . . printing java version"
+
+# ANDROIDSDK installation
+
 mkdir -p /opt/androidsdk
 echo "--> RUN . . .             . . . creating file androidsdk"
 cd /opt/androidsdk
@@ -82,6 +96,17 @@ cp -rf /opt/androidsdk/tools/bin/* /usr/bin/
 echo "--> RUN . . .             . . . sets commands"
 cp -rf /opt/androidsdk/tools/bin/* /usr/lib/
 echo "--> RUN . . .             . . . sets commands"
+
+# Gradle installation
+
+wget https://services.gradle.org/distributions/gradle-6.2.2-bin.zip -P /tmp
+sudo unzip -d /opt/gradle /tmp/gradle-6.2.2-bin.zip 
+sudo nano /etc/profile.d/gradle.sh
+echo 'export GRADLE_HOME=/opt/gradle/gradle-6.2.2' >> /etc/profile.d/gradle.sh
+echo 'export PATH=${GRADLE_HOME}/bin:${PATH}' >> /etc/profile.d/gradle.sh
+sudo chmod +x /etc/profile.d/gradle.sh
+source /etc/profile.d/gradle.sh
+gradle -v
 
 echo "--> RUN . . .             . . . app yarn global add @ionic/cli"
 yarn global add @ionic/cli@^6.2.0
