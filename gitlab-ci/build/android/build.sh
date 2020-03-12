@@ -77,6 +77,8 @@ yum install java-1.8.0-openjdk-devel -y 1> /dev/null
 echo "--> RUN . . .             . . . install java 8"
 java -version
 echo "--> RUN . . .             . . . printing java version"
+rpm -ql htop
+echo "--> RUN . . .             . . . display installation path"
 
 # ANDROIDSDK installation
 
@@ -86,7 +88,7 @@ cd /opt/androidsdk
 echo "--> RUN . . .             . . . cd into it"
 wget --quiet https://dl.google.com/android/repository/commandlinetools-linux-6200805_latest.zip
 echo "--> RUN . . .             . . . downloading android zip file"
-unzip commandlinetools-linux-6200805_latest.zip
+unzip -q commandlinetools-linux-6200805_latest.zip
 echo "--> RUN . . .             . . . unzip file"
 cd /opt
 echo "--> RUN . . .             . . . sets permission to androidsdk folder"
@@ -101,8 +103,8 @@ export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.242.b08-0.el7_7.x86_64/bi
 echo "--> Setting env var . . . . . . JAVA_HOME . . .         . . . $JAVA_HOME"
 # Gradle installation
 
-wget https://services.gradle.org/distributions/gradle-6.2.2-bin.zip -P /tmp
-sudo unzip -d /opt/gradle /tmp/gradle-6.2.2-bin.zip 
+wget --quiet https://services.gradle.org/distributions/gradle-6.2.2-bin.zip -P /tmp
+unzip -q -d /opt/gradle /tmp/gradle-6.2.2-bin.zip 
 export GRADLE_HOME=/opt/gradle/gradle-6.2.2
 echo "--> Setting env var . . . . . . GRADLE_HOME . . .       . . . $GRADLE_HOME"
 export PATH=${GRADLE_HOME}/bin:${PATH}
