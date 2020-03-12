@@ -117,6 +117,9 @@ echo "--> RUN . . .             . . . app yarn global add cordova"
 yarn global add cordova
 echo "--> RUN . . .             . . . app yarn global add typescript"
 yarn global add typescript@3.8.3
+
+cd ${CI_ROOT}/app
+
 echo "--> RUN . . .             . . . app ionic cordova prepare android"
 ionic cordova prepare android --no-interactive --confirm
 echo "--> RUN . . .             . . . app ionic cordova build android"
