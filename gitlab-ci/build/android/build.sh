@@ -93,7 +93,9 @@ cp -rf /opt/androidsdk/tools/bin/* /usr/lib/
 echo "--> RUN . . .             . . . sets commands"
 
 export ANDROID_HOME=/opt/androidsdk/Sdk
+echo "--> RUN . . .             . . . sets commands"
 export PATH=$PATH:$ANDROID_HOME/tools
+echo "--> RUN . . .             . . . sets commands"
 export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.242.b08-0.el7_7.x86_64/bin
 echo "--> Setting env var . . . . . . JAVA_HOME . . .         . . . $JAVA_HOME"
 # Gradle installation
