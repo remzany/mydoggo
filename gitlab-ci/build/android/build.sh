@@ -89,8 +89,14 @@ chown -R root:root androidsdk
 
 cp -rf /opt/androidsdk/tools/bin/* /usr/bin/
 echo "--> RUN . . .             . . . sets commands"
-cp -rf /opt/androidsdk/tools/bin/* /usr/lib/
+
+
+
+#Android SDK Build Tools
+wget --quiet https://dl.google.com/android/repository/build-tools_r30-rc1-linux.zip -P /tmp
+unzip -q -d /opt/sdkbuildtools /tmp/build-tools_r30-rc1-linux.zip
 echo "--> RUN . . .             . . . sets commands"
+
 
 export ANDROID_HOME=/opt/androidsdk/Sdk
 echo "--> RUN . . .             . . . sets android to path"
@@ -121,9 +127,9 @@ yarn global add typescript@3.8.3
 cd ${CI_ROOT}/app
 
 echo "--> RUN . . .             . . . app ionic cordova prepare android"
-ionic cordova prepare android --no-interactive --confirm
+ionic cordova prepare android --no-interactive --confirm --quiet
 echo "--> RUN . . .             . . . app ionic cordova build android"
-ionic cordova build android --no-interactive --confirm
+ionic cordova build android --no-interactive --confirm --quiet
 
 if [ ! -d "${CI_ROOT}/app/platforms/android/app/build/outputs/apk/debug/" ]; then
   echo "failed to build apk"
