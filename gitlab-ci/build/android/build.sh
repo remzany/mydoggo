@@ -87,14 +87,17 @@ echo "--> RUN . . .             . . . sets permission to androidsdk folder"
 cd /opt
 chown -R root:root androidsdk
 
-#cp -rf /opt/androidsdk/tools/bin/* /usr/bin/
-#echo "--> RUN . . .             . . . sets commands"
+cp -rf /opt/androidsdk/tools/bin/* /usr/bin/
+cp -rf /opt/androidsdk/tools/lib/* /usr/lib/
+echo "--> RUN . . .             . . . sets commands"
 
 
 
 #Android SDK Build Tools
 wget --quiet https://dl.google.com/android/repository/build-tools_r30-rc1-linux.zip -P /tmp
 unzip -q -d /opt/androidsdkbuildtools /tmp/build-tools_r30-rc1-linux.zip
+
+cp -rf  /opt/androidsdkbuildtools/* /usr/bin/android_sdk/build-tools/
 echo "--> RUN . . .             . . . sets commands"
 
 
