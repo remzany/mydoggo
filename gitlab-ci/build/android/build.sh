@@ -93,9 +93,9 @@ cp -rf /opt/androidsdk/tools/bin/* /usr/lib/
 echo "--> RUN . . .             . . . sets commands"
 
 export ANDROID_HOME=/opt/androidsdk/Sdk
-echo "--> RUN . . .             . . . sets commands"
-export PATH=$PATH:$ANDROID_HOME/tools
-echo "--> RUN . . .             . . . sets commands"
+echo "--> RUN . . .             . . . sets android to path"
+export PATH=$PATH:$ANDROID_HOME/tools/bin
+echo "--> RUN . . .             . . . sets android to path"
 export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.242.b08-0.el7_7.x86_64/bin
 echo "--> Setting env var . . . . . . JAVA_HOME . . .         . . . $JAVA_HOME"
 # Gradle installation
@@ -106,7 +106,10 @@ export GRADLE_HOME=/opt/gradle/gradle-6.2.2
 echo "--> Setting env var . . . . . . GRADLE_HOME . . .       . . . $GRADLE_HOME"
 export PATH=${GRADLE_HOME}/bin:${PATH}
 echo "--> Setting env var . . . . . . PATH . . .              . . . $PATH"
-echo "version" gradle -v
+
+echo "displaying versions" 
+gradle -v
+echo "displaying versions"
 
 echo "--> RUN . . .             . . . app yarn global add @ionic/cli"
 yarn global add @ionic/cli@^6.2.0
