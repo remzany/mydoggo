@@ -94,7 +94,7 @@ chown -R root:root androidsdk
 
 #Android SDK Build Tools
 wget --quiet https://dl.google.com/android/repository/build-tools_r30-rc1-linux.zip -P /tmp
-unzip -q -d /opt/androidsdk /tmp/build-tools_r30-rc1-linux.zip
+unzip -q -d /opt/androidsdkbuildtools /tmp/build-tools_r30-rc1-linux.zip
 echo "--> RUN . . .             . . . sets commands"
 
 
