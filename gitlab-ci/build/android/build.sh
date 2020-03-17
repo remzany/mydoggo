@@ -73,40 +73,41 @@ rpm -ql java-1.8.0-openjdk-devel
 echo "--> RUN . . .             . . . SHOW WHERE IS SDK INSTALLED"
 
 # ANDROIDSDK installation
-
-echo "--> RUN . . .             . . . creating folder androidsdk"
-mkdir -p /opt/androidsdk
-
-echo "--> RUN . . .             . . . cd into it"
-cd /opt/androidsdk
-echo "--> RUN . . .             . . . downloading android zip file"
-wget --quiet https://dl.google.com/android/repository/commandlinetools-linux-6200805_latest.zip
-echo "--> RUN . . .             . . . unzip file"
-unzip -q commandlinetools-linux-6200805_latest.zip
-echo "--> RUN . . .             . . . sets permission to androidsdk folder"
-cd /opt
-chown -R root:root androidsdk
-
-cp -rf /opt/androidsdk/tools/bin/* /usr/bin/
-cp -rf /opt/androidsdk/tools/lib/* /usr/lib/
-echo "--> RUN . . .             . . . sets commands"
-
-
+#echo "--> RUN . . .             . . . creating folder androidsdk"
+#mkdir -p /opt/androidsdk
+#echo "--> RUN . . .             . . . cd into it"
+#cd /opt/androidsdk
+#echo "--> RUN . . .             . . . downloading android zip file"
+#wget --quiet https://dl.google.com/android/repository/commandlinetools-linux-6200805_latest.zip
+#echo "--> RUN . . .             . . . unzip file"
+#unzip -q commandlinetools-linux-6200805_latest.zip
+#echo "--> RUN . . .             . . . sets permission to androidsdk folder"
+#cd /opt
+#chown -R root:root androidsdk
+#cp -rf /opt/androidsdk/tools/bin/* /usr/bin/
+#cp -rf /opt/androidsdk/tools/lib/* /usr/lib/
+#echo "--> RUN . . .             . . . sets commands"
 
 #Android SDK Build Tools
-wget --quiet https://dl.google.com/android/repository/build-tools_r30-rc1-linux.zip -P /tmp
-unzip -q -d /opt/androidsdkbuildtools /tmp/build-tools_r30-rc1-linux.zip
+#wget --quiet https://dl.google.com/android/repository/build-tools_r30-rc1-linux.zip -P /tmp
+#unzip -q -d /opt/androidsdkbuildtools /tmp/build-tools_r30-rc1-linux.zip
+#cp -rf  /opt/androidsdkbuildtools/* /usr/bin/android_sdk/build-tools/
+#echo "--> RUN . . .             . . . sets commands"
+cd 
+wget --quiet --output-document=android-sdk.zip https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip
+unzip -d android-sdk-linux android-sdk.zip
+echo y | android-sdk-linux/tools/bin/sdkmanager  "platforms;android-28" >/dev/null
+echo y | android-sdk-linux/tools/bin/sdkmanager  "platform-tools" >/dev/null
+echo y | android-sdk-linux/tools/bin/sdkmanager  "build-tools;28.0.2" >/dev/null
+cd 
+export ANDROID_HOME=$PWD/android-sdk-linux/
+export ANDROID_SDK_ROOT=$PWD/android-sdk-linux
 
-cp -rf  /opt/androidsdkbuildtools/* /usr/bin/android_sdk/build-tools/
-echo "--> RUN . . .             . . . sets commands"
-
-
-export ANDROID_HOME=/opt/androidsdk/Sdk
-echo "--> RUN . . .             . . . sets android to path"
-export PATH=$PATH:$ANDROID_HOME/tools/bin
-echo "--> RUN . . .             . . . sets android to path"
-export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.242.b08-0.el7_7.x86_64/bin
-echo "--> Setting env var . . . . . . JAVA_HOME . . .         . . . $JAVA_HOME"
+#echo "--> RUN . . .             . . . sets android to path"
+#export PATH=$PATH:$ANDROID_HOME/tools/bin
+#echo "--> RUN . . .             . . . sets android to path"
+#export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.242.b08-0.el7_7.x86_64/bin
+#echo "--> Setting env var . . . . . . JAVA_HOME . . .         . . . $JAVA_HOME"
 # Gradle installation
 
 wget --quiet https://services.gradle.org/distributions/gradle-6.2.2-bin.zip -P /tmp
