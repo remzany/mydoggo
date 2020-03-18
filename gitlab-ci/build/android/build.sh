@@ -94,9 +94,9 @@ wget --quiet --output-document=android-sdk.zip https://dl.google.com/android/rep
 unzip -d android-sdk-linux android-sdk.zip
 echo y | android-sdk-linux/tools/bin/sdkmanager  "platforms;android-28" >/dev/null
 echo y | android-sdk-linux/tools/bin/sdkmanager  "platform-tools" >/dev/null
-echo y | android-sdk-linux/tools/bin/sdkmanager  "build-tools;28.0.2" >/dev/null
+echo y | android-sdk-linux/tools/bin/sdkmanager  "build-tools;19.1.0" >/dev/null
 cd 
-export ANDROID_HOME=$PWD/android-sdk-linux/
+
 export ANDROID_SDK_ROOT=$PWD/android-sdk-linux/
 
 
