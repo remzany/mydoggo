@@ -56,21 +56,17 @@ echo "--> Setting env var . . . . . . BUILD_ROOT . . .        . . . $BUILD_ROOT"
 export CI_ROOT=${CI_PROJECT_DIR}
 echo "--> Setting env var . . . . . . CI_ROOT . . .           . . . $CI_ROOT"
 
-export ANDROID_COMPILE_SDK=28
-echo "--> Setting env var . . . . . . ANDROID_COMPILE_SDK . . . . . $ANDROID_COMPILE_SDK"
-export ANDROID_BUILD_TOOLS=28.0.2
-echo "--> Setting env var . . . . . . ANDROID_BUILD_TOOLS . . . . . $ANDROID_BUILD_TOOLS"
-export ANDROID_SDK_TOOLS=4333796
-echo "--> Setting env var . . . . . . ANDROID_SDK_TOOLS . . . . . . $ANDROID_SDK_TOOLS"
+#export ANDROID_COMPILE_SDK=28
+#echo "--> Setting env var . . . . . . ANDROID_COMPILE_SDK . . . . . $ANDROID_COMPILE_SDK"
+#export ANDROID_BUILD_TOOLS=28.0.2
+#echo "--> Setting env var . . . . . . ANDROID_BUILD_TOOLS . . . . . $ANDROID_BUILD_TOOLS"
+#export ANDROID_SDK_TOOLS=4333796
+#echo "--> Setting env var . . . . . . ANDROID_SDK_TOOLS . . . . . . $ANDROID_SDK_TOOLS"
 
 echo "--> RUN . . .             . . . app yarn install"
 cd ${CI_ROOT}/app
 yarn 1> /dev/null
 
-
-echo "--> RUN . . .             . . . SHOW WHERE IS SDK INSTALLED"
-rpm -ql java-1.8.0-openjdk-devel
-echo "--> RUN . . .             . . . SHOW WHERE IS SDK INSTALLED"
 
 # ANDROIDSDK installation
 #echo "--> RUN . . .             . . . creating folder androidsdk"
@@ -98,18 +94,21 @@ wget --quiet --output-document=android-sdk.zip https://dl.google.com/android/rep
 unzip -d android-sdk-linux android-sdk.zip
 echo y | android-sdk-linux/tools/bin/sdkmanager  "platforms;android-28" >/dev/null
 echo y | android-sdk-linux/tools/bin/sdkmanager  "platform-tools" >/dev/null
-echo y | android-sdk-linux/tools/bin/sdkmanager  "build-tools;19.1.0" >/dev/null
+echo y | android-sdk-linux/tools/bin/sdkmanager  "build-tools;28.0.2" >/dev/null
 cd 
 export ANDROID_HOME=$PWD/android-sdk-linux/
-export ANDROID_SDK_ROOT=$PWD/android-sdk-linux
+export ANDROID_SDK_ROOT=$PWD/android-sdk-linux/
+
 
 #echo "--> RUN . . .             . . . sets android to path"
 #export PATH=$PATH:$ANDROID_HOME/tools/bin
 #echo "--> RUN . . .             . . . sets android to path"
 #export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.242.b08-0.el7_7.x86_64/bin
 #echo "--> Setting env var . . . . . . JAVA_HOME . . .         . . . $JAVA_HOME"
+
 # Gradle installation
 
+cd 
 wget --quiet https://services.gradle.org/distributions/gradle-6.2.2-bin.zip -P /tmp
 unzip -q -d /opt/gradle /tmp/gradle-6.2.2-bin.zip 
 export GRADLE_HOME=/opt/gradle/gradle-6.2.2
@@ -117,9 +116,7 @@ echo "--> Setting env var . . . . . . GRADLE_HOME . . .       . . . $GRADLE_HOME
 export PATH=${GRADLE_HOME}/bin:${PATH}
 echo "--> Setting env var . . . . . . PATH . . .              . . . $PATH"
 
-echo "displaying versions" 
-gradle -v
-echo "displaying versions"
+# Installation of packages
 
 echo "--> RUN . . .             . . . app yarn global add @ionic/cli"
 yarn global add @ionic/cli@^6.2.0
