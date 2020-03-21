@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, HttpStatus } from '@nestjs/common';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { AuthService } from './auth.service';
 import { PassportStrategy } from '@nestjs/passport';
@@ -21,7 +21,10 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         const user = await this.authService.validateUserByJwt(payload);
 
         if(!user){
-            throw new UnauthorizedException();
+            throw new UnauthorizedException({
+                status: HttpStatus.FORBIDDEN,
+                error: 'This is a custom message',
+              });
         }
 
         return user;
@@ -29,3 +32,9 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     }
 
 }
+
+/*{
+                status: HttpStatus.FORBIDDEN,
+                error: 'This is a custom message',
+              }, HttpStatus.FORBIDDEN););
+        }*/
