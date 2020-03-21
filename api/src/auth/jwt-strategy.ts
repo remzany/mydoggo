@@ -21,10 +21,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         const user = await this.authService.validateUserByJwt(payload);
 
         if(!user){
-            throw new UnauthorizedException({
-                status: HttpStatus.FORBIDDEN,
-                error: 'This is a custom message',
-              });
+            throw new UnauthorizedException();
         }
 
         return user;

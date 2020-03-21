@@ -21,20 +21,14 @@ export class AuthService {
             // Check the supplied password against the hash stored for this email address
             userToAttempt.checkPassword(loginAttempt.password, (err, isMatch) => {
     
-                if(err)      throw new UnauthorizedException({
-                    status: HttpStatus.FORBIDDEN,
-                    error: 'This is a custom message',
-                  });
+                if(err)      throw new UnauthorizedException();
     
                 if(isMatch){
                     // If there is a successful match, generate a JWT for the user
                     resolve(this.createJwtPayload(userToAttempt));
     
                 } else {
-                    throw new UnauthorizedException({
-                        status: HttpStatus.FORBIDDEN,
-                        error: 'This is a custom message',
-                      });
+                    throw new UnauthorizedException();
                 }
     
             });
@@ -51,10 +45,7 @@ export class AuthService {
         if(user){
             return this.createJwtPayload(user);
         } else {
-            throw new UnauthorizedException({
-                status: HttpStatus.FORBIDDEN,
-                error: 'This is a custom message',
-              });
+            throw new UnauthorizedException();
         }
 
     }
