@@ -24,24 +24,6 @@ const routes: Routes =
   }
 ];
 
-const old_routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'home',
-   loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule),
-    canActivate: [AuthGuardGuard]},
-  {
-    path: 'login',
-    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
-  },
-  {
-    path: 'dog-form',
-    loadChildren: () => import('./pages/dog-form/dog-form.module').then( m => m.DogFormPageModule)
-  },
-  {
-    path: 'tabs',
-    loadChildren: () => import('./pages/tabs/tabs.module').then( m => m.TabsPageModule)
-  },
-];
 
 @NgModule({
   imports: [
