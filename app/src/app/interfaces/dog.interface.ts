@@ -17,6 +17,5 @@ export interface DogStats{
 
 export interface DogFormData{
     "breed":string,
-    "name":string,
-    "date":string
+    "name":string
 }

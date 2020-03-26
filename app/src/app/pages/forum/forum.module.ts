@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { ForumPageRoutingModule } from './forum-routing.module';
-import {ComponentsModule} from '../../components/components.module';
 
 import { ForumPage } from './forum.page';
 
@@ -14,8 +13,7 @@ import { ForumPage } from './forum.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    ForumPageRoutingModule,
-    ComponentsModule
+    ForumPageRoutingModule
   ],
   declarations: [ForumPage]
 })

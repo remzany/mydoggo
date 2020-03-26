@@ -1,40 +1,48 @@
-import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
+import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import { User} from './user.interface';
-import { CreateUserDto, UpdateUserDto, UpdateTOdo } from './dto/create-user.dto';
+import { User } from './interfaces/user.interface';
+import { UserDto } from './dto/user.dto';
 
 @Injectable()
 export class UsersService {
+  constructor(@InjectModel('User') private readonly userModel: Model<User>) {}
 
-  
-    
-  constructor(@InjectModel('User') private userModel: Model<User>) { }
-
-  async create(createUserDto: CreateUserDto) {
-
-    let createdUser = new this.userModel(createUserDto);
-    return await createdUser.save();
-
+  // CREATE user
+  async addUser(createUserDTO: UserDto): Promise<User> {
+    const newUser = await new this.userModel(createUserDTO);
+    return newUser.save();
   }
 
-  async update(id: string, userDto: UpdateUserDto): Promise<User> {
-
-    return await this.userModel.findByIdAndUpdate(id, userDto, {useFindAndModify: false, new: true});
+  // READ user
+  async getUser(userID): Promise<User> {
+    const customer = await this.userModel.findById(userID).exec();
+    return customer;
   }
 
-  async updateTodos(id: string, userTodo: UpdateTOdo): Promise<User> {
-
-    return await this.userModel.findByIdAndUpdate(id, userTodo, {useFindAndModify: false, new: true});
+  // UPDATE user details
+  async updateUser(userID, data): Promise<User> {
+    const updatedUser = await this.userModel.findByIdAndUpdate(userID, data, {
+      new: true,
+    });
+    return updatedUser;
   }
 
-  async findOneByEmail(email): Model<User> {
-
-    return await this.userModel.findOne({email: email});
-
+  // DELETE user
+  async deleteUser(userID): Promise<any> {
+    const deletedUser = await this.userModel.findByIdAndRemove(userID);
+    return deletedUser;
   }
 
-  async listUsers(): Promise<User[] | null> {
-    return await this.userModel.find().exec();
+  // GET ALL users
+  async getAllUser(): Promise<User[]> {
+    const customers = await this.userModel.find().exec();
+    return customers;
   }
+
+  // For JWT checking
+  async findOneByEmail(email: string): Promise<User> {
+    return await this.userModel.findOne({ email: email }, '+password');
+  }
+
 }

@@ -1,28 +1,32 @@
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
+import { ConfigModule } from './config/config.module';
+import { MongooseModule } from '@nestjs/mongoose';
+import { ConfigService } from './config/config.service';
 import { AuthModule } from './auth/auth.module';
-import {BreedModule} from './breed/breed.module';
-
-import {TypegooseModule} from 'nestjs-typegoose';
-import { ConfigModule } from '@nestjs/config';
+import * as path from 'path';
+import { NeconfigModule } from 'neconfig';
+import { BreedModule } from './bread/breed.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-      expandVariables: true
-    }),
-    MongooseModule.forRoot('mongodb://mongodb/myDoggo'),
-    TypegooseModule.forRoot("mongodb://mongodb/myDoggo", {
-    }),
     UsersModule,
+    ConfigModule,
+    NeconfigModule.register({
+      readers: [
+        { name: 'env', file: path.resolve(process.cwd(), '.env') }
+      ]
+    }),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        uri: configService.get('MONGODB_URI'),
+        useNewUrlParser: true,
+      }),
+      inject: [ConfigService],
+    }),
     AuthModule,
-    BreedModule
-  ],
-  controllers: [AppController],
-  providers: [AppService],
+    BreedModule,
+  ]
 })
 export class AppModule {}

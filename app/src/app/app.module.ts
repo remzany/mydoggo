@@ -9,26 +9,40 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
-import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { IonicStorageModule, Storage } from '@ionic/storage';
 import { HttpClientModule } from '@angular/common/http';
 
 import { SecureStorage} from '@ionic-native/secure-storage/ngx';
-import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
-const config: SocketIoConfig = { url: 'http://localhost:3000', options: {}};
+import { TOKEN_KEY } from './services/api.service';
+import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 
-
+export function jwtOptionsFactory(storage) {
+  return {
+    tokenGetter: () => {
+      return storage.get(TOKEN_KEY);
+    },
+    whitelistedDomains: ['localhost:5000'] // Add your Heroku URL in here!
+  }
+}
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, SocketIoModule.forRoot(config), HttpClientModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
+    IonicStorageModule.forRoot(),
+    HttpClientModule,
+    JwtModule.forRoot({
+      jwtOptionsProvider: {
+        provide: JWT_OPTIONS,
+        useFactory: jwtOptionsFactory,
+        deps: [Storage]
+      }
+    })],
   providers: [
     StatusBar,
     SplashScreen,
     SecureStorage,
-    NativeStorage,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
 })

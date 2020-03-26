@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
+
+import { ApiService, User } from '../../services/api.service';
+
+
 @Component({
   selector: 'app-training',
   templateUrl: './training.page.html',
@@ -7,9 +11,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TrainingPage implements OnInit {
 
-  constructor() { }
+  constructor(private api:ApiService) { }
 
   ngOnInit() {
   }
 
+  signOut(){
+    this.api.logout();
+  }
 }

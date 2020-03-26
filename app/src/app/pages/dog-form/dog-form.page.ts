@@ -4,10 +4,15 @@ import { AlertController } from '@ionic/angular';
 
 import { HttpRequestService } from '../../services/http-request.service';
 
-import { DogStats, DogFormData } from '../../interfaces/dog.interface';
+import { DogFormData } from '../../interfaces/dog.interface';
 
 import { NavController } from '@ionic/angular';
 
+import {ApiService, User} from '../../services/api.service';
+
+import { tap } from 'rxjs/operators';
+
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dog-form',
@@ -21,27 +26,39 @@ export class DogFormPage implements OnInit {
   breed:Array<string> = [];
   selectedBread: string = "";
   
-  dogData:DogFormData = {breed:"",name:"",date:""};
+  dogData:DogFormData = {breed:"",name:""};
+  user:User;
 
-  constructor(private navCtrl:NavController, private alert:AlertController, private httpReq: HttpRequestService) { }
+  constructor(private navCtrl:NavController, private alert:AlertController, private httpReq: HttpRequestService, private api:ApiService, private router:Router) { }
 
   ngOnInit() {
-    //.subscribe(dogData => console.log(dogData))
-    console.log("listing dog data");
-    this.httpReq.getDogsBreed().subscribe((data: Array<DogStats>) => {
-      data.map(a => {
-        console.log(a.name);
-        this.requestedData.push(a.name);
-      })
+    this.api.getBreed().pipe(tap(
+      data => {
+        this.requestedData = data;
+      }
+    )).subscribe();
+
       this.breed = this.requestedData;
-    });
+
+      this.loadUserData();
+
   }
 
   updateAccount(){
-    this.httpReq.updateAccount(true, this.dogData.name, this.dogData.breed, this.dogData.date).subscribe(res => {
+    let data= {"dogName": this.dogData.name, "dogBreed": this.dogData.breed}
+
+    this.api.updateUser(this.user._id, data).subscribe(res =>{
       console.log(res);
 
-      this.navCtrl.navigateRoot('tabs');
+      this.router.navigateByUrl('/tabs');
+
+    })
+  }
+
+  loadUserData(){
+    this.api.getUserData().subscribe(a =>{
+      this.user = a;
+
     })
   }
 
@@ -87,9 +104,6 @@ export class DogFormPage implements OnInit {
     if(this.dogData.breed == "")
       arr.push("breed");
     
-    if(this.dogData.date == "")
-      arr.push("date");
-
       if(arr.length == 0)
         this.updateAccount();
       else

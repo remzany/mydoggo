@@ -1,44 +1,77 @@
-
-import { Controller, Get, Post, Body, UseGuards } from '@nestjs/common';
-import { CreateUserDto, UpdateUserDto, UpdateTOdo } from './dto/create-user.dto';
+import { UserDto } from './dto/user.dto';
 import { UsersService } from './users.service';
+import {
+  Controller,
+  Get,
+  Res,
+  HttpStatus,
+  Post,
+  Body,
+  Put,
+  NotFoundException,
+  Delete,
+  Param,
+  UseGuards
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
-@Controller('api/users')
+@Controller('users')
 export class UsersController {
+  constructor(private userService: UsersService) {}
 
-    constructor(private usersService: UsersService) {
-
+  @Post()
+  async addUser(@Res() res, @Body() createUserDto: UserDto) {
+    try {
+      const user = await this.userService.addUser(createUserDto);
+      return res.status(HttpStatus.OK).json({
+        msg: 'User has been created successfully',
+        user
+      });
+    } catch (e) {
+      return res.status(HttpStatus.CONFLICT).json({
+        msg: 'User already exists'
+      });
     }
+  }
 
-    @Post() 
-    async create(@Body() createUserDto: CreateUserDto) {
-        return await this.usersService.create(createUserDto);
-    }
+  @UseGuards(AuthGuard())
+  @Get(':userID')
+  async getUser(@Res() res, @Param('userID') userID) {
+    const user = await this.userService.getUser(userID);
+    if (!user) throw new NotFoundException('User does not exist!');
+    return res.status(HttpStatus.OK).json(user);
+  }
 
-    @Post('updateUser') 
-    async update(@Body() updateUser: UpdateUserDto) {
-        return await this.usersService.update(updateUser.uid, updateUser);
-    }
+  @UseGuards(AuthGuard())
+  @Put(':userID')
+  async updateUser(
+    @Res() res,
+    @Param('userID') userID,
+    @Body() createUserDto: UserDto,
+  ) {
+    const user = await this.userService.updateUser(userID, createUserDto);
+    if (!user) throw new NotFoundException('User does not exist!');
+    return res.status(HttpStatus.OK).json({
+      msg: 'User has been successfully updated',
+      user,
+    });
+  }
 
-    @Post('updateUserTodos')
-    async updateTodos(@Body() userTodos: UpdateTOdo) {
-        return await this.usersService.updateTodos(userTodos.uid, userTodos);
-    }
+  @UseGuards(AuthGuard())
+  @Delete(':userID')
+  async deleteUser(@Res() res, @Param('userID') userID) {
+    const user = await this.userService.deleteUser(userID);
+    if (!user) throw new NotFoundException('User does not exist');
+    return res.status(HttpStatus.OK).json({
+      msg: 'User has been deleted',
+      user,
+    });
+  }
 
-    // This route will require successfully passing our default auth strategy (JWT) in order
-    // to access the route
-    @Get('test')
-    async testAuthRoute(){
-        return await {
-            message: "this shit works"
-        }
-    }
-
-    @Get('getlist')
-    async getUsers(){
-        return await {
-            message: await this.usersService.listUsers()
-        }
-    }
+  @UseGuards(AuthGuard())
+  @Get()
+  async getAllUser(@Res() res) {
+    const users = await this.userService.getAllUser();
+    return res.status(HttpStatus.OK).json(users);
+  }
 }

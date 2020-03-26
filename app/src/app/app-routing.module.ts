@@ -1,29 +1,32 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-
-import { AuthGuardGuard } from './guards/auth-guard.guard';
 import { AuthGuard } from './guards/auth.guard';
+import { AutoLoginGuard } from './guards/auto-login.guard';
 
-const routes: Routes = 
-[
+const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+    loadChildren: () =>
+      import('./pages/login/login.module').then(m => m.LoginPageModule),
+      canActivate: [AutoLoginGuard]
   },
   {
-    path: 'login',
-    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+    path: 'register',
+    loadChildren: () =>
+      import('./pages/register/register.module').then(m => m.RegisterPageModule),
+      canActivate: [AutoLoginGuard]
   },
   {
     path: 'tabs',
-    loadChildren: () => import('./pages/tabs/tabs.module').then(m => m.TabsPageModule), canActivate:[AuthGuard]
+    loadChildren: () =>
+      import('./pages/tabs/tabs.module').then(m => m.TabsPageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'dog-form',
     loadChildren: () => import('./pages/dog-form/dog-form.module').then( m => m.DogFormPageModule), canActivate:[AuthGuard]
   }
 ];
-
 
 @NgModule({
   imports: [
