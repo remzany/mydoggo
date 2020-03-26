@@ -41,6 +41,7 @@ export class HttpRequestService {
     }
 
     this.http.post('api/auth', credentials).subscribe((res: any) => {
+      console.log("api auth res is: ");
       console.log(res);
 
       this.dogName = res.dogName;
@@ -97,8 +98,7 @@ export class HttpRequestService {
       dogBreed: dogBreed,
       dogBirthDay: dogBirthDay
     };
-
-    console.log(data);
+    
     return this.http.post('api/users/updateUser', data).pipe(map((response: any) => {
       return response;
     }));

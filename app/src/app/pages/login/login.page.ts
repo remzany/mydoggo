@@ -38,6 +38,7 @@ export class LoginPage implements OnInit{
   createAccount(){
     if(this.createEmail != "email"){
       this.httpReq.createAccount(this.createEmail, this.createPassword).subscribe(a =>{
+        console.log("error");
         console.log(a);
       })
     }

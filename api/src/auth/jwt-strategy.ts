@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, HttpStatus } from '@nestjs/common';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { AuthService } from './auth.service';
 import { PassportStrategy } from '@nestjs/passport';
@@ -29,3 +29,9 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     }
 
 }
+
+/*{
+                status: HttpStatus.FORBIDDEN,
+                error: 'This is a custom message',
+              }, HttpStatus.FORBIDDEN););
+        }*/

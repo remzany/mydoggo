@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, HttpStatus } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { LoginUserDto } from '../users/dto/login-user.dto';
 import { UsersService } from '../users/users.service';
@@ -21,7 +21,7 @@ export class AuthService {
             // Check the supplied password against the hash stored for this email address
             userToAttempt.checkPassword(loginAttempt.password, (err, isMatch) => {
     
-                if(err) throw new UnauthorizedException();
+                if(err)      throw new UnauthorizedException();
     
                 if(isMatch){
                     // If there is a successful match, generate a JWT for the user
