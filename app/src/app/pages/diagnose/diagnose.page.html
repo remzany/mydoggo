@@ -12,12 +12,12 @@
 
 <ion-content>
 
-  <ion-item>
+  <ion-item *ngFor="let ques of question">
     <ion-buttons slot="end">
     <ion-button>
       <ion-icon slot="icon-only" name="arrow-round-up"></ion-icon>
     </ion-button>
-      {{1+1}}
+      {{ques}}
     <ion-button>
       <ion-icon slot="icon-only" name="arrow-round-down"></ion-icon>
     </ion-button>
