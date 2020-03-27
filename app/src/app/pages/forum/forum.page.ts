@@ -8,6 +8,9 @@ import { Observable } from 'rxjs';
 import { DogStats } from '../../interfaces/dog.interface';
 
 import {ApiService} from '../../services/api.service';
+
+import { Router } from "@angular/router";
+
 @Component({
   selector: 'app-forum',
   templateUrl: './forum.page.html',
@@ -22,7 +25,8 @@ export class ForumPage implements OnInit {
 
   constructor(private httpReq:HttpRequestService, 
     private modal:ModalController,
-    private api:ApiService) { }
+    private api:ApiService,
+    private router:Router) { }
 
   ngOnInit() {
     this.api.getUserData().subscribe(a => {
@@ -37,8 +41,8 @@ export class ForumPage implements OnInit {
       })
     });
   }
-    signOut(){
-      this.api.logout();
+    openDiagnose(){
+      this.router.navigateByUrl('/diagnose');
     }
 
 }

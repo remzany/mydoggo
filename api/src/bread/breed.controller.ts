@@ -10,7 +10,7 @@ import {
 
   import { AuthGuard } from '@nestjs/passport';
 
-@Controller('breed')
+@Controller('api/breed')
 export class BreedController {
     constructor(private breedService:BreedService){}
 

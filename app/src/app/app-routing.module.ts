@@ -25,7 +25,8 @@ const routes: Routes = [
   {
     path: 'dog-form',
     loadChildren: () => import('./pages/dog-form/dog-form.module').then( m => m.DogFormPageModule), canActivate:[AuthGuard]
-  }
+  },
+  { path: 'diagnose', loadChildren: './pages/diagnose/diagnose.module#DiagnosePageModule' }
 ];
 
 @NgModule({

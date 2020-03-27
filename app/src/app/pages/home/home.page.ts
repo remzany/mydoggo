@@ -81,8 +81,16 @@ export class HomePage {
     this.api.logout();
   }
   
-  delete(i:number){
-    this.todos.splice(i, 1);
+  delete(todo){
+    let index = this.todos.indexOf(todo);
+
+    if(index > -1){
+      this.todos.splice(index, 1);
+      this.api.updateUser(this.user._id, {"todos": this.todos}).subscribe(a => {
+        console.log(a);
+      })
+    }
+
   }
 
   async openAddDog(){
