@@ -10,10 +10,9 @@ import {Question} from '../../interfaces/diagnose.interface';
 
 export class DiagnosePage implements OnInit {
 
-  questions:[Question];
+  questions:Array<Question> = [{title: "Marusa moja lepotica", comments: 0, upvotes: 3, imageUrl: "/"}];
 
   constructor() {
-    this.questions.push({title: "Marusa kakec", comments: 0, upvotes: 3, imageUrl: "/"});
    }
 
   ngOnInit() {

@@ -1,6 +1,6 @@
 <ion-header no-border>
   <ion-toolbar color="tertiary">
-    <ion-title>Home</ion-title>
+    <ion-title> {{ 'HOME.title' | translate:params }} </ion-title>
 
     <ion-button class="ion-padding-end" slot="end" (click)="signOut()">
       <ion-icon slot="icon-only" name="log-out"></ion-icon>
@@ -36,7 +36,13 @@
 
         <ion-icon slot="start" src="../assets/icon/task-icon.svg"></ion-icon>
 
-        <p> You have {{todos.length}} thing<span *ngIf="todos.length != 1">s </span> left to do! </p>
+
+        <p> {{ 'HOME.todo_text' | translate:params }} {{todos.length}} 
+         <span *ngIf="todos.length == 1">{{ 'HOME.todo_1' | translate:params }} </span>
+         <span *ngIf="todos.length >= 2">{{ 'HOME.todo_2' | translate:params }} </span>
+         </p>
+
+        <!-- <p> You have {{todos.length}} thing<span *ngIf="todos.length != 1">s </span> left to do! </p> -->
 
 
 

@@ -10,6 +10,9 @@ import { SecureStorage, SecureStorageObject } from '@ionic-native/secure-storage
 
 import { ApiService, User } from '../../services/api.service';
 
+import { TranslateConfigService } from '../../services/translate-config.service';
+ 
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -22,16 +25,24 @@ export class HomePage {
   todos:Array<string> = [];
   user:User;
 
-  constructor(private alert:AlertController, private api:ApiService, private httpReq: HttpRequestService, private modalController: ModalController, private router:Router, private secureStorage: SecureStorage){
-  }
+  selectedLanguage:string;
+
+  constructor(
+    private alert:AlertController,
+    private api:ApiService, 
+    private httpReq: HttpRequestService, 
+    private modalController: ModalController,
+    private router:Router, 
+    private secureStorage: SecureStorage,
+    private translateConfigService: TranslateConfigService
+    ){}
 
   ngOnInit(){
     console.log("hello from home page");
 
     this.loadUserData();
-
-    
-     
+    // this.selectedLanguage = this.translateConfigService.getDefaultLanguage();
+    this.translateConfigService.setLanguage("en");
   }
 
   loadUserData(){

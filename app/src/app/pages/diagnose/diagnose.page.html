@@ -12,17 +12,26 @@
 
 <ion-content>
 
-  <ion-item *ngFor="let ques of question">
-    <ion-buttons slot="end">
-    <ion-button>
-      <ion-icon slot="icon-only" name="arrow-round-up"></ion-icon>
-    </ion-button>
-      {{ques}}
-    <ion-button>
-      <ion-icon slot="icon-only" name="arrow-round-down"></ion-icon>
-    </ion-button>
+  <ion-card *ngFor="let ques of questions">
+    <ion-card-header>
+      <ion-card-title>{{ques.title}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item lines="none">
+    
+        <ion-buttons slot="end">
+        <ion-button>
+          <ion-icon slot="icon-only" name="arrow-round-up"></ion-icon>
+        </ion-button>
+          {{ques.upvotes}}
+        <ion-button>
+          <ion-icon slot="icon-only" name="arrow-round-down"></ion-icon>
+        </ion-button>
+    
+        </ion-buttons>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
 
-    </ion-buttons>
-  </ion-item>
 
 </ion-content>
