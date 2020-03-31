@@ -1,6 +1,8 @@
 build android:
   stage: build
-  image: centos:7
+  tags:
+    - vm
+    - centos7
   cache:
     key: "$CI_COMMIT_SHA-$CI_PIPELINE_IID"
     paths:
