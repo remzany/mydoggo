@@ -7,6 +7,10 @@ import { Observable } from 'rxjs';
 
 import { DogStats } from '../../interfaces/dog.interface';
 
+import {ApiService} from '../../services/api.service';
+
+import { Router } from "@angular/router";
+
 @Component({
   selector: 'app-forum',
   templateUrl: './forum.page.html',
@@ -14,28 +18,31 @@ import { DogStats } from '../../interfaces/dog.interface';
 })
 export class ForumPage implements OnInit {
 
-  title:string = "";
-  dog:Observable<DogStats[]>;
+  dog:Observable<Array<{name:string, val:boolean}>>;
   dogBreed:Array<{name:string, val:boolean}> = [];
 
-  selected = "Akita";
+  selected = "";
 
-  constructor(private httpReq:HttpRequestService, private modal:ModalController) { }
+  constructor(private httpReq:HttpRequestService, 
+    private modal:ModalController,
+    private api:ApiService,
+    private router:Router) { }
 
   ngOnInit() {
-    this.title = this.httpReq.getDogData().dogBreed;
-
-    console.log(this.title);
+    this.api.getUserData().subscribe(a => {
+      this.selected = a.dogBreed;
+    })
   }
 
   openModal(){
-    this.dog = this.httpReq.getDogsBreed();
-    
-    this.dog.subscribe( a => {
+    this.api.getBreed().subscribe(a =>{
       a.forEach(element => {
-        this.dogBreed.push({name: element.name, val:true});
-      });
+        this.dogBreed.push({name: element, val:false});
+      })
     });
-
   }
+    openDiagnose(){
+      this.router.navigateByUrl('/diagnose');
+    }
+
 }

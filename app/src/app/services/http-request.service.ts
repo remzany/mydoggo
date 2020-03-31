@@ -8,7 +8,6 @@ import { NavController } from '@ionic/angular';
 
 import { SecureStorage, SecureStorageObject } from '@ionic-native/secure-storage/ngx';
 
-import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { Platform } from '@ionic/angular';
 
 @Injectable({
@@ -26,7 +25,6 @@ export class HttpRequestService {
       private http: HttpClient,
       private navCtrl:NavController,
       private secureStorage:SecureStorage,
-      private nativeStorage: NativeStorage,
       private platform: Platform) {}
 
   getDogsBreed(): Observable<Array<DogStats>> {
@@ -53,11 +51,7 @@ export class HttpRequestService {
       let userData = atob(x);
 
       this.platform.ready().then(() => {
-        this.nativeStorage.setItem('userItem', {property: userData})
-          .then(
-            () => console.log('Stored item!'),
-            error => console.error('Error storing item', error)
-          );
+        
       })
 
       if(!res.dogOwner)

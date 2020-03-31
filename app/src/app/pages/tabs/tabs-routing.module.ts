@@ -3,7 +3,46 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { TabsPage } from './tabs.page';
 
-const routes: Routes = [
+const routes_old: Routes = [
+  {
+    path: '',
+    redirectTo: '/app/users',
+    pathMatch: 'full'
+  },
+  {
+    path: '',
+    component: TabsPage,
+    children: [
+      {
+        path: 'users',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('../users/users.module').then(m => m.UsersPageModule)
+          }
+        ]
+      },
+      {
+        path: 'account',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('../account/account.module').then(m => m.AccountPageModule)
+          }
+        ]
+      }
+    ]
+  }
+];
+
+const routes_new: Routes = [
+  {
+    path: '',
+    redirectTo: '/tabs/home',
+    pathMatch: 'full' 
+  },
   {
     path: '',
     component: TabsPage,
@@ -44,16 +83,11 @@ const routes: Routes = [
         pathMatch: 'full'
       }
     ]
-  },
-  {
-    path: '',
-    redirectTo: '/tabs/home',
-    pathMatch: 'full'
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild(routes_new)],
   exports: [RouterModule],
 })
 export class TabsPageRoutingModule {}
