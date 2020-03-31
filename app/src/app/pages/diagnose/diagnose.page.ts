@@ -10,7 +10,7 @@ import {Question} from '../../interfaces/diagnose.interface';
 
 export class DiagnosePage implements OnInit {
 
-  questions:Array<Question> = [{title: "Marusa moja lepotica", comments: 0, upvotes: 3, imageUrl: "/"}];
+  questions:Array<Question> = [{title: "Pes ima rdečico na sprednji tački", comments: 0, upvotes: 3, imageUrl: "/"}];
 
   constructor() {
    }
