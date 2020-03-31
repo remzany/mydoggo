@@ -1,9 +1,7 @@
 {
 	"HOME": {
 		"title": "Domača stran",
-		"todo_1": "opravilo",
-		"todo_2": "opravil",
 		"todo_label": "dodaj opravilo",
-		"todo_text": "Opraviti morata še"
+		"todo_text": "{count, plural, =0{Nimate opravil} one{Imate le še eno opravilo!} two{čakajo vas še dve opravili} few{opraviti morate še {count} opravila} other{opraviti morate še {count} opravil}}"
 	}
 }

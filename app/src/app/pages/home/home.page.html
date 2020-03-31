@@ -9,7 +9,6 @@
 </ion-header>
 
 <ion-content>
-
   <ion-card>
     <ion-card-header>
       <ion-item lines="none">
@@ -35,11 +34,7 @@
 
         <ion-icon slot="start" src="../assets/icon/task-icon.svg"></ion-icon>
 
-
-        <p> {{ 'HOME.todo_text' | translate:params }} {{todos.length}} 
-         <span *ngIf="todos.length == 1">{{ 'HOME.todo_1' | translate:params }} </span>
-         <span *ngIf="todos.length >= 2">{{ 'HOME.todo_2' | translate:params }} </span>
-         </p>
+        <p translate [translateParams]="{ count: todos.length }"> HOME.todo_text </p>
 
         <!-- <p> You have {{todos.length}} thing<span *ngIf="todos.length != 1">s </span> left to do! </p> -->
 
