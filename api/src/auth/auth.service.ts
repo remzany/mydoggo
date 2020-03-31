@@ -14,15 +14,15 @@ export class AuthService {
 
         return new Promise((resolve) => {
             if (!userToAttempt) {
-                resolve({success: false, msg: 'User not found'});
+                resolve({success: false, msg: 'usernone'});
             }
             userToAttempt.checkPassword(loginAttempt.password, (err, isMatch) => {
-                if(err) resolve({success: false, msg: 'Unexpected error. Please try again later.'});
+                if(err) resolve({success: false, msg: 'usererror'});
     
                 if(isMatch){
                     resolve({success: true, data: this.createJwtPayload(userToAttempt)});
                 } else {
-                    resolve({success: false, msg: 'Wrong password'})
+                    resolve({success: false, msg: 'userwrong'})
                 }
             });
         });

@@ -4,6 +4,11 @@ import { Router } from '@angular/router';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { finalize } from 'rxjs/operators';
 
+
+import { TranslateConfigService } from '../../services/translate-config.service';
+import {TranslateService} from '@ngx-translate/core';
+ 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -19,10 +24,14 @@ export class LoginPage implements OnInit {
     private api: ApiService,
     private router: Router,
     private alertCtrl: AlertController,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private translateConfigService: TranslateConfigService,
+    private translate:TranslateService
   ) {}
  
-  ngOnInit() { }
+  ngOnInit() {
+    this.translateConfigService.getDefaultLanguage();
+   }
  
   async login() {
     const loading = await this.loadingCtrl.create();
@@ -36,9 +45,12 @@ export class LoginPage implements OnInit {
         this.router.navigateByUrl('/tabs');
       }
     }, async err => {
+
+      let x = "LOGIN." + err.error['msg'];
+
       const alert = await this.alertCtrl.create({
-        header: 'Login failed',
-        message: err.error['msg'],
+        header: this.translate.instant('LOGIN.login_label'),
+        message: this.translate.instant(x),
         buttons: ['OK']
       });
       await alert.present();

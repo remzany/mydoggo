@@ -1,7 +1,17 @@
 {
 	"HOME": {
 		"title": "Domača stran",
-		"todo_label": "dodaj opravilo",
-		"todo_text": "{count, plural, =0{Nimate opravil} one{Imate le še eno opravilo!} two{čakajo vas še dve opravili} few{opraviti morate še {count} opravila} other{opraviti morate še {count} opravil}}"
+		"todo_label": "Dodaj opravilo",
+		"todo_text": "{count, plural, =0{Nimate opravil} one{Imate le še eno opravilo!} few{opraviti morate še {count} opravila} other{opraviti morate še {count} opravil}}"
+	},
+	"LOGIN": {
+		"email": "Email",
+		"password": "Geslo",
+		"login": "Prijava",
+		"register": "Ustvari račun",
+		"login_label": "Prijava neuspešna",
+		"usernone":"Račun ne obstaja",
+		"userwrong":"Napačno geslo",
+		"usererror":"Nakaj je šlo narobe, poskusite kasneje"
 	}
 }

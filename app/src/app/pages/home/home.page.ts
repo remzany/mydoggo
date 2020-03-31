@@ -45,8 +45,8 @@ export class HomePage {
     console.log("hello from home page");
 
     this.loadUserData();
-    // this.selectedLanguage = this.translateConfigService.getDefaultLanguage();
-    this.translateConfigService.setLanguage("sl");
+    this.translateConfigService.getDefaultLanguage();
+    //this.translateConfigService.setLanguage("si");
 
  
   }
