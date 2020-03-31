@@ -1,5 +1,6 @@
 variables:
   GIT_STRATEGY: clone
+  YARN_CACHE_FOLDER: "$CI_PROJECT_DIR/cache/yarn"
 
 stages:
   - prep
@@ -7,6 +8,5 @@ stages:
   - test
 
 include:
-  - local: '/gitlab-ci/prep/.gitlab-ci.yml'
   - local: '/gitlab-ci/build/android/.gitlab-ci.yml'
   # - local: '/gitlab-ci/test/android/.gitlab-ci.yml'
