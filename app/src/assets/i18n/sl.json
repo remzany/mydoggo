@@ -1,8 +1,9 @@
 {
-    "HOME": {
-        "title": "Domača stran",
-        "todo_text": "Opraviti morata še",
-        "todo_1": "opravilo",
-        "todo_2": "opravil"
-    }
+	"HOME": {
+		"title": "Domača stran",
+		"todo_1": "opravilo",
+		"todo_2": "opravil",
+		"todo_label": "dodaj opravilo",
+		"todo_text": "Opraviti morata še"
+	}
 }
