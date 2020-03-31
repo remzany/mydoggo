@@ -1,5 +1,6 @@
 variables:
   GIT_STRATEGY: clone
+  YARN_CACHE_FOLDER: "$CI_PROJECT_DIR/cache/yarn"
 
 stages:
   - prep

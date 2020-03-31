@@ -4,8 +4,9 @@ build android:
     - vm
     - centos7
   cache:
-    key: "$CI_COMMIT_SHA-$CI_PIPELINE_IID"
+    key: "$CI_PROJECT_PATH_SLUG-$CI_COMMIT_BRANCH"
     paths:
+      - cache/yarn/
       - app/node_modules/
   script:
     - cd gitlab-ci/build/android
