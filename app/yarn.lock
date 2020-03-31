@@ -5022,6 +5022,13 @@ make-fetch-happen@^4.0.1, make-fetch-happen@^4.0.2:
     socks-proxy-agent "^4.0.0"
     ssri "^6.0.0"
 
+make-plural@^4.1.1:
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/make-plural/-/make-plural-4.3.0.tgz#f23de08efdb0cac2e0c9ba9f315b0dff6b4c2735"
+  integrity sha512-xTYd4JVHpSCW+aqDof6w/MebaMVNTVYBZhbB/vi513xXdiPT92JMVCo0Jq8W2UZnzYRFeVbQiQ+I25l13JuKvA==
+  optionalDependencies:
+    minimist "^1.2.0"
+
 mamacro@^0.0.3:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/mamacro/-/mamacro-0.0.3.tgz#ad2c9576197c9f1abf308d0787865bd975a3f3e4"
@@ -5089,6 +5096,20 @@ merge-descriptors@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/merge-descriptors/-/merge-descriptors-1.0.1.tgz#b00aaa556dd8b44568150ec9d1b953f3f90cbb61"
   integrity sha1-sAqqVW3YtEVoFQ7J0blT8/kMu2E=
+
+messageformat-parser@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/messageformat-parser/-/messageformat-parser-3.0.0.tgz#38ae9348eb4834ab19b3a8d682af7babb335f37a"
+  integrity sha512-5KfDWGAHz5kzfKH5V4M7+o3CIFiykCfFDaLK+Ck2fkaxYfLWwKZMioxrSsMRnkfMr0ZaaC0gcxyOUb2d0GCy4A==
+
+messageformat@2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/messageformat/-/messageformat-2.0.2.tgz#adb15dad45cd3a3d4900a5611ef757ae26f2508e"
+  integrity sha512-q1xLSMd6om5ReT/S+dsgONtuDt0iAuxB7sRMmEjDrK3aUJLTKyE/GrmKkDEkYgJHW6YYA596W3mzC4bmr/JtRw==
+  dependencies:
+    make-plural "^4.1.1"
+    messageformat-parser "^3.0.0"
+    reserved-words "^0.1.2"
 
 methods@^1.1.2, methods@~1.1.2:
   version "1.1.2"
@@ -5351,6 +5372,11 @@ netmask@^1.0.6:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/netmask/-/netmask-1.0.6.tgz#20297e89d86f6f6400f250d9f4f6b4c1945fcd35"
   integrity sha1-ICl+idhvb2QA8lDZ9Pa0wZRfzTU=
+
+ngx-translate-messageformat-compiler@^4.6.0:
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/ngx-translate-messageformat-compiler/-/ngx-translate-messageformat-compiler-4.6.0.tgz#ae7070cc03d3ffb07c78887bdf1433d3d5dd8cb0"
+  integrity sha512-tX2iMZ51Gh6YfMeuTdUfgYipKbcz1Z1q/lbZLOWsMqyRzKcpL9nhM2fPkWfaangKu4o4kUJloWN0kFsyy6Ge5g==
 
 nice-try@^1.0.4:
   version "1.0.5"
@@ -6599,6 +6625,11 @@ requires-port@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/requires-port/-/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
   integrity sha1-kl0mAdOaxIXgkc8NpcbmlNw9yv8=
+
+reserved-words@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/reserved-words/-/reserved-words-0.1.2.tgz#00a0940f98cd501aeaaac316411d9adc52b31ab1"
+  integrity sha1-AKCUD5jNUBrqqsMWQR2a3FKzGrE=
 
 resolve-cwd@^2.0.0:
   version "2.0.0"

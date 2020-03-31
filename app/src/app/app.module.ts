@@ -26,9 +26,11 @@ export function jwtOptionsFactory(storage) {
   }
 }
 
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+//TRANSLATION
+
+import { TranslateModule, TranslateLoader, TranslateCompiler } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { TranslateConfigService } from './services/translate-config.service';
+import {TranslateMessageFormatCompiler} from 'ngx-translate-messageformat-compiler';
 
 export function LanguageLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -58,7 +60,12 @@ export function HttpLoaderFactory(http: HttpClient) {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
-    }}),
+      },
+      compiler: {
+        provide: TranslateCompiler,
+        useClass: TranslateMessageFormatCompiler
+      }
+    }),
 
     BrowserModule,
     AppRoutingModule,
