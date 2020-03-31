@@ -7,6 +7,9 @@ import { AuthModule } from './auth/auth.module';
 import * as path from 'path';
 import { NeconfigModule } from 'neconfig';
 import { BreedModule } from './bread/breed.module';
+import { DiagnoseController } from './diagnose/diagnose.controller';
+import { DiagnoseService } from './diagnose/diagnose.service';
+import { DiagnoseModule } from './diagnose/diagnose.module';
 
 @Module({
   imports: [
@@ -27,6 +30,9 @@ import { BreedModule } from './bread/breed.module';
     }),
     AuthModule,
     BreedModule,
-  ]
+    DiagnoseModule,
+  ],
+  controllers: [DiagnoseController],
+  providers: [DiagnoseService]
 })
 export class AppModule {}
