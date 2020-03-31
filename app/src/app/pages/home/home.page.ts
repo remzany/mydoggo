@@ -11,6 +11,8 @@ import { SecureStorage, SecureStorageObject } from '@ionic-native/secure-storage
 import { ApiService, User } from '../../services/api.service';
 
 import { TranslateConfigService } from '../../services/translate-config.service';
+
+import {TranslateService} from '@ngx-translate/core';
  
 
 @Component({
@@ -26,6 +28,7 @@ export class HomePage {
   user:User;
 
   selectedLanguage:string;
+  todo_label:string = "";
 
   constructor(
     private alert:AlertController,
@@ -34,7 +37,8 @@ export class HomePage {
     private modalController: ModalController,
     private router:Router, 
     private secureStorage: SecureStorage,
-    private translateConfigService: TranslateConfigService
+    private translateConfigService: TranslateConfigService,
+    private translate:TranslateService
     ){}
 
   ngOnInit(){
@@ -43,6 +47,8 @@ export class HomePage {
     this.loadUserData();
     // this.selectedLanguage = this.translateConfigService.getDefaultLanguage();
     this.translateConfigService.setLanguage("sl");
+
+ 
   }
 
   loadUserData(){
@@ -61,9 +67,9 @@ export class HomePage {
   }
   
   async openTOdo(){
-    
+
     const alert = await this.alert.create({
-      header: `Please add task`,
+      header: this.translate.instant('HOME.todo_label'),
       inputs:[
         {
           name: "todo",
