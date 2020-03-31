@@ -42,7 +42,7 @@ export class HomePage {
 
     this.loadUserData();
     // this.selectedLanguage = this.translateConfigService.getDefaultLanguage();
-    this.translateConfigService.setLanguage("en");
+    this.translateConfigService.setLanguage("sl");
   }
 
   loadUserData(){

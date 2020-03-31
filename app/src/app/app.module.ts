@@ -34,6 +34,10 @@ export function LanguageLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
 }
 
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -48,19 +52,19 @@ export function LanguageLoader(http: HttpClient) {
         deps: [Storage]
       }
     }),
-
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    HttpClientModule,
     
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: (LanguageLoader),
+        useFactory: HttpLoaderFactory,
         deps: [HttpClient]
-      }
-    })],
+    }}),
+
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    HttpClientModule
+    ],
   providers: [
     StatusBar,
     SplashScreen,
