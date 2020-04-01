@@ -25,12 +25,20 @@ export interface User {
   todos?: Array<string>;
 }
 
+export interface Diagnose{
+  text:string;
+  upvote:number;
+  comments:Array<{text:string, data:string, upvote:number}>;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
   public user: Observable<any>;
   private userData = new BehaviorSubject(null);
+
+  private userBreed:string = "";
  
   constructor(private storage: Storage, private http: HttpClient, private plt: Platform, private router: Router) { 
     this.loadStoredToken();  
@@ -121,6 +129,14 @@ export class ApiService {
   
   getBreed(): Observable<Array<string>> {
     return this.http.get<Array<string>>(`${environment.apiUrl}/breed`).pipe(
+      take(1)
+    );
+  }
+
+  getDiagnose(): Observable<Diagnose>{
+    let id:string = "American-Pit-Bull-Terrier";
+    
+    return this.http.get<Diagnose>(`${environment.apiUrl}/diagnose/${id}`).pipe(
       take(1)
     );
   }

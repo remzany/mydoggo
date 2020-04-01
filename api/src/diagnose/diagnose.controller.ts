@@ -21,7 +21,7 @@ export class DiagnoseController {
     @Get(':diagnoseID')
     async getDiagnoses(@Res() res, @Param('diagnoseID') diagnoseID) {
       const diagnose = await this.diagnoseService.getDiagnoses(diagnoseID);
-      if (!diagnose) throw new NotFoundException('There is no diagnoses for this diagnose');
+      if (!diagnose) return res.status(404).json({msg: "diagnosenone"});
       return res.status(HttpStatus.OK).json(diagnose);
     }
 
