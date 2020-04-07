@@ -6,7 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { DiagnosePage } from './diagnose.page';
-
+import{ DiagnoseAddComponent} from '../../components/diagnose-add/diagnose-add.component'
 const routes: Routes = [
   {
     path: '',
@@ -21,6 +21,9 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [DiagnosePage]
+  declarations: [DiagnosePage, DiagnoseAddComponent],
+  entryComponents: [
+    DiagnoseAddComponent
+  ]
 })
 export class DiagnosePageModule {}

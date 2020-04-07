@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
-import {Question} from '../../interfaces/diagnose.interface';
+import {Diagnose} from '../../interfaces/diagnose.interface';
 import {ApiService} from '../../services/api.service';
-import { AlertController } from '@ionic/angular';
-
+import { AlertController, ModalController } from '@ionic/angular';
+import {DiagnoseAddComponent } from '../../components/diagnose-add/diagnose-add.component'
 
 @Component({
   selector: 'app-diagnose',
@@ -13,17 +13,39 @@ import { AlertController } from '@ionic/angular';
 
 export class DiagnosePage implements OnInit {
 
-  questions:Array<Question> = [{title: "Pes ima rdečico na sprednji tački", comments: 0, upvotes: 3, imageUrl: "/"}];
+  diagnose:Diagnose;
+  commentsNumber:number;
 
-  constructor(private api:ApiService, private alert:AlertController) {
+  constructor(
+    private api:ApiService,
+    private alert:AlertController,
+    private modal:ModalController) {
    }
 
   ngOnInit() {
-    this.api.getDiagnose().subscribe(res => {
+
+    this.getDiagnoses();
+  }
+
+  createDiagnose(){
+    this.api.createDiagnose("Kuža ima rdečico", "rdečica se je pojavila na spodnji strani rebra",["Mogoče bi pomagala krema xyz"],["janez"], 3).subscribe(res => {
       console.log(res);
-    }, async err => {
-      this.openError(err.error['msg']);
-    });
+    })
+  }
+
+  getDiagnoses(){
+    this.api.getAllDiagnoses().subscribe( res => {
+      console.log(res);
+      this.diagnose = res;
+    })
+  }
+
+  async openModal(){
+    const modal = await this.modal.create({
+      component: DiagnoseAddComponent,
+      backdropDismiss: true
+    })
+    return await modal.present();
   }
 
   async openError(x:any){

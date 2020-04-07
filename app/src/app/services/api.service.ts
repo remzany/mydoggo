@@ -7,6 +7,7 @@ import { take, map, switchMap, delay } from 'rxjs/operators';
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+ import {Diagnose} from '../interfaces/diagnose.interface';
  
 const helper = new JwtHelperService();
 export const TOKEN_KEY = 'jwt-token';
@@ -25,11 +26,7 @@ export interface User {
   todos?: Array<string>;
 }
 
-export interface Diagnose{
-  text:string;
-  upvote:number;
-  comments:Array<{text:string, data:string, upvote:number}>;
-}
+
 
 @Injectable({
   providedIn: 'root'
@@ -133,10 +130,32 @@ export class ApiService {
     );
   }
 
+  getAllDiagnoses(): Observable<Diagnose>{
+    return this.http.get<Diagnose>(`${environment.apiUrl}/diagnose/`).pipe(
+      take(1)
+    );
+  }
+
   getDiagnose(): Observable<Diagnose>{
     let id:string = "American-Pit-Bull-Terrier";
     
     return this.http.get<Diagnose>(`${environment.apiUrl}/diagnose/${id}`).pipe(
+      take(1)
+    );
+  }
+
+
+  createDiagnose(title:string, description:string, comments: Array<string>, likeArray: Array<string>, likeCount:number): Observable<Diagnose>{
+    let data = {
+      "title": title,
+      "description" : description,
+      "comments" : comments,
+      "likeArray" : likeArray,
+      "likeCount" : likeCount
+    };
+
+
+    return this.http.post<Diagnose>(`${environment.apiUrl}/diagnose`, data).pipe(
       take(1)
     );
   }

@@ -4,26 +4,40 @@
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
 
-    <ion-item slot="end" lines="none">
-      <ion-button >add</ion-button>
-    </ion-item>
+    <ion-buttons slot="end">
+      <ion-button (click)="openModal()">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
-  <ion-card *ngFor="let ques of questions">
+  <ion-card *ngFor="let diag of diagnose">
     <ion-card-header>
-      <ion-card-title>{{ques.title}}</ion-card-title>
+      <ion-img src="../../../assets/images/doghurt.jpg"></ion-img>
+      <ion-card-title>{{diag.title}}</ion-card-title>
+      <ion-card-subtitle>{{diag.description}}</ion-card-subtitle>
+      
     </ion-card-header>
     <ion-card-content>
       <ion-item lines="none">
+
+        <ion-buttons slot="start">
+          <ion-button>
+            <ion-icon slot="icon-only" name="chatbubbles"></ion-icon>
+          </ion-button>
+            {{diag.comments.length}}
+        </ion-buttons>
+ 
     
         <ion-buttons slot="end">
         <ion-button>
           <ion-icon slot="icon-only" name="arrow-round-up"></ion-icon>
         </ion-button>
-          {{ques.upvotes}}
+          {{diag.likeCount}}
         <ion-button>
           <ion-icon slot="icon-only" name="arrow-round-down"></ion-icon>
         </ion-button>
@@ -33,5 +47,10 @@
     </ion-card-content>
   </ion-card>
 
+  <div>
+    <rect class="bar" x="20" y="60" width="80" height="120"/>
+  <rect class="bar" x="110" y="10" width="80" height="170"/>
+  <rect class="bar" x="200" y="160" width="80" height="20"/>
+  </div>
 
 </ion-content>

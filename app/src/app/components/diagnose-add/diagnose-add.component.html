@@ -1,0 +1,21 @@
+
+
+<ion-header>
+  <ion-toolbar>
+    <ion-backdrop visible="true">cancel</ion-backdrop>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card *ngFor="let label of labels">
+    <ion-item lines="none">
+      <ion-label position="floating">{{label}}</ion-label>
+      <ion-textarea></ion-textarea>
+    </ion-item>
+  </ion-card>
+</ion-content>
+
+<ion-footer>
+<ion-button expand="full">SAVE</ion-button>
+</ion-footer>
