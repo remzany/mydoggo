@@ -27,11 +27,7 @@ export class DiagnosePage implements OnInit {
     this.getDiagnoses();
   }
 
-  createDiagnose(){
-    this.api.createDiagnose("Kuža ima rdečico", "rdečica se je pojavila na spodnji strani rebra",["Mogoče bi pomagala krema xyz"],["janez"], 3).subscribe(res => {
-      console.log(res);
-    })
-  }
+
 
   getDiagnoses(){
     this.api.getAllDiagnoses().subscribe( res => {

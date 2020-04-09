@@ -145,10 +145,11 @@ export class ApiService {
   }
 
 
-  createDiagnose(title:string, description:string, comments: Array<string>, likeArray: Array<string>, likeCount:number): Observable<Diagnose>{
+  createDiagnose(title:string, description:string, tag:string, comments: Array<string>, likeArray: Array<string>, likeCount:number): Observable<Diagnose>{
     let data = {
       "title": title,
       "description" : description,
+      "tag": tag,
       "comments" : comments,
       "likeArray" : likeArray,
       "likeCount" : likeCount

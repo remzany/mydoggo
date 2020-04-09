@@ -4,4 +4,5 @@ export class DiagnoseDto {
     readonly comments:Array<string>;
     readonly likeArray:Array<string>;
     readonly likeCount:Number;
+    readonly tag:string;
 }

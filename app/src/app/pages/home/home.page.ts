@@ -30,6 +30,9 @@ export class HomePage {
   selectedLanguage:string;
   todo_label:string = "";
 
+  flipped: boolean = false;
+
+
   constructor(
     private alert:AlertController,
     private api:ApiService, 
@@ -49,6 +52,10 @@ export class HomePage {
     //this.translateConfigService.setLanguage("si");
 
  
+  }
+
+  flip(){
+    this.flipped = !this.flipped;
   }
 
   loadUserData(){
@@ -108,6 +115,17 @@ export class HomePage {
       })
     }
 
+  }
+
+  done(todo){
+    let index = this.todos.indexOf(todo);
+
+    if(index > -1){
+      this.todos.splice(index, 1);
+      this.api.updateUser(this.user._id, {"todos": this.todos}).subscribe(a => {
+        console.log(a);
+      })
+    }
   }
 
   async openAddDog(){

@@ -12,7 +12,8 @@ export const DiagnoseSchema = new mongoose.Schema({
     },
     comments:Array,
     likeArray:Array,
-    likeCount:Number
+    likeCount:Number,
+    tag:String
     }, {
   timestamps: true
 });
