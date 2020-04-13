@@ -152,7 +152,8 @@ export class ApiService {
       "tag": tag,
       "comments" : comments,
       "likeArray" : likeArray,
-      "likeCount" : likeCount
+      "likeCount" : likeCount,
+      "ownership": this.getUserToken()['id']
     };
 
 

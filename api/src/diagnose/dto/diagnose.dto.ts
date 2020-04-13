@@ -5,4 +5,5 @@ export class DiagnoseDto {
     readonly likeArray:Array<string>;
     readonly likeCount:Number;
     readonly tag:string;
+    readonly ownership:string;
 }

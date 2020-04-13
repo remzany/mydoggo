@@ -7,4 +7,5 @@ export interface Diagnose extends Document {
     readonly likeArray:Array<string>;
     readonly likeCount:Number;
     readonly tag:string;
+    readonly ownership:string;
 }
