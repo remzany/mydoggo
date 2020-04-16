@@ -5,6 +5,10 @@ import {ApiService} from '../../services/api.service';
 import { AlertController, ModalController } from '@ionic/angular';
 import {DiagnoseAddComponent } from '../../components/diagnose-add/diagnose-add.component'
 
+import { PopoverController } from '@ionic/angular';
+import { PopoverComponent } from '../../components/popover/popover.component';
+
+
 @Component({
   selector: 'app-diagnose',
   templateUrl: './diagnose.page.html',
@@ -19,7 +23,8 @@ export class DiagnosePage implements OnInit {
   constructor(
     private api:ApiService,
     private alert:AlertController,
-    private modal:ModalController) {
+    private modal:ModalController,
+    private popoverController: PopoverController) {
    }
 
   ngOnInit() {
@@ -27,7 +32,25 @@ export class DiagnosePage implements OnInit {
     this.getDiagnoses();
   }
 
+  async presentPopover(ev: any) {
+    const popover = await this.popoverController.create({
+      component: PopoverComponent,
+      event: ev,
+      translucent: true
+    });
 
+    popover.onDidDismiss().then(data => {
+      console.log(data);
+
+      if(data.data != null || data.data != ""){
+        if(data.data == "newpost")
+          this.openModal();
+      }
+    })
+
+
+    return await popover.present();
+  }
 
   getDiagnoses(){
     this.api.getAllDiagnoses().subscribe( res => {

@@ -6,7 +6,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { DiagnosePage } from './diagnose.page';
-import{ DiagnoseAddComponent} from '../../components/diagnose-add/diagnose-add.component'
+import{ DiagnoseAddComponent} from '../../components/diagnose-add/diagnose-add.component';
+import{ PopoverComponent} from '../../components/popover/popover.component';
+
 const routes: Routes = [
   {
     path: '',
@@ -21,9 +23,10 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [DiagnosePage, DiagnoseAddComponent],
+  declarations: [DiagnosePage, DiagnoseAddComponent, PopoverComponent],
   entryComponents: [
-    DiagnoseAddComponent
+    DiagnoseAddComponent,
+    PopoverComponent
   ]
 })
 export class DiagnosePageModule {}
