@@ -13,6 +13,8 @@ import { ApiService, User } from '../../services/api.service';
 import { TranslateConfigService } from '../../services/translate-config.service';
 
 import {TranslateService} from '@ngx-translate/core';
+
+import {ReminderComponent } from '../../components/reminder/reminder.component';
  
 
 @Component({
@@ -141,6 +143,14 @@ export class HomePage {
           {text: "No"}
         ]})
         await alert.present();
+  }
+
+  async reminder(){
+    const modal = await this.modalController.create({
+      component: ReminderComponent,
+      backdropDismiss: true
+    })
+    return await modal.present();
   }
   
   

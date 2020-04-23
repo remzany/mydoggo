@@ -8,6 +8,8 @@ import { HomePage } from './home.page';
 import { SecureStorage} from '@ionic-native/secure-storage/ngx';
 import { TranslateModule } from '@ngx-translate/core';
 
+import { ReminderComponent } from '../../components/reminder/reminder.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -24,6 +26,9 @@ import { TranslateModule } from '@ngx-translate/core';
   providers:[
     SecureStorage
   ],
-  declarations: [HomePage]
+  declarations: [HomePage, ReminderComponent],
+  entryComponents:[
+    ReminderComponent
+  ]
 })
 export class HomePageModule {}
