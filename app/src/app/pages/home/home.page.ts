@@ -32,9 +32,6 @@ export class HomePage {
   selectedLanguage:string;
   todo_label:string = "";
 
-  flipped: boolean = false;
-
-
   constructor(
     private alert:AlertController,
     private api:ApiService, 
@@ -49,19 +46,18 @@ export class HomePage {
   ngOnInit(){
     console.log("hello from home page");
 
+    this.api.refreshNeeded.subscribe( () => {
+      this.loadUserData();
+    })
+
     this.loadUserData();
     this.translateConfigService.getDefaultLanguage();
-    //this.translateConfigService.setLanguage("si");
-
  
-  }
-
-  flip(){
-    this.flipped = !this.flipped;
   }
 
   loadUserData(){
     this.api.getUserData().subscribe(a =>{
+      console.log(a);
       this.user = a;
 
       if(a.dogBreed == "" && a.dogName == "" || a.dogBreed == null && a.dogName == null){
@@ -97,11 +93,8 @@ export class HomePage {
             }
           ]})
           await alert.present();
-        }
-        
-  logOut(){
-    this.router.navigate(['']);
   }
+
 
   signOut() {
     this.api.logout();

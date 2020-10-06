@@ -1,6 +1,23 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>MyDoggo app</ion-title>
+    <ion-title>MyDoggo</ion-title>
+
+    <ion-button class="ion-padding-end" slot="end">
+
+      <ion-select value="slo" (ionChange)="languageSettings($event)">
+        <ion-select-option value="slo" >Slovenian</ion-select-option>
+        <ion-select-option value="eng" >English</ion-select-option>
+      </ion-select>
+
+      <ion-icon slot="icon-only" name="star"></ion-icon>
+    </ion-button>
+
+
+
+
+
+
+      
   </ion-toolbar>
 </ion-header>
  

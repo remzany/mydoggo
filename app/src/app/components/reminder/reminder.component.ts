@@ -9,6 +9,8 @@ export class ReminderComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+
+  }
 
 }

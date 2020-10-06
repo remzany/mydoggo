@@ -9,9 +9,15 @@
   <ion-card>
     <ion-card-content>
       <ion-item>
-        <ion-label>MM DD YY</ion-label>
-        <ion-datetime displayFormat="MM DD YY" placeholder="Select Date"></ion-datetime>
+        <ion-label> {{ 'REMINDER.date' | translate:params }}</ion-label>
+        <ion-datetime displayFormat="MM DD YY" placeholder="{{ 'REMINDER.day' | translate:params }}"></ion-datetime>
       </ion-item>
+
+      <ion-item>
+        <ion-label> {{ 'REMINDER.description' | translate:params }}</ion-label>
+        <ion-input></ion-input>
+      </ion-item>
+
     </ion-card-content>
   </ion-card>
 </ion-content>

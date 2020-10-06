@@ -13,5 +13,10 @@
 		"usernone":"Račun ne obstaja",
 		"userwrong":"Napačno geslo",
 		"usererror":"Nakaj je šlo narobe, poskusite kasneje"
+	},
+	"REMINDER": {
+		"date" : "Izberi dan",
+		"day" : "dan",
+		"description": "vnesite besedilo"
 	}
 }

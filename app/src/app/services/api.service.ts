@@ -2,13 +2,13 @@ import { environment } from './../../environments/environment';
 import { Platform } from '@ionic/angular';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { BehaviorSubject, Observable, from } from 'rxjs';
-import { take, map, switchMap, delay } from 'rxjs/operators';
+import { BehaviorSubject, Observable, from, Subject, Observer } from 'rxjs';
+import { take, map, switchMap, delay, tap } from 'rxjs/operators';
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
  import {Diagnose} from '../interfaces/diagnose.interface';
- 
+
 const helper = new JwtHelperService();
 export const TOKEN_KEY = 'jwt-token';
 
@@ -35,10 +35,16 @@ export class ApiService {
   public user: Observable<any>;
   private userData = new BehaviorSubject(null);
 
-  private userBreed:string = "";
+  observer: Observer<any>;
  
   constructor(private storage: Storage, private http: HttpClient, private plt: Platform, private router: Router) { 
     this.loadStoredToken();  
+  }
+
+  private _refreshNedded = new Subject<void>();
+
+  get refreshNeeded(){
+    return this._refreshNedded;
   }
  
   loadStoredToken() {
@@ -94,13 +100,18 @@ export class ApiService {
   getUserData() {
     const id = this.getUserToken()['id'];
     return this.http.get<User>(`${environment.apiUrl}/users/${id}`).pipe(
-      take(1)
+      tap(data => {
+        return data
+      })
     );
   }
 
   getAllUsers(): Observable<User[]> {
     return this.http.get<User[]>(`${environment.apiUrl}/users`).pipe(
-      take(1)
+      tap(data => {
+        this._refreshNedded.next();
+        return data
+      })
     );
   }
 
@@ -132,8 +143,12 @@ export class ApiService {
 
   getAllDiagnoses(): Observable<Diagnose>{
     return this.http.get<Diagnose>(`${environment.apiUrl}/diagnose/`).pipe(
-      take(1)
+      tap(data => {
+        this._refreshNedded.next();
+        return data;
+      })
     );
+
   }
 
   getDiagnose(): Observable<Diagnose>{

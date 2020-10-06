@@ -29,6 +29,9 @@ export class DiagnosePage implements OnInit {
 
   ngOnInit() {
 
+    this.api.refreshNeeded.subscribe( () =>{
+      this.getDiagnoses();
+    })
     this.getDiagnoses();
   }
 
@@ -54,7 +57,6 @@ export class DiagnosePage implements OnInit {
 
   getDiagnoses(){
     this.api.getAllDiagnoses().subscribe( res => {
-      console.log(res);
       this.diagnose = res;
     })
   }

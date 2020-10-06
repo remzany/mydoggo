@@ -16,9 +16,11 @@ import {TranslateService} from '@ngx-translate/core';
 })
 export class LoginPage implements OnInit {
   credentials = {
-    email: 'marusa@marusa.com',
+    email: 'test1@test1.com',
     password: 'marusa'
   };
+
+  languages: Array<string> = ['Slovenian', 'English']
  
   constructor(
     private api: ApiService,
@@ -55,5 +57,15 @@ export class LoginPage implements OnInit {
       });
       await alert.present();
     });
+  }
+
+  languageSettings(val:any){
+
+    if(val.detail.value == "slo")
+      this.translateConfigService.setLanguage("sl");
+
+    if(val.detail.value == "eng")
+    this.translateConfigService.setLanguage("en");
+
   }
 }

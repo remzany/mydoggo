@@ -13,5 +13,10 @@
 		"usernone":"User not found",
 		"userwrong":"Wrong password",
 		"usererror":"Something went wrong, please try again later"
+	},
+	"REMINDER": {
+		"date" : "select date",
+		"day" : "day",
+		"description": "Please write description"
 	}
 }
