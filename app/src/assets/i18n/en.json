@@ -17,6 +17,11 @@
 	"REMINDER": {
 		"date" : "select date",
 		"day" : "day",
-		"description": "Please write description"
+		"description": "Please write description",
+		"time": "time",
+		"timer" : "select time"
+	},
+	"BUTTON" : {
+		"create": "create"
 	}
 }

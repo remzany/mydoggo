@@ -15,8 +15,14 @@
 		"usererror":"Nakaj je šlo narobe, poskusite kasneje"
 	},
 	"REMINDER": {
+		"description": "vnesite besedilo",
 		"date" : "Izberi dan",
 		"day" : "dan",
-		"description": "vnesite besedilo"
+		"time": "čas",
+		"timer" : "Izberi čas"
+
+	},
+	"BUTTON" : {
+		"create": "ustvari"
 	}
 }
