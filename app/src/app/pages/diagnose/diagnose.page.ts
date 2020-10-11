@@ -29,9 +29,6 @@ export class DiagnosePage implements OnInit {
 
   ngOnInit() {
 
-    this.api.refreshNeeded.subscribe( () =>{
-      this.getDiagnoses();
-    })
     this.getDiagnoses();
   }
 

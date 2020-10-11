@@ -32,8 +32,8 @@ if [[ ! -z "$help" ]]; then
   exit
 fi
 
-export DOCKER_CLIENT_TIMEOUT=120 #docker-compose up
-export COMPOSE_HTTP_TIMEOUT=120 #docker-compose up
+export DOCKER_CLIENT_TIMEOUT=400 #docker-compose up
+export COMPOSE_HTTP_TIMEOUT=400 #docker-compose up
 export CURRENT_UID=$(id -u):$(id -g)
 
 if [[ ! -z "$rebuild" ]]; then

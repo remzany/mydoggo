@@ -40,12 +40,6 @@ export class ApiService {
   constructor(private storage: Storage, private http: HttpClient, private plt: Platform, private router: Router) { 
     this.loadStoredToken();  
   }
-
-  private _refreshNedded = new Subject<void>();
-
-  get refreshNeeded(){
-    return this._refreshNedded;
-  }
  
   loadStoredToken() {
     let platformObs = from(this.plt.ready());
@@ -109,7 +103,6 @@ export class ApiService {
   getAllUsers(): Observable<User[]> {
     return this.http.get<User[]>(`${environment.apiUrl}/users`).pipe(
       tap(data => {
-        this._refreshNedded.next();
         return data
       })
     );
@@ -144,7 +137,6 @@ export class ApiService {
   getAllDiagnoses(): Observable<Diagnose>{
     return this.http.get<Diagnose>(`${environment.apiUrl}/diagnose/`).pipe(
       tap(data => {
-        this._refreshNedded.next();
         return data;
       })
     );

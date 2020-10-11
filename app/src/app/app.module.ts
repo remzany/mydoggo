@@ -13,6 +13,8 @@ import { IonicStorageModule, Storage } from '@ionic/storage';
 import { HttpClientModule, HttpClient  } from '@angular/common/http';
 
 import { SecureStorage} from '@ionic-native/secure-storage/ngx';
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
+
 
 import { TOKEN_KEY } from './services/api.service';
 import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
@@ -22,7 +24,7 @@ export function jwtOptionsFactory(storage) {
     tokenGetter: () => {
       return storage.get(TOKEN_KEY);
     },
-    whitelistedDomains: ['localhost:5000'] // Add your Heroku URL in here!
+    whitelistedDomains: ['83.212.82.27:80'] // Add your Heroku URL in here!
   }
 }
 
@@ -45,7 +47,6 @@ export function HttpLoaderFactory(http: HttpClient) {
   imports: [
     IonicModule.forRoot(),
     IonicStorageModule.forRoot(),
-
     JwtModule.forRoot({
       jwtOptionsProvider: {
         provide: JWT_OPTIONS,
@@ -53,7 +54,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         deps: [Storage]
       }
     }),
-    
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -65,7 +65,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         useClass: TranslateMessageFormatCompiler
       }
     }),
-
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
@@ -75,6 +74,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     StatusBar,
     SplashScreen,
     SecureStorage,
+    LocalNotifications,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

@@ -46,10 +46,6 @@ export class HomePage {
   ngOnInit(){
     console.log("hello from home page");
 
-    this.api.refreshNeeded.subscribe( () => {
-      this.loadUserData();
-    })
-
     this.loadUserData();
     this.translateConfigService.getDefaultLanguage();
  
