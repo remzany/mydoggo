@@ -134,13 +134,13 @@ export class ApiService {
     );
   }
 
-  getAllDiagnoses(): Observable<Diagnose>{
-    return this.http.get<Diagnose>(`${environment.apiUrl}/diagnose/`).pipe(
+  getAllDiagnoses(): Observable<Array<Diagnose>>{
+    return this.http.get<Array<Diagnose>>(`${environment.apiUrl}/diagnose/`).pipe(
       tap(data => {
+        console.log(data);
         return data;
       })
     );
-
   }
 
   getDiagnose(): Observable<Diagnose>{
@@ -168,5 +168,25 @@ export class ApiService {
       take(1)
     );
   }
- 
+
+  getDiagnoseLength():Observable<number>{
+    return this.http.get<number>(`${environment.apiUrl}/diagnose/diagnoseLangth`).pipe(
+      take(1)
+  )};
+
+  upvoteDiagnose(x:{_id: string}):Observable<{errors:number, msg:string, likeNumber: number}>{
+    const id = this.getUserToken()['id'];
+
+    return this.http.put<{errors:number, msg:string, likeNumber: number}>(`${environment.apiUrl}/diagnose/upvote/${x._id}`, {'likeArray': id}).pipe(
+      take(1)
+    )
+  };
+
+  downvoteDiagnose(x:{_id: string}):Observable<{errors:number, msg:string, likeNumber: number}>{
+
+    const id = this.getUserToken()['id'];
+
+    return this.http.put<{errors:number, msg:string, likeNumber: number}>(`${environment.apiUrl}/diagnose/downvote/${x._id}`, {'likeArray': id}).pipe(
+      take(1)
+  )};
 }

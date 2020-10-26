@@ -1,3 +1,5 @@
+
+
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
@@ -16,7 +18,10 @@
 
 <ion-content>
 
-  <ion-card *ngFor="let diag of diagnose">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-card *ngFor="let diag of diagnose, let i = index">
     <ion-card-header>
       <!-- <ion-img style="max-width: 256px;" src="../../../assets/images/doghurt.jpg"></ion-img> -->
       <ion-card-title>{{diag.title}}</ion-card-title>
@@ -34,18 +39,26 @@
         </ion-buttons>
  
     
-        <ion-buttons slot="end">
-        <ion-button>
-          <ion-icon slot="icon-only" name="arrow-round-up"></ion-icon>
-        </ion-button>
+        <ion-buttons slot="end" >
+
+          <ion-button (click)="upVote(i)">
+            <ion-icon slot="icon-only" name="arrow-up"></ion-icon>
+          </ion-button>
+
           {{diag.likeCount}}
-        <ion-button>
-          <ion-icon slot="icon-only" name="arrow-round-down"></ion-icon>
+
+        <ion-button (click)="downVote(i)">
+          <ion-icon slot="icon-only" name="arrow-down"></ion-icon>
         </ion-button>
     
         </ion-buttons>
       </ion-item>
+
+      <ion-item class="animate__animated animate__fadeInDown">
+        Comments section
+      </ion-item>
     </ion-card-content>
+
   </ion-card>
 
 

@@ -20,6 +20,7 @@ export class ForumPage implements OnInit {
 
   dog:Observable<Array<{name:string, val:boolean}>>;
   dogBreed:Array<{name:string, val:boolean}> = [];
+  diagnoseLength:number = 0;
 
   selected = "";
 
@@ -31,18 +32,22 @@ export class ForumPage implements OnInit {
   ngOnInit() {
     this.api.getUserData().subscribe(a => {
       this.selected = a.dogBreed;
-    })
-  }
+    });
 
-  openModal(){
+    this.api.getAllDiagnoses().subscribe(res => {
+      this.diagnoseLength = res.length;
+    });
+
     this.api.getBreed().subscribe(a =>{
       a.forEach(element => {
         this.dogBreed.push({name: element, val:false});
       })
     });
+
   }
-    openDiagnose(){
-      this.router.navigateByUrl('/diagnose');
-    }
+
+  openDiagnose(){
+    this.router.navigateByUrl('/diagnose');
+  }
 
 }

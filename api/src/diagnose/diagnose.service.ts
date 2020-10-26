@@ -6,7 +6,7 @@ import { DiagnoseDto } from './dto/diagnose.dto';
 
 @Injectable()
 export class DiagnoseService {
-  constructor(@InjectModel('Diagnose') private readonly diagnoseModel: Model<Diagnose>) {}
+  constructor(@InjectModel('Diagnose') private readonly diagnoseModel: Model<Diagnose>) { }
 
   // CREATE diagnose
   async addDiagnose(createDiagnoseDTO: DiagnoseDto): Promise<Diagnose> {
@@ -16,16 +16,69 @@ export class DiagnoseService {
 
   // READ diagnose
   async getDiagnose(diagnoseID): Promise<Diagnose> {
-    const customer = await this.diagnoseModel.findById(diagnoseID).exec();
-    return customer;
+    const diagnose = await this.diagnoseModel.findById(diagnoseID).exec();
+    return diagnose;
   }
 
   // UPDATE diagnose details
-  async updateDiagnose(diagnoseID, data): Promise<Diagnose> {
-    const updatedDiagnose = await this.diagnoseModel.findByIdAndUpdate(diagnoseID, data, {
-      new: true,
+  async upvoteDiagnose(diagnoseID, data: DiagnoseDto): Promise<Diagnose> {
+
+
+    let val = null;
+
+    const upvoteDiagnose = await this.diagnoseModel.findByIdAndUpdate(diagnoseID, {
+      $addToSet: { "likeArray": data.likeArray },
+    }, {
+      new: true
+    }).then(async (res) => {
+
+      val = res.likeArray.length;
+
+      const result = await this.diagnoseModel.findByIdAndUpdate(diagnoseID, {
+        $set: {
+          "likeCount": res.likeArray.length
+        }
+      });
+
+      return result;
+
     });
-    return updatedDiagnose;
+
+    upvoteDiagnose.likeCount = val;
+
+    console.log(JSON.stringify(upvoteDiagnose));
+
+    return upvoteDiagnose;
+
+  }
+
+  // UPDATE diagnose details
+  async downvoteDiagnose(diagnoseID, data: DiagnoseDto): Promise<Diagnose> {
+
+
+    let val = null;
+
+    const downvoteDiagnose = await this.diagnoseModel.findByIdAndUpdate(diagnoseID, {
+      $pull: { "likeArray": data.likeArray },
+    }, {
+      new: true
+    }).then(async (res) => {
+
+      val = res.likeArray.length;
+
+      const result =  await this.diagnoseModel.findByIdAndUpdate(diagnoseID, {
+        $set: {
+          "likeCount": res.likeArray.length
+        }
+      });
+
+      return result
+      
+    });
+
+    downvoteDiagnose.likeCount = val;
+
+    return downvoteDiagnose;
   }
 
   // DELETE diagnose

@@ -17,7 +17,7 @@ import { PopoverComponent } from '../../components/popover/popover.component';
 
 export class DiagnosePage implements OnInit {
 
-  diagnose:Diagnose;
+  diagnose:Array<Diagnose>;
   commentsNumber:number;
 
   constructor(
@@ -28,7 +28,6 @@ export class DiagnosePage implements OnInit {
    }
 
   ngOnInit() {
-
     this.getDiagnoses();
   }
 
@@ -47,8 +46,6 @@ export class DiagnosePage implements OnInit {
           this.openModal();
       }
     })
-
-
     return await popover.present();
   }
 
@@ -63,6 +60,11 @@ export class DiagnosePage implements OnInit {
       component: DiagnoseAddComponent,
       backdropDismiss: true
     })
+
+    modal.onDidDismiss().then(res => {
+      console.log(res.data);
+      this.diagnose.unshift(res.data);
+    })
     return await modal.present();
   }
 
@@ -75,6 +77,37 @@ export class DiagnosePage implements OnInit {
             }
           ]})
           alert.present();
+  }
+
+  doRefresh(event){
+    this.api.getAllDiagnoses().subscribe( res => {
+      this.diagnose = res;
+    });
+
+    setTimeout(() => {
+      event.target.complete();
+    }, 2000);
+  }
+
+  upVote(i){
+
+    let data = {
+      "_id" : this.diagnose[i]._id
+    }
+
+    this.api.upvoteDiagnose(data).subscribe(res => {
+      this.diagnose[i].likeCount = res.likeNumber;
+    });
+  }
+
+  downVote(i){
+    let data = {
+      "_id" : this.diagnose[i]._id
+    }
+
+    this.api.downvoteDiagnose(data).subscribe(res => {
+      this.diagnose[i].likeCount = res.likeNumber;
+    });
   }
 
 }

@@ -45,15 +45,14 @@ export class HomePage {
 
   ngOnInit(){
     console.log("hello from home page");
-
     this.loadUserData();
+
     this.translateConfigService.getDefaultLanguage();
  
   }
 
   loadUserData(){
     this.api.getUserData().subscribe(a =>{
-      console.log(a);
       this.user = a;
 
       if(a.dogBreed == "" && a.dogName == "" || a.dogBreed == null && a.dogName == null){
@@ -140,6 +139,19 @@ export class HomePage {
       backdropDismiss: true
     })
     return await modal.present();
+  }
+
+
+  doRefresh(event){
+    this.api.getUserData().subscribe(a =>{
+      console.log(a);
+      this.todos = a.todos;
+    });
+
+    setTimeout(() => {
+      event.target.complete();
+    }, 2000);
+
   }
   
   

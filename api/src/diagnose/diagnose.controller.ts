@@ -43,17 +43,34 @@ export class DiagnoseController {
   }
 
   @UseGuards(AuthGuard())
-  @Put(':diagnoseID')
-  async updateDiagnose(
+  @Put('upvote/:diagnoseID')
+  async upvoteDiagnose(
     @Res() res,
     @Param('diagnoseID') diagnoseID,
     @Body() createDiagnoseDto: DiagnoseDto,
   ) {
-    const diagnose = await this.diagnoseService.updateDiagnose(diagnoseID, createDiagnoseDto);
+    const diagnose = await this.diagnoseService.upvoteDiagnose(diagnoseID, createDiagnoseDto);
     if (!diagnose) throw new NotFoundException('Diagnose does not exist!');
     return res.status(HttpStatus.OK).json({
+      errors: 0,
       msg: 'Diagnose has been successfully updated',
-      diagnose,
+      likeNumber: diagnose.likeCount,
+    });
+  }
+
+  @UseGuards(AuthGuard())
+  @Put('downvote/:diagnoseID')
+  async downvoteDiagnose(
+    @Res() res,
+    @Param('diagnoseID') diagnoseID,
+    @Body() createDiagnoseDto: DiagnoseDto,
+  ) {
+    const diagnose = await this.diagnoseService.downvoteDiagnose(diagnoseID, createDiagnoseDto);
+    if (!diagnose) throw new NotFoundException('Diagnose does not exist!');
+    return res.status(HttpStatus.OK).json({
+      errors: 0,
+      msg: 'Diagnose has been successfully updated',
+      likeNumber: diagnose.likeCount,
     });
   }
 
@@ -74,4 +91,5 @@ export class DiagnoseController {
     const diagnose = await this.diagnoseService.getAllDiagnose();
     return res.status(HttpStatus.OK).json(diagnose);
   }
+
 }

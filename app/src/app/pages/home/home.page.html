@@ -10,10 +10,13 @@
 
 <ion-content>
 
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
 
 
   <ion-card>
-    <ion-card-header>
+    <ion-card-header class="ion-padding">
       <ion-item lines="none">
 
         <ion-avatar>
@@ -33,10 +36,11 @@
   </ion-card>
 
   <ion-card>
-        <ion-card-header (click)="openTOdo()">
+        <ion-card-header>
           <ion-item lines="none">
             <ion-icon slot="start" src="../assets/icon/task-icon.svg"></ion-icon>
             <p translate [translateParams]="{ count: todos.length }"> HOME.todo_text </p>
+            <ion-icon slot="end" name="add" (click)="openTOdo()"></ion-icon>
           </ion-item>
         </ion-card-header>
 

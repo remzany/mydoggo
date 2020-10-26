@@ -6,6 +6,7 @@ export interface Question{
 }
 
 export interface Diagnose{
+    _id:string;
     title:string;
     description:string;
     comments:Array<string>;

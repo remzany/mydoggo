@@ -1,4 +1,4 @@
-<ion-header (click)="openModal()">
+<ion-header>
 
   <ion-item>
     <ion-select value="{{selected}}" class="ion-padding-end" cancelText="Cancel" okText="Confirm">
@@ -18,7 +18,7 @@
     <ion-card-header class="ion-padding">
       <ion-img src="../assets/icon/diagnose-new-icon.svg" ></ion-img>
       <ion-card-title>Diagnose my Dog</ion-card-title>
-      <ion-card-subtitle> 0 diagnoses</ion-card-subtitle>
+      <ion-card-subtitle> {{diagnoseLength}} diagnoses</ion-card-subtitle>
 
 
     </ion-card-header>
