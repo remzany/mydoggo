@@ -14,3 +14,5 @@ nodejs -v
 npm -v
 
 git clone this project, npm install both app and api
+
+npm install -g npm@latest
