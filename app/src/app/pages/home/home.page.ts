@@ -16,6 +16,7 @@ import {TranslateService} from '@ngx-translate/core';
 
 import {ReminderComponent } from '../../components/reminder/reminder.component';
  
+import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -40,7 +41,8 @@ export class HomePage {
     private router:Router, 
     private secureStorage: SecureStorage,
     private translateConfigService: TranslateConfigService,
-    private translate:TranslateService
+    private translate:TranslateService,
+    private platform: Platform
     ){}
 
   ngOnInit(){
@@ -134,11 +136,28 @@ export class HomePage {
   }
 
   async reminder(){
-    const modal = await this.modalController.create({
-      component: ReminderComponent,
-      backdropDismiss: true
-    })
-    return await modal.present();
+
+    if(this.platform.is('mobile')){
+      const modal = await this.modalController.create({
+        component: ReminderComponent,
+        backdropDismiss: true
+      })
+      return await modal.present();
+    }else{
+      const alert = await this.alert.create({
+        header: this.translate.instant('REMINDER.useMobile'),
+          buttons: [
+            {
+              text: 'Ok',
+            }
+          ]})
+
+        await alert.present();
+        return null;
+    }
+
+
+
   }
 
 

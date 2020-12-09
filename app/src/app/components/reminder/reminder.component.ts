@@ -26,14 +26,18 @@ export class ReminderComponent implements OnInit {
 
   createNotification(){
     try{
-      this.localNotifications.schedule({
+      let x = this.localNotifications.schedule({
         id: 1,
         text: 'Single ILocalNotification',
         sound: this.platform.is('android')? 'file://sound.mp3': 'file://beep.caf',
         data: { secret: this.text }
       });
+
+      alert(x);
     }catch(e){
       alert(e);
+    }finally{
+
     }
 
   }

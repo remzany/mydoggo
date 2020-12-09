@@ -68,12 +68,12 @@ const routes_new: Routes = [
         ]
       },
       {
-        path: 'training',
+        path: 'dogsearch',
         children: [
           {
             path: '',
             loadChildren: () =>
-              import('../training/training.module').then(m => m.TrainingPageModule)
+              import('../dog-search/dog-search.module').then(m => m.DogSearchPageModule)
           }
         ]
       },

@@ -49,12 +49,6 @@ export class DiagnosePage implements OnInit {
     return await popover.present();
   }
 
-  getDiagnoses(){
-    this.api.getAllDiagnoses().subscribe( res => {
-      this.diagnose = res;
-    })
-  }
-
   async openModal(){
     const modal = await this.modal.create({
       component: DiagnoseAddComponent,
@@ -68,6 +62,15 @@ export class DiagnosePage implements OnInit {
     return await modal.present();
   }
 
+
+  getDiagnoses(){
+    this.api.getAllDiagnoses().subscribe( res => {
+      this.diagnose = res;
+      console.log(this.diagnose);
+    })
+  }
+
+
   async openError(x:any){
     let alert = await this.alert.create({
       header:  x,
@@ -76,7 +79,7 @@ export class DiagnosePage implements OnInit {
           text: 'Ok',
             }
           ]})
-          alert.present();
+    alert.present();
   }
 
   doRefresh(event){
@@ -89,7 +92,7 @@ export class DiagnosePage implements OnInit {
     }, 2000);
   }
 
-  upVote(i){
+  upVote(i: number){
 
     let data = {
       "_id" : this.diagnose[i]._id
@@ -100,7 +103,7 @@ export class DiagnosePage implements OnInit {
     });
   }
 
-  downVote(i){
+  downVote(i: number){
     let data = {
       "_id" : this.diagnose[i]._id
     }
@@ -110,4 +113,44 @@ export class DiagnosePage implements OnInit {
     });
   }
 
+  async addComment(i: number){
+
+    let data = {
+      "_id" : this.diagnose[i]._id,
+      "comment": ""
+    }
+
+    let alert = await this.alert.create({
+      header:  "text: ",
+      inputs: [{
+        name: 'comment',
+        type: 'text'
+      }],
+      buttons: [
+        {
+          text: 'Ok',
+        }
+      ]
+    });
+
+    await alert.present();
+
+    await alert.onDidDismiss().then(res => {
+      data.comment = res.data.values.comment;
+    });
+
+
+  this.api.addComment(data).subscribe(res => {
+    console.log(res);
+    this.diagnose[i].comments = res.comment;
+  });
+
+  }
+
 }
+
+
+
+
+
+ 

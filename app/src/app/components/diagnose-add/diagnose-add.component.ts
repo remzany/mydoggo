@@ -1,5 +1,6 @@
-import { Component, OnInit, ElementRef, ViewChild, Renderer } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, Renderer2 } from '@angular/core';
 import {ApiService} from '../../services/api.service';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-diagnose-add',
@@ -17,7 +18,7 @@ export class DiagnoseAddComponent implements OnInit {
   ngAfterViewInit(){
   }
 
-  constructor(private renderer:Renderer, private api:ApiService) { }
+  constructor(private renderer:Renderer2, private api:ApiService, private modal:ModalController) { }
 
   ngOnInit() {}
 
@@ -29,28 +30,28 @@ export class DiagnoseAddComponent implements OnInit {
       y = y.substr(1);
       this.selectedTag = y;
       x =document.getElementById(y);
-      this.renderer.setElementStyle(ev, 'fill', '#f00');
-      this.renderer.setElementStyle(x, 'fill', '#f00');
+      this.renderer.setStyle(ev, 'fill', '#f00');
+      this.renderer.setStyle(x, 'fill', '#f00');
     }else{
       this.selectedTag = ev.id;
       x =document.getElementById("_" + ev.id);
-      this.renderer.setElementStyle(ev, 'fill', '#f00');
-      this.renderer.setElementStyle(x, 'fill', '#f00');
+      this.renderer.setStyle(ev, 'fill', '#f00');
+      this.renderer.setStyle(x, 'fill', '#f00');
     }
 
     if(this.lastSelected_01 != null && this.lastSelected_01 != ev && this.lastSelected_02 != ev){
-      this.renderer.setElementStyle(this.lastSelected_01, 'fill', '#fff');
+      this.renderer.setStyle(this.lastSelected_01, 'fill', '#fff');
 
       if(this.lastSelected_01.localName == "tspan")
-        this.renderer.setElementStyle(this.lastSelected_01, 'fill', '#000');
+        this.renderer.setStyle(this.lastSelected_01, 'fill', '#000');
 
     }
 
     if(this.lastSelected_02 != null && this.lastSelected_01 != ev && this.lastSelected_02 != ev){
-      this.renderer.setElementStyle(this.lastSelected_02, 'fill', '#fff');
+      this.renderer.setStyle(this.lastSelected_02, 'fill', '#fff');
 
       if(this.lastSelected_02.localName == "tspan")
-        this.renderer.setElementStyle(this.lastSelected_02, 'fill', '#000');
+        this.renderer.setStyle(this.lastSelected_02, 'fill', '#000');
     }
 
       
@@ -77,9 +78,12 @@ export class DiagnoseAddComponent implements OnInit {
   }
 
   createDiagnose(){
-    this.api.createDiagnose(this.item.title, this.item.description, this.selectedTag,["Mogoče bi pomagala krema xyz"],["janez"], 3).subscribe(res => {
+    this.api.createDiagnose(this.item.title, this.item.description, this.selectedTag).subscribe(res => {
       console.log(res);
+      this.modal.dismiss();
     })
+
+    
   }
 
 }

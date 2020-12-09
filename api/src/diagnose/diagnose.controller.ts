@@ -19,6 +19,8 @@ import { AuthGuard } from '@nestjs/passport';
 export class DiagnoseController {
   constructor(private diagnoseService: DiagnoseService) {}
 
+
+  @UseGuards(AuthGuard())
   @Post()
   async addDiagnose(@Res() res, @Body() createDiagnoseDto: DiagnoseDto) {
     try {
@@ -82,6 +84,22 @@ export class DiagnoseController {
     return res.status(HttpStatus.OK).json({
       msg: 'Diagnose has been deleted',
       diagnose,
+    });
+  }
+
+  @UseGuards(AuthGuard())
+  @Put('addcomment/:diagnoseID')
+  async addCommentDiagnose(
+    @Res() res,
+    @Param('diagnoseID') diagnoseID,
+    @Body() data: {"content": string, "owner": string},
+  ) {
+    const diagnose = await this.diagnoseService.addCommentDiagnose(diagnoseID, data);
+    if (!diagnose) throw new NotFoundException('Diagnose does not exist!');
+    return res.status(HttpStatus.OK).json({
+      errors: 0,
+      msg: 'Diagnose has been successfully updated',
+      comment: diagnose.comments
     });
   }
 

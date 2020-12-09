@@ -10,7 +10,9 @@ export class DiagnoseService {
 
   // CREATE diagnose
   async addDiagnose(createDiagnoseDTO: DiagnoseDto): Promise<Diagnose> {
+
     const newDiagnose = await new this.diagnoseModel(createDiagnoseDTO);
+    
     return newDiagnose.save();
   }
 
@@ -26,9 +28,10 @@ export class DiagnoseService {
 
     let val = null;
 
-    const upvoteDiagnose = await this.diagnoseModel.findByIdAndUpdate(diagnoseID, {
-      $addToSet: { "likeArray": data.likeArray },
-    }, {
+    const upvoteDiagnose = await this.diagnoseModel.findByIdAndUpdate(
+      diagnoseID, 
+      { $addToSet: { "likeArray": data.likeArray }},
+      {
       new: true
     }).then(async (res) => {
 
@@ -45,8 +48,6 @@ export class DiagnoseService {
     });
 
     upvoteDiagnose.likeCount = val;
-
-    console.log(JSON.stringify(upvoteDiagnose));
 
     return upvoteDiagnose;
 
@@ -79,6 +80,18 @@ export class DiagnoseService {
     downvoteDiagnose.likeCount = val;
 
     return downvoteDiagnose;
+  }
+
+  async addCommentDiagnose(diagnoseID, data:{"content":string, "owner": string}): Promise<any> {
+
+    const updatedDiagnose = await this.diagnoseModel.findByIdAndUpdate(
+      diagnoseID, 
+      { $addToSet: {"comments": data} },
+      {new : true}
+    );
+
+    return updatedDiagnose;
+
   }
 
   // DELETE diagnose

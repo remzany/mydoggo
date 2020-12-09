@@ -152,14 +152,12 @@ export class ApiService {
   }
 
 
-  createDiagnose(title:string, description:string, tag:string, comments: Array<string>, likeArray: Array<string>, likeCount:number): Observable<Diagnose>{
+  createDiagnose(title:string, description:string, tag:string): Observable<Diagnose>{
     let data = {
       "title": title,
       "description" : description,
       "tag": tag,
-      "comments" : comments,
-      "likeArray" : likeArray,
-      "likeCount" : likeCount,
+      "likeArray" : this.getUserToken()['id'],
       "ownership": this.getUserToken()['id']
     };
 
@@ -182,11 +180,24 @@ export class ApiService {
     )
   };
 
+
+  addComment(x:{_id: string, comment:string} ){
+
+    const id = this.getUserToken()['id'];
+
+
+    console.log(x.comment)
+    return this.http.put<{errors:number, msg:string, comment: Array<{"content": string, "owner": string}>}>(`${environment.apiUrl}/diagnose/addcomment/${x._id}`, {'content': x.comment, 'owner': "bine"}).pipe(
+      take(1)
+    );
+  }
+
   downvoteDiagnose(x:{_id: string}):Observable<{errors:number, msg:string, likeNumber: number}>{
 
     const id = this.getUserToken()['id'];
 
     return this.http.put<{errors:number, msg:string, likeNumber: number}>(`${environment.apiUrl}/diagnose/downvote/${x._id}`, {'likeArray': id}).pipe(
       take(1)
-  )};
+    );
+  }
 }

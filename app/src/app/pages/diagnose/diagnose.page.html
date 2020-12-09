@@ -7,7 +7,6 @@
     </ion-buttons>
 
     <ion-buttons slot="end">
-      <!-- <ion-button (click)="openModal()"> -->
         <ion-button (click)="presentPopover($event)">
         <ion-icon slot="icon-only" name="add"></ion-icon>
       </ion-button>
@@ -32,9 +31,10 @@
       <ion-item lines="none">
 
         <ion-buttons slot="start">
-          <ion-button>
+          <ion-button (click)="addComment(i)">
             <ion-icon slot="icon-only" name="chatbubbles"></ion-icon>
           </ion-button>
+
             {{diag.comments.length}}
         </ion-buttons>
  
@@ -54,9 +54,15 @@
         </ion-buttons>
       </ion-item>
 
-      <ion-item class="animate__animated animate__fadeInDown">
-        Comments section
-      </ion-item>
+      <div *ngFor="let comment of diag.comments">
+        <ion-item class="animate__animated animate__fadeInDown">
+          {{comment.owner}} - {{comment.content}}
+        </ion-item>
+
+      </div>
+
+
+
     </ion-card-content>
 
   </ion-card>

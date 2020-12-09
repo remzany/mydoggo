@@ -2,7 +2,8 @@
 	"HOME": {
 		"title": "Domača stran",
 		"todo_label": "Dodaj opravilo",
-		"todo_text": "{count, plural, =0{Nimate opravil} one{Imate le še eno opravilo!} few{opraviti morate še {count} opravila} other{opraviti morate še {count} opravil}}"
+		"todo_text": "{count, plural, =0{Nimate opravil} one{Imate le še eno opravilo!} few{opraviti morate še {count} opravila} other{opraviti morate še {count} opravil}}",
+		"addDog": "Želite dodati psa?"
 	},
 	"LOGIN": {
 		"email": "Email",
@@ -19,7 +20,8 @@
 		"date" : "Izberi dan",
 		"day" : "dan",
 		"time": "čas",
-		"timer" : "Izberi čas"
+		"timer" : "Izberi čas",
+		"useMobile" : "Za uporabo opomnika potrebujete mobilno napravo"
 
 	},
 	"BUTTON" : {

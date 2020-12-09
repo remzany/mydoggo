@@ -9,7 +9,7 @@ export interface Diagnose{
     _id:string;
     title:string;
     description:string;
-    comments:Array<string>;
+    comments:Array<{"content":string, "owner":string}>;
     likeArray:Array<string>;
     likeCount:Number;
   }
