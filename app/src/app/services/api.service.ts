@@ -182,12 +182,15 @@ export class ApiService {
 
 
   addComment(x:{_id: string, comment:string} ){
-
     const id = this.getUserToken()['id'];
+    return this.http.put<{errors:number, msg:string, comment: Array<{"content": string, "owner": string, "_id": string}>}>(`${environment.apiUrl}/diagnose/addcomment/${x._id}`, {'content': x.comment, 'owner': "bine", '_ownerid': id}).pipe(
+      take(1)
+    );
+  }
 
-
-    console.log(x.comment)
-    return this.http.put<{errors:number, msg:string, comment: Array<{"content": string, "owner": string}>}>(`${environment.apiUrl}/diagnose/addcomment/${x._id}`, {'content': x.comment, 'owner': "bine", '_ownerid': id}).pipe(
+  deleteComment(diagnoseID, commentID){
+    const id = this.getUserToken()['id'];
+    return this.http.put<{errors:number, msg:string, comment: Array<{"content": string, "owner": string, "_id": string}>}>(`${environment.apiUrl}/diagnose/deletecomment/${diagnoseID}`, {'ownerID': id, 'commentID' : commentID}).pipe(
       take(1)
     );
   }

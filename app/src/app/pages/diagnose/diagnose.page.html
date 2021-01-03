@@ -54,10 +54,20 @@
         </ion-buttons>
       </ion-item>
 
-      <div *ngFor="let comment of diag.comments">
+      <div *ngFor="let comment of diag.comments, , let j = index">
         <ion-item class="animate__animated animate__fadeInDown">
           {{comment.owner}} - {{comment.content}}
+
+
+        <ion-buttons slot="end">
+          <ion-button (click)="deleteComment(i, j)">
+            <ion-icon slot="icon-only" name="close"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+
+
         </ion-item>
+
 
       </div>
 

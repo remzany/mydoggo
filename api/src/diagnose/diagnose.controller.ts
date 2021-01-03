@@ -14,6 +14,7 @@ import {
   UseGuards
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { DiagnoseData} from './interfaces/diagnose.interface';
 
 @Controller('api/diagnose')
 export class DiagnoseController {
@@ -92,7 +93,7 @@ export class DiagnoseController {
   async addCommentDiagnose(
     @Res() res,
     @Param('diagnoseID') diagnoseID,
-    @Body() data: {"content": string, "owner": string},
+    @Body() data: DiagnoseData,
   ) {
     const diagnose = await this.diagnoseService.addCommentDiagnose(diagnoseID, data);
     if (!diagnose) throw new NotFoundException('Diagnose does not exist!');
@@ -108,7 +109,7 @@ export class DiagnoseController {
   async deleteComment(
     @Res() res,
     @Param('diagnoseID') diagnoseID,
-    @Body() data: {"commentID": string, "ownerID": string},
+    @Body() data: {"ownerID": string, "commentID": string},
   ) {
     const diagnose = await this.diagnoseService.deleteComment(diagnoseID, data);
     if (!diagnose) throw new NotFoundException('Diagnose does not exist!');

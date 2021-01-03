@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import { Diagnose } from './interfaces/diagnose.interface';
+import { Diagnose, DiagnoseData } from './interfaces/diagnose.interface';
 import { DiagnoseDto } from './dto/diagnose.dto';
 
 @Injectable()
@@ -82,11 +82,11 @@ export class DiagnoseService {
     return downvoteDiagnose;
   }
 
-  async addCommentDiagnose(diagnoseID, data:{"content":string, "owner": string}): Promise<any> {
+  async addCommentDiagnose(diagnoseID, DiagnoseData): Promise<any> {
 
     const updatedDiagnose = await this.diagnoseModel.findByIdAndUpdate(
       diagnoseID, 
-      { $addToSet: {"comments": data} },
+      { $addToSet: {"comments": DiagnoseData} },
       {new : true}
     );
 
@@ -107,11 +107,19 @@ export class DiagnoseService {
   }
 
   // DELETE diagnose
-  async deleteComment(diagnoseID, data): Promise<any> {
+  async deleteComment(diagnoseID, data: {"ownerID": string, "commentID": string}): Promise<any> {
 
-    const comments = await this.diagnoseModel.findById(diagnoseID);
-    console.log(`cooments section: ${comments}, data is: ${data}`);
-    return comments;
+    
+
+    let comment = await this.diagnoseModel.findById(diagnoseID);
+    comment.comments.forEach(async (res, index) => {
+      if(res._id != data.commentID) return;
+      if(res._ownerid != data.ownerID ) return;
+      comment.comments.splice(index, 1);
+      await this.diagnoseModel.findByIdAndUpdate(diagnoseID, comment);
+    })
+
+    return comment;
 
   }
   // For JWT checking

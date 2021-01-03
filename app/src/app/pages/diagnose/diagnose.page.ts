@@ -70,7 +70,6 @@ export class DiagnosePage implements OnInit {
     })
   }
 
-
   async openError(x:any){
     let alert = await this.alert.create({
       header:  x,
@@ -132,19 +131,20 @@ export class DiagnosePage implements OnInit {
         }
       ]
     });
-
     await alert.present();
-
     await alert.onDidDismiss().then(res => {
       data.comment = res.data.values.comment;
     });
 
+    this.api.addComment(data).subscribe(res => {
+      this.diagnose[i].comments = res.comment;
+    });
+  }
 
-  this.api.addComment(data).subscribe(res => {
-    console.log(res);
-    this.diagnose[i].comments = res.comment;
-  });
-
+  deleteComment(i: number, j: number){
+    this.api.deleteComment(this.diagnose[i]._id, this.diagnose[i].comments[j]._id).subscribe(res => {
+      this.diagnose[i].comments = res.comment
+    });
   }
 
 }
