@@ -101,11 +101,19 @@ export class DiagnoseService {
   }
 
   // GET ALL diagnose
-  async getAllDiagnose(): Promise<Diagnose[]> {
-    const diagnoses = await this.diagnoseModel.find().exec();
+  async getAllDiagnose(userId: string): Promise<Diagnose[]> {
+    const diagnoses = await this.diagnoseModel.find({}, '-comments._ownerid').exec();
     return diagnoses;
   }
 
+  // DELETE diagnose
+  async deleteComment(diagnoseID, data): Promise<any> {
+
+    const comments = await this.diagnoseModel.findById(diagnoseID);
+    console.log(`cooments section: ${comments}, data is: ${data}`);
+    return comments;
+
+  }
   // For JWT checking
   async findOneByEmail(email: string): Promise<Diagnose> {
     return await this.diagnoseModel.findOne({ email: email }, '+password');

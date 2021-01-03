@@ -122,4 +122,8 @@ export class DogFormPage implements OnInit {
         await alert.present();
   }
 
+  skip(){
+    this.router.navigateByUrl('/tabs');
+  }
+
 }

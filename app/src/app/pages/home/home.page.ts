@@ -55,6 +55,7 @@ export class HomePage {
 
   loadUserData(){
     this.api.getUserData().subscribe(a =>{
+      console.log(a);
       this.user = a;
 
       if(a.dogBreed == "" && a.dogName == "" || a.dogBreed == null && a.dogName == null){

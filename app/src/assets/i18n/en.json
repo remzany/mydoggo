@@ -6,10 +6,20 @@
 		"addDog": "Would you like to add a dog?"
 	},
 	"LOGIN": {
+		"username": "Username",
+		"username_placeholder" : "please insert your username",
+		"username_show_error" : "username is to short, minimum length is 5!",
 		"email": "Email",
+		"email_show_error": "Please provide correct form of email address",
+		"email_placeholder" : "please insert your email",
 		"password": "Password",
+		"password_confirm": "Confirm password",
+		"password_confirm_show_error": "Password must be equal",
+		"password_show_error": "Your password it too weak!",
+		"password_placeholder" : "please insert your password",
 		"login": "Login",
 		"register": "Register",
+		"sign_in": "Sign in",
 		"login_label": "Login failed",
 		"usernone":"User not found",
 		"userwrong":"Wrong password",
@@ -24,6 +34,8 @@
 		"useMobile" : "You need mobile device to use notifications"
 	},
 	"BUTTON" : {
-		"create": "create"
+		"create": "create",
+		"skip": "skip",
+		"add": "add"
 	}
 }

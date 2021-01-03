@@ -21,18 +21,40 @@
         <ion-card-content>
 
           <ion-item lines="none">
-            <ion-label position="stacked">Email</ion-label>
-            <ion-input type="email" placeholder="Email" name="email" [(ngModel)]="credentials.email"></ion-input>
+            <ion-label position="stacked">{{ 'LOGIN.username' | translate:params }}</ion-label>
+            <ion-input type="text" placeholder="{{ 'LOGIN.username_placeholder' | translate:params }}" name="username" [(ngModel)]="credentials.username" (ionChange)="regexUsername(credentials.username)"></ion-input>
+            <ion-text color="danger">
+              <h6 [hidden]="hiddenUsernameError"> {{ 'LOGIN.username_show_error' | translate:params }} </h6>
+            </ion-text>
           </ion-item>
 
           <ion-item lines="none">
-            <ion-label position="stacked">Password</ion-label>
-            <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="credentials.password">
+            <ion-label position="stacked">{{ 'LOGIN.email' | translate:params }}</ion-label>
+            <ion-input type="email" placeholder="{{ 'LOGIN.email_placeholder' | translate:params }}" name="email" [(ngModel)]="credentials.email" (ionChange)="regexEmail(credentials.email)" ></ion-input>
+            <ion-text color="danger">
+              <h6 [hidden]="hiddenEmailError"> {{ 'LOGIN.email_show_error' | translate:params }} </h6>
+            </ion-text>
+          </ion-item>
+          
+          <ion-item lines="none">
+            <ion-label position="stacked">{{ 'LOGIN.password' | translate:params }}</ion-label>
+            <ion-input type="password" placeholder="{{ 'LOGIN.password_placeholder' | translate:params }}" name="password" [(ngModel)]="credentials.password" (ionChange)="regexPassword(credentials.password)">
             </ion-input>
+            <ion-text color="danger">
+              <h6 [hidden]="passwordError"> {{ 'LOGIN.password_show_error' | translate:params }} </h6>
+            </ion-text>
           </ion-item>
 
-          <ion-button class="ion-margin-top ion-padding-horizontal" (click)="register()" expand="block"
-            [disabled]="credentials.email == '' || credentials.password == ''">Sign up</ion-button>
+          <ion-item lines="none">
+            <ion-label position="stacked">{{ 'LOGIN.password_confirm' | translate:params }}</ion-label>
+            <ion-input type="password" placeholder="{{ 'LOGIN.password_placeholder' | translate:params }}" name="password" (ionChange)="regexConfirmPassword($event)">
+            </ion-input>
+            <ion-text color="danger">
+              <h6 [hidden]="hiddenConfirmPasswordError"> {{ 'LOGIN.password_confirm_show_error' | translate:params }} </h6>
+            </ion-text>
+          </ion-item>
+
+          <ion-button class="ion-margin-top ion-padding-horizontal" (click)="register()" expand="block" >{{ 'LOGIN.sign_in' | translate:params }}</ion-button>
 
         </ion-card-content>
       </ion-card>

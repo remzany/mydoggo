@@ -104,9 +104,25 @@ export class DiagnoseController {
   }
 
   @UseGuards(AuthGuard())
+  @Put('deletecomment/:diagnoseID')
+  async deleteComment(
+    @Res() res,
+    @Param('diagnoseID') diagnoseID,
+    @Body() data: {"commentID": string, "ownerID": string},
+  ) {
+    const diagnose = await this.diagnoseService.deleteComment(diagnoseID, data);
+    if (!diagnose) throw new NotFoundException('Diagnose does not exist!');
+    return res.status(HttpStatus.OK).json({
+      errors: 0,
+      msg: 'Diagnose has been successfully updated',
+      comment: diagnose.comments
+    });
+  }
+
+  @UseGuards(AuthGuard())
   @Get()
-  async getAllDiagnose(@Res() res) {
-    const diagnose = await this.diagnoseService.getAllDiagnose();
+  async getAllDiagnose(@Res() res, @Body() userId: string) {
+    const diagnose = await this.diagnoseService.getAllDiagnose(userId);
     return res.status(HttpStatus.OK).json(diagnose);
   }
 

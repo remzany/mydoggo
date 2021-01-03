@@ -23,7 +23,7 @@
   <ion-card *ngFor="let diag of diagnose, let i = index">
     <ion-card-header>
       <!-- <ion-img style="max-width: 256px;" src="../../../assets/images/doghurt.jpg"></ion-img> -->
-      <ion-card-title>{{diag.title}}</ion-card-title>
+      <ion-card-title>{{diag.title}} - [{{diag.tag}}]</ion-card-title>
       <ion-card-subtitle>{{diag.description}}</ion-card-subtitle>
       
     </ion-card-header>

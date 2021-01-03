@@ -19,6 +19,8 @@ import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { TOKEN_KEY } from './services/api.service';
 import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 
+import { Camera } from '@ionic-native/camera/ngx';
+
 export function jwtOptionsFactory(storage) {
   return {
     tokenGetter: () => {
@@ -68,13 +70,14 @@ export function HttpLoaderFactory(http: HttpClient) {
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    HttpClientModule
+    HttpClientModule,
     ],
   providers: [
     StatusBar,
     SplashScreen,
     SecureStorage,
     LocalNotifications,
+    Camera,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

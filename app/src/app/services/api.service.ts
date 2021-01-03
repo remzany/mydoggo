@@ -37,12 +37,12 @@ export class ApiService {
 
   observer: Observer<any>;
  
-  constructor(private storage: Storage, private http: HttpClient, private plt: Platform, private router: Router) { 
+  constructor(private storage: Storage, private http: HttpClient, private platform: Platform, private router: Router) { 
     this.loadStoredToken();  
   }
  
   loadStoredToken() {
-    let platformObs = from(this.plt.ready());
+    let platformObs = from(this.platform.ready());
  
     this.user = platformObs.pipe(
       switchMap(() => {
@@ -77,7 +77,7 @@ export class ApiService {
     );
   }
  
-  register(credentials: {email: string, password: string }) {
+  register(credentials: {email: string, password: string, username:string }) {
     return this.http.post(`${environment.apiUrl}/users`, credentials).pipe(
       take(1),
       switchMap(res => {
@@ -187,7 +187,7 @@ export class ApiService {
 
 
     console.log(x.comment)
-    return this.http.put<{errors:number, msg:string, comment: Array<{"content": string, "owner": string}>}>(`${environment.apiUrl}/diagnose/addcomment/${x._id}`, {'content': x.comment, 'owner': "bine"}).pipe(
+    return this.http.put<{errors:number, msg:string, comment: Array<{"content": string, "owner": string}>}>(`${environment.apiUrl}/diagnose/addcomment/${x._id}`, {'content': x.comment, 'owner': "bine", '_ownerid': id}).pipe(
       take(1)
     );
   }

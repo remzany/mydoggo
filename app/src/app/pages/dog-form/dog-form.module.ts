@@ -10,12 +10,14 @@ import { DogFormPage } from './dog-form.page';
 
 import { AlertController } from '@ionic/angular';
 
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    TranslateModule.forChild(),
     DogFormPageRoutingModule
   ],
   declarations: [DogFormPage],

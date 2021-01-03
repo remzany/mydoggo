@@ -9,6 +9,8 @@ import { SecureStorage} from '@ionic-native/secure-storage/ngx';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { ReminderComponent } from '../../components/reminder/reminder.component';
+import { DogProfileComponent } from '../../components/dog-profile/dog-profile.component';
+
 
 @NgModule({
   imports: [
@@ -26,9 +28,10 @@ import { ReminderComponent } from '../../components/reminder/reminder.component'
   providers:[
     SecureStorage
   ],
-  declarations: [HomePage, ReminderComponent],
+  declarations: [HomePage, ReminderComponent, DogProfileComponent],
   entryComponents:[
-    ReminderComponent
+    ReminderComponent,
+    DogProfileComponent
   ]
 })
 export class HomePageModule {}

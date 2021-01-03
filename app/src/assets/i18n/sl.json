@@ -6,10 +6,20 @@
 		"addDog": "Želite dodati psa?"
 	},
 	"LOGIN": {
+		"username": "Uporabniško ime",
+		"username_placeholder" : "Vnesi svoje uporabniško ime",
+		"username_show_error" : "uporabniško ime mora vsebovati vsak 5 znakov",
 		"email": "Email",
+		"email_show_error": "Prosim vnesite veljaven email",
+		"email_placeholder" : "Vnesi svoje e-mail naslov",
 		"password": "Geslo",
+		"password_show_error": "Geslo je prešibko",
+		"password_confirm": "Ponovno vnesite geslo",
+		"password_confirm_show_error": "Gesli morata biti enaki",
+		"password_placeholder" : "Prosim vnesite močno geslo",
 		"login": "Prijava",
 		"register": "Ustvari račun",
+		"sign_in": "Registracija",
 		"login_label": "Prijava neuspešna",
 		"usernone":"Račun ne obstaja",
 		"userwrong":"Napačno geslo",
@@ -25,6 +35,8 @@
 
 	},
 	"BUTTON" : {
-		"create": "ustvari"
+		"create": "ustvari",
+		"skip": "preskoči",
+		"add": "dodaj"
 	}
 }

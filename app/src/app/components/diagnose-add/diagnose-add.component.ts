@@ -1,6 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild, Renderer2 } from '@angular/core';
 import {ApiService} from '../../services/api.service';
 import { ModalController } from '@ionic/angular';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
 @Component({
   selector: 'app-diagnose-add',
@@ -15,10 +16,11 @@ export class DiagnoseAddComponent implements OnInit {
   item:{title:string, description:string} = {title:"", description:""};
   selectedTag:string = "";
 
+
   ngAfterViewInit(){
   }
 
-  constructor(private renderer:Renderer2, private api:ApiService, private modal:ModalController) { }
+  constructor(private renderer:Renderer2, private api:ApiService, private modal:ModalController, private camera:Camera) { }
 
   ngOnInit() {}
 
@@ -75,6 +77,23 @@ export class DiagnoseAddComponent implements OnInit {
 
     if(x == 3)
       this.createDiagnose();
+  }
+
+  takePicture(){
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE
+    }
+    
+    this.camera.getPicture(options).then((imageData) => {
+      // imageData is either a base64 encoded string or a file URI
+      // If it's base64 (DATA_URL):
+      let base64Image = 'data:image/jpeg;base64,' + imageData;
+     }, (err) => {
+      // Handle error
+     });
   }
 
   createDiagnose(){

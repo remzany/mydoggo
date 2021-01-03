@@ -14,10 +14,10 @@ export const DiagnoseSchema = new mongoose.Schema({
             type: String,
             required: true
         },
-        comments:[{"content": String, "owner": String}],
+        comments:[{"content": String, "owner": String, "_ownerid": String}],
         likeArray:[String],
         likeCount:Number,
-        tag:String,
+        tag:String
     }, 
     {
   timestamps: true

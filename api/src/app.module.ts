@@ -8,6 +8,7 @@ import * as path from 'path';
 import { NeconfigModule } from 'neconfig';
 import { BreedModule } from './bread/breed.module';
 import {DiagnoseModule} from './diagnose/diagnose.module';
+import { PhotosModule } from './photos/photos.module';
 @Module({
   imports: [
     UsersModule,
@@ -27,7 +28,8 @@ import {DiagnoseModule} from './diagnose/diagnose.module';
     }),
     AuthModule,
     BreedModule,
-    DiagnoseModule
+    DiagnoseModule,
+    PhotosModule
   ]
 })
 export class AppModule {}
