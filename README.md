@@ -46,5 +46,10 @@ npm i -g cordova
 npm i -g cordova-res
 ionic cordova resources android
 
-JAVA JDK 8
--go to site, inspect copy nexturl. change otn => otn-pub. It will download it
+
+JAVA JDK 8: Go to site, inspect copy nexturl. change otn => otn-pub. It will download it
+Gradle: download it from site (dont forget to add gradle to path).
+add java SDK to path: variable name: "ANDROID_SDK_ROOT", location: "C:\Users\Uporabnik\AppData\Local\Android\Sdk"
+Licences for sdk manager, go to this location: "C:\Users\Uporabnik\AppData\Local\Android\Sdk\tools" and run "./sdkmanager.bat --licenses"
+
+
