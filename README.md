@@ -41,3 +41,10 @@ docker-compose --version
 npm install -g npm@latest
 
 //npm install both app and api
+npm i -g @ionic/cli
+npm i -g cordova
+npm i -g cordova-res
+ionic cordova resources android
+
+JAVA JDK 8
+-go to site, inspect copy nexturl. change otn => otn-pub. It will download it
