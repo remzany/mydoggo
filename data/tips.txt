@@ -12,6 +12,6 @@ How to setup SSL for docker nginx contrainer
 FOR YOUR PROJECT CONFIGURATION
 - if you want to renew certificate, delete data/certbot
 - delete all container, for fresh
-
-- run ./init-letsencrypt.sh
+- run "./run.sh -r -d"
+- run "sudo ./init-letsencrypt.sh" !!! dont forget about permission
 
