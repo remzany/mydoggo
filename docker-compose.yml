@@ -1,6 +1,6 @@
-version: "3.4"
-services:
+version: '3.4'
 
+services:
   api:
     restart: unless-stopped
     build:
@@ -22,39 +22,6 @@ services:
     networks:
       - main
 
-  nginx: 
-    restart: unless-stopped
-    image: nginx:latest
-    volumes:
-      - ./nginx/nginx:/etc/nginx/conf.d
-      - ./nginx/certbot/conf:/etc/letsencrypt
-      - ./nginx/certbot/www:/var/www/certbot
-    ports:
-      - "80:80"
-      - "443:443"
-    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
-    depends_on:
-      - api
-      - mongopanel
-    healthcheck:
-      test: ["CMD", "curl", "-sSG", "http://localhost/nginxcheck"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 15s
-    networks:
-      - main
-
-  certbot:
-    image: certbot/certbot
-    restart: unless-stopped
-    volumes:
-      - ./nginx/certbot/conf:/etc/letsencrypt
-      - ./nginx/certbot/www:/var/www/certbot
-    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
-    networks: 
-      - main
-      
   mongodb:
     restart: unless-stopped
     image: mongo
@@ -68,7 +35,7 @@ services:
       start_period: 15s
     networks: 
       - main
-      
+
   mongopanel:
     restart: unless-stopped
     image: mongo-express
@@ -90,5 +57,30 @@ services:
     networks: 
       - main
 
+  nginx:
+    image: nginx:latest
+    restart: unless-stopped
+    volumes:
+      - ./data/nginx:/etc/nginx/conf.d
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+    ports:
+      - "80:80"
+      - "443:443"
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+    networks:
+      - main
+
+  certbot:
+    image: certbot/certbot
+    restart: unless-stopped
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    networks:
+      - main
+
 networks:
   main:
+

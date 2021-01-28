@@ -8,6 +8,7 @@ services:
       dockerfile: dockerfile
     environment:
       - NODE_ENV=development
+    user: ${CURRENT_UID}
     volumes:
       - ./api:/var/server
       - /var/server/node_modules
@@ -22,19 +23,38 @@ services:
     networks:
       - main
 
+  app:
+    restart: unless-stopped
+    build:
+      context: ./app
+      dockerfile: dockerfile
+    environment:
+      - ENV=development
+    user: ${CURRENT_UID}
+    volumes:
+      - ./app:/var/server
+      - /var/server/node_modules
+    healthcheck:
+      test: ["CMD", "curl", "-sSG", "http://localhost:8080"]
+      interval: 45s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    networks:
+      - main
+
   nginx: 
     restart: unless-stopped
     image: nginx:latest
     volumes:
-      - ./nginx/nginx:/etc/nginx/conf.d
-      - ./nginx/certbot/conf:/etc/letsencrypt
-      - ./nginx/certbot/www:/var/www/certbot
+      - ./nginx/nginx.dev.conf:/etc/nginx/nginx.conf
+      # - ./nginx/ssl/:/etc/nginx/ssl/
     ports:
-      - "80:80"
-      - "443:443"
-    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+      - 80:80
+      # - 443:443
     depends_on:
       - api
+      - app
       - mongopanel
     healthcheck:
       test: ["CMD", "curl", "-sSG", "http://localhost/nginxcheck"]
@@ -43,16 +63,6 @@ services:
       retries: 3
       start_period: 15s
     networks:
-      - main
-
-  certbot:
-    image: certbot/certbot
-    restart: unless-stopped
-    volumes:
-      - ./nginx/certbot/conf:/etc/letsencrypt
-      - ./nginx/certbot/www:/var/www/certbot
-    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
-    networks: 
       - main
       
   mongodb:

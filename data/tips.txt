@@ -1,0 +1,17 @@
+TTPSConnectionPool(host=‘acme-v02.api.letsencrypt.org’, port=443): Read timed out
+use command: "traceroute / tracert"
+
+
+How to setup SSL for docker nginx contrainer
+1.
+-you can use this tutorial https://medium.com/@pentacent/nginx-and-lets-encrypt-with-docker-in-less-than-5-minutes-b4b8a60d3a71
+- if you use this github, to speed process "https://github.com/wmnnd/nginx-certbot" check next line
+- !!! important, for permission you must run "chmod +x init-letsencrypt.sh" and "sudo ./init-letsencrypt.sh" 
+
+
+FOR YOUR PROJECT CONFIGURATION
+- if you want to renew certificate, delete data/certbot
+- delete all container, for fresh
+
+- run ./init-letsencrypt.sh
+

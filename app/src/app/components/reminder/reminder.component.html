@@ -11,21 +11,21 @@
   <ion-card>
     <ion-card-content>
       <ion-item>
-        <ion-label> {{ 'REMINDER.date' | translate:params }}</ion-label>
-        <ion-datetime [(ngModel)]="todaysDate" displayFormat="MM DD YY" placeholder="{{ 'REMINDER.day' | translate:params }}"></ion-datetime>
+        <ion-label> {{ 'REMINDER.date' | translate }}</ion-label>
+        <ion-datetime [(ngModel)]="todaysDate" displayFormat="MM DD YY" placeholder="{{ 'REMINDER.day' | translate }}"></ion-datetime>
       </ion-item>
 
       <ion-item>
-        <ion-label> {{ 'REMINDER.timer' | translate:params }}</ion-label>
-        <ion-datetime [(ngModel)]="time" displayFormat="HH mm" placeholder="{{ 'REMINDER.time' | translate:params }}"></ion-datetime>
+        <ion-label> {{ 'REMINDER.timer' | translate }}</ion-label>
+        <ion-datetime [(ngModel)]="time" displayFormat="HH mm" placeholder="{{ 'REMINDER.time' | translate }}"></ion-datetime>
       </ion-item>
 
       <ion-item>
-        <ion-label> {{ 'REMINDER.description' | translate:params }}</ion-label>
+        <ion-label> {{ 'REMINDER.description' | translate }}</ion-label>
         <ion-input [(ngModel)]="text"></ion-input>
       </ion-item>
 
-      <ion-button class="ion-margin-top ion-padding-horizontal" (click)="createNotification()" expand="block" [disabled]="text == '' && time == ''">{{ 'BUTTON.create' | translate:params }}</ion-button>
+      <ion-button class="ion-margin-top ion-padding-horizontal" (click)="createNotification()" expand="block" [disabled]="text == '' && time == ''">{{ 'BUTTON.create' | translate }}</ion-button>
         
 
     </ion-card-content>
