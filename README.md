@@ -54,17 +54,21 @@ Licences for sdk manager, go to this location: "C:\Users\Uporabnik\AppData\Local
 
 ionic cordova prepare android
 
-maybe you will get this error:
-Source path does not exist: resources/android/xml/network_security_config.xml
-fix:
-1. Create folder at path: resources/ android/ xml/network_security_config.xml
-2. add below code to file:
+Errors that you maybe will be facing:
 
-<?xml version="1.0" encoding="utf-8"?>
-<network-security-config>
-<domain-config cleartextTrafficPermitted="true">
-    <domain includeSubdomains="true">localhost</domain>
-</domain-config>
-</network-security-config>
+- Source path does not exist: resources/android/xml/network_security_config.xml
+    fix:
+    1. Create folder at path: resources/ android/ xml/network_security_config.xml
+    2. add below code to file:
 
+    <?xml version="1.0" encoding="utf-8"?>
+    <network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">localhost</domain>
+    </domain-config>
+    </network-security-config>
+
+- Error: Manifest merger failed, uses-sdk:minSdkVersion 19 cannot be smaller than version 22 declared in library
+    1. change capacitor.config.json, "android-minSdkVersion": "19" => to errors number
+    2. change config.xml, <preference name="android-minSdkVersion" value="19" /> => to errors number
 
