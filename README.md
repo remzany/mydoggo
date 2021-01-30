@@ -52,4 +52,19 @@ Gradle: download it from site (dont forget to add gradle to path).
 add java SDK to path: variable name: "ANDROID_SDK_ROOT", location: "C:\Users\Uporabnik\AppData\Local\Android\Sdk"
 Licences for sdk manager, go to this location: "C:\Users\Uporabnik\AppData\Local\Android\Sdk\tools" and run "./sdkmanager.bat --licenses"
 
+ionic cordova prepare android
+
+maybe you will get this error:
+Source path does not exist: resources/android/xml/network_security_config.xml
+fix:
+1. Create folder at path: resources/ android/ xml/network_security_config.xml
+2. add below code to file:
+
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+<domain-config cleartextTrafficPermitted="true">
+    <domain includeSubdomains="true">localhost</domain>
+</domain-config>
+</network-security-config>
+
 
