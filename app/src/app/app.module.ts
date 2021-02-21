@@ -10,7 +10,6 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
 import { IonicStorageModule, Storage } from '@ionic/storage';
-import { HttpClientModule, HttpClient  } from '@angular/common/http';
 
 import { SecureStorage} from '@ionic-native/secure-storage/ngx';
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
@@ -21,12 +20,19 @@ import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 
 import { Camera } from '@ionic-native/camera/ngx';
 
+import { 
+  HTTP_INTERCEPTORS, 
+  HttpClientModule,
+  HttpClient
+} from '@angular/common/http';
+import { AuthConfigInterceptor } from './services/auth/authconfig.interceptor';
+
 export function jwtOptionsFactory(storage) {
   return {
     tokenGetter: () => {
       return storage.get(TOKEN_KEY);
     },
-    whitelistedDomains: ['83.212.82.27:80'] // Add your Heroku URL in here!
+    whitelistedDomains: ['https://app.moj-ljubljencek.si'] // Add your Heroku URL in here!
   }
 }
 
@@ -35,9 +41,6 @@ export function jwtOptionsFactory(storage) {
 import { TranslateModule, TranslateLoader, TranslateCompiler } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import {TranslateMessageFormatCompiler} from 'ngx-translate-messageformat-compiler';
-export function LanguageLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
-}
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -70,7 +73,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    HttpClientModule,
     ],
   providers: [
     StatusBar,
@@ -78,7 +80,12 @@ export function HttpLoaderFactory(http: HttpClient) {
     SecureStorage,
     LocalNotifications,
     Camera,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: AuthConfigInterceptor,
+    //   multi: true
+    // }
   ],
   bootstrap: [AppComponent]
 })

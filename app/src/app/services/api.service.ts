@@ -1,11 +1,11 @@
-import { environment } from './../../environments/environment';
+import { environment } from './../../environments/environment.prod';
 import { Platform } from '@ionic/angular';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { BehaviorSubject, Observable, from, Subject, Observer } from 'rxjs';
-import { take, map, switchMap, delay, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, from} from 'rxjs';
+import { take, map, switchMap, tap } from 'rxjs/operators';
 import { JwtHelperService } from "@auth0/angular-jwt";
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { Router } from '@angular/router';
  import {Diagnose} from '../interfaces/diagnose.interface';
 
@@ -26,17 +26,15 @@ export interface User {
   todos?: Array<string>;
 }
 
-
-
 @Injectable({
   providedIn: 'root'
 })
+
 export class ApiService {
   public user: Observable<any>;
   private userData = new BehaviorSubject(null);
+  private headers = new HttpHeaders();
 
-  observer: Observer<any>;
- 
   constructor(private storage: Storage, private http: HttpClient, private platform: Platform, private router: Router) { 
     this.loadStoredToken();  
   }
@@ -59,7 +57,7 @@ export class ApiService {
       })
     );
   }
- 
+
   login(credentials: {email: string, password: string }) {
     return this.http.post(`${environment.apiUrl}/auth`, credentials).pipe(
       take(1),
@@ -73,7 +71,7 @@ export class ApiService {
  
         let storageObs = from(this.storage.set(TOKEN_KEY, token));
         return storageObs;
-      })
+      }),
     );
   }
  
@@ -81,7 +79,6 @@ export class ApiService {
     return this.http.post(`${environment.apiUrl}/users`, credentials).pipe(
       take(1),
       switchMap(res => {
-        console.log('result: ', res);
         return this.login(credentials);
       })
     );
@@ -93,7 +90,8 @@ export class ApiService {
 
   getUserData() {
     const id = this.getUserToken()['id'];
-    return this.http.get<User>(`${environment.apiUrl}/users/${id}`).pipe(
+    
+    return this.http.get<User>(`${environment.apiUrl}/users/${id}`, {headers: this.headers}).pipe(
       tap(data => {
         return data
       })
@@ -137,7 +135,6 @@ export class ApiService {
   getAllDiagnoses(): Observable<Array<Diagnose>>{
     return this.http.get<Array<Diagnose>>(`${environment.apiUrl}/diagnose/`).pipe(
       tap(data => {
-        console.log(data);
         return data;
       })
     );
@@ -203,4 +200,7 @@ export class ApiService {
       take(1)
     );
   }
+
+
+
 }
