@@ -16,27 +16,25 @@ import {
   })
 
   export class AuthConfigInterceptor implements HttpInterceptor {
-    
+
 
     constructor(private api:ApiService) { }
-  
+
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-      console.log("interception started");
-  
-      let token = this.api.getUserToken();
 
+      const token = this.api.getUserToken().token;
       console.log(token);
-      token = token['id'];
-      //Authentication by setting header with token value
+
+      // Authentication by setting header with token value
       if (token) {
         request = request.clone({
           setHeaders: {
-            'Authorization': token
+            Authorization: token
           }
         });
       }
-  
+
       if (!request.headers.has('Content-Type')) {
         request = request.clone({
           setHeaders: {
@@ -44,7 +42,7 @@ import {
           }
         });
       }
-  
+
       request = request.clone({
         headers: request.headers.set('Accept', 'application/json')
       });
@@ -61,6 +59,4 @@ import {
           return throwError(error);
         }));
     }
-
-  
   }

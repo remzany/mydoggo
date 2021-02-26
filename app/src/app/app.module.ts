@@ -20,10 +20,11 @@ import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 
 import { Camera } from '@ionic-native/camera/ngx';
 
-import { 
-  HTTP_INTERCEPTORS, 
+import {
+  HTTP_INTERCEPTORS,
   HttpClientModule,
-  HttpClient
+  HttpClient,
+  HttpBackend
 } from '@angular/common/http';
 import { AuthConfigInterceptor } from './services/auth/authconfig.interceptor';
 
@@ -36,15 +37,18 @@ export function jwtOptionsFactory(storage) {
   }
 }
 
-//TRANSLATION
+// TRANSLATION
 
 import { TranslateModule, TranslateLoader, TranslateCompiler } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import {TranslateMessageFormatCompiler} from 'ngx-translate-messageformat-compiler';
 
-export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http);
+
+
+export function translateHttpLoaderFactory(httpBackend: HttpBackend): TranslateHttpLoader {
+  return new TranslateHttpLoader(new HttpClient(httpBackend));
 }
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -62,9 +66,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      },
+        deps: [HttpBackend],
+        useFactory: translateHttpLoaderFactory
+    },
       compiler: {
         provide: TranslateCompiler,
         useClass: TranslateMessageFormatCompiler
