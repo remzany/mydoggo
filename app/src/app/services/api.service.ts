@@ -2,10 +2,10 @@ import { environment } from './../../environments/environment';
 import { Platform } from '@ionic/angular';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { BehaviorSubject, Observable, from, Subject, Observer } from 'rxjs';
-import { take, map, switchMap, delay, tap } from 'rxjs/operators';
-import { JwtHelperService } from "@auth0/angular-jwt";
-import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable, from} from 'rxjs';
+import { take, map, switchMap, tap } from 'rxjs/operators';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { Router } from '@angular/router';
  import {Diagnose} from '../interfaces/diagnose.interface';
 
@@ -34,23 +34,23 @@ export interface User {
 export class ApiService {
   public user: Observable<any>;
   private userData = new BehaviorSubject(null);
+  private fullToken = '';
 
-  observer: Observer<any>;
- 
   constructor(private storage: Storage, private http: HttpClient, private platform: Platform, private router: Router) { 
-    this.loadStoredToken();  
+    this.loadStoredToken();
   }
- 
+
   loadStoredToken() {
-    let platformObs = from(this.platform.ready());
- 
+    const platformObs = from(this.platform.ready());
+
     this.user = platformObs.pipe(
       switchMap(() => {
         return from(this.storage.get(TOKEN_KEY));
       }),
       map(token => {
         if (token) {
-          let decoded = helper.decodeToken(token); 
+          this.fullToken = token;
+          const decoded = helper.decodeToken(token);
           this.userData.next(decoded);
           return true;
         } else {
@@ -93,7 +93,9 @@ export class ApiService {
 
   getUserData() {
     const id = this.getUserToken()['id'];
-    return this.http.get<User>(`${environment.apiUrl}/users/${id}`).pipe(
+
+    return this.http.get<User>(`${environment.apiUrl}/users/${id}`,
+     { headers: new HttpHeaders({Authorization: 'Bearer ' + this.fullToken})}).pipe(
       tap(data => {
         return data
       })
@@ -101,7 +103,8 @@ export class ApiService {
   }
 
   getAllUsers(): Observable<User[]> {
-    return this.http.get<User[]>(`${environment.apiUrl}/users`).pipe(
+    return this.http.get<User[]>(`${environment.apiUrl}/users`,
+    { headers: new HttpHeaders({Authorization: 'Bearer ' + this.fullToken})}).pipe(
       tap(data => {
         return data
       })
@@ -109,13 +112,15 @@ export class ApiService {
   }
 
   updateUser(id, data) {
-    return this.http.put(`${environment.apiUrl}/users/${id}`, data).pipe(
+    return this.http.put(`${environment.apiUrl}/users/${id}`, data,
+    { headers: new HttpHeaders({Authorization: 'Bearer ' + this.fullToken})}).pipe(
       take(1)
     );
   }
 
   removeUser(id) {
-    return this.http.delete(`${environment.apiUrl}/users/${id}`).pipe(
+    return this.http.delete(`${environment.apiUrl}/users/${id}`,
+    { headers: new HttpHeaders({Authorization: 'Bearer ' + this.fullToken})}).pipe(
       take(1)
     );
   }
@@ -129,13 +134,15 @@ export class ApiService {
 
   
   getBreed(): Observable<Array<string>> {
-    return this.http.get<Array<string>>(`${environment.apiUrl}/breed`).pipe(
+    return this.http.get<Array<string>>(`${environment.apiUrl}/breed`,
+    { headers: new HttpHeaders({Authorization: 'Bearer ' + this.fullToken})}).pipe(
       take(1)
     );
   }
 
   getAllDiagnoses(): Observable<Array<Diagnose>>{
-    return this.http.get<Array<Diagnose>>(`${environment.apiUrl}/diagnose/`).pipe(
+    return this.http.get<Array<Diagnose>>(`${environment.apiUrl}/diagnose/`,
+    { headers: new HttpHeaders({Authorization: 'Bearer ' + this.fullToken})}).pipe(
       tap(data => {
         console.log(data);
         return data;
@@ -146,7 +153,8 @@ export class ApiService {
   getDiagnose(): Observable<Diagnose>{
     let id:string = "American-Pit-Bull-Terrier";
     
-    return this.http.get<Diagnose>(`${environment.apiUrl}/diagnose/${id}`).pipe(
+    return this.http.get<Diagnose>(`${environment.apiUrl}/diagnose/${id}`,
+    { headers: new HttpHeaders({Authorization: 'Bearer ' + this.fullToken})}).pipe(
       take(1)
     );
   }
@@ -162,20 +170,24 @@ export class ApiService {
     };
 
 
-    return this.http.post<Diagnose>(`${environment.apiUrl}/diagnose`, data).pipe(
+    return this.http.post<Diagnose>(`${environment.apiUrl}/diagnose`, data,
+    { headers: new HttpHeaders({Authorization: 'Bearer ' + this.fullToken})}).pipe(
       take(1)
     );
   }
 
   getDiagnoseLength():Observable<number>{
-    return this.http.get<number>(`${environment.apiUrl}/diagnose/diagnoseLangth`).pipe(
+    return this.http.get<number>(`${environment.apiUrl}/diagnose/diagnoseLangth`,
+    { headers: new HttpHeaders({Authorization: 'Bearer ' + this.fullToken})}).pipe(
       take(1)
   )};
 
   upvoteDiagnose(x:{_id: string}):Observable<{errors:number, msg:string, likeNumber: number}>{
     const id = this.getUserToken()['id'];
 
-    return this.http.put<{errors:number, msg:string, likeNumber: number}>(`${environment.apiUrl}/diagnose/upvote/${x._id}`, {'likeArray': id}).pipe(
+    return this.http.put<{errors:number, msg:string, likeNumber: number}>
+    (`${environment.apiUrl}/diagnose/upvote/${x._id}`, {'likeArray': id},
+    { headers: new HttpHeaders({Authorization: 'Bearer ' + this.fullToken})}).pipe(
       take(1)
     )
   };
@@ -183,14 +195,18 @@ export class ApiService {
 
   addComment(x:{_id: string, comment:string} ){
     const id = this.getUserToken()['id'];
-    return this.http.put<{errors:number, msg:string, comment: Array<{"content": string, "owner": string, "_id": string}>}>(`${environment.apiUrl}/diagnose/addcomment/${x._id}`, {'content': x.comment, 'owner': "bine", '_ownerid': id}).pipe(
+    return this.http.put<{errors:number, msg:string, comment: Array<{"content": string, "owner": string, "_id": string}>}>
+    (`${environment.apiUrl}/diagnose/addcomment/${x._id}`, {'content': x.comment, 'owner': "bine", '_ownerid': id},
+    { headers: new HttpHeaders({Authorization: 'Bearer ' + this.fullToken})}).pipe(
       take(1)
     );
   }
 
   deleteComment(diagnoseID, commentID){
     const id = this.getUserToken()['id'];
-    return this.http.put<{errors:number, msg:string, comment: Array<{"content": string, "owner": string, "_id": string}>}>(`${environment.apiUrl}/diagnose/deletecomment/${diagnoseID}`, {'ownerID': id, 'commentID' : commentID}).pipe(
+    return this.http.put<{errors:number, msg:string, comment: Array<{"content": string, "owner": string, "_id": string}>}>(
+      `${environment.apiUrl}/diagnose/deletecomment/${diagnoseID}`, {'ownerID': id, 'commentID' : commentID},
+      { headers: new HttpHeaders({Authorization: 'Bearer ' + this.fullToken})}).pipe(
       take(1)
     );
   }
@@ -199,7 +215,16 @@ export class ApiService {
 
     const id = this.getUserToken()['id'];
 
-    return this.http.put<{errors:number, msg:string, likeNumber: number}>(`${environment.apiUrl}/diagnose/downvote/${x._id}`, {'likeArray': id}).pipe(
+    return this.http.put<{errors:number, msg:string, likeNumber: number}>(
+      `${environment.apiUrl}/diagnose/downvote/${x._id}`, {'likeArray': id},
+      { headers: new HttpHeaders({Authorization: 'Bearer ' + this.fullToken})}).pipe(
+      take(1)
+    );
+  }
+
+  uploadImage(data){
+    return this.http.post<Diagnose>(`${environment.apiUrl}/photos/upload`, data,
+    { headers: new HttpHeaders({Authorization: 'Bearer ' + this.fullToken})}).pipe(
       take(1)
     );
   }

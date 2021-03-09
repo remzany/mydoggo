@@ -10,23 +10,28 @@
 
 <ion-content>
 
-  <ion-card>
+  <ion-card *ngIf="!showCameraGalery" >
     <ion-item lines="none">
-      <ion-label position="floating">TITLE</ion-label>
+      <ion-label position="floating">Title</ion-label>
       <ion-input [(ngModel)]="item.title"></ion-input>
     </ion-item>
 
     <ion-item lines="none">
-      <ion-label position="floating">DESCRIPTION</ion-label>
+      <ion-label position="floating">Description</ion-label>
       <ion-input [(ngModel)]="item.description"></ion-input>
     </ion-item>
+
+    <ion-item>
+      <ion-label>Add image </ion-label>
+      <ion-checkbox slot="end" [(ngModel)]="item.image" color="primary" (ionChange)="changeValue()"></ion-checkbox>
+    </ion-item>
+
     
-    <ion-button expand="full" (click)="takePicture()">Take picture</ion-button>
 
 
   </ion-card>
 
-  <ion-card>
+  <ion-card *ngIf="!showCameraGalery">
  
       <svg version="1.1" viewBox="0 0 59.153 34.856">
         <g transform="translate(-45.647 -103.59)">
@@ -90,12 +95,14 @@
 
   </ion-card>
 
-<!--width="43.887mm" height="34.856mm" viewBox="0 0 43.887 34.856"-->
-
-
+<ion-card *ngIf="showCameraGalery" class="animate__animated animate__fadeInRight">
+    <img src="{{ImagePath}}" />
+    <img src="{{galleryImage}}" />
+    <ion-button expand="full" (click)="selectImage()">Select image</ion-button>
+</ion-card>
 
 </ion-content>
 
 <ion-footer>
-<ion-button expand="full" (click)="save()">SAVE</ion-button>
+<ion-button expand="full" (click)="save()">{{imageItem.display}}</ion-button>
 </ion-footer>

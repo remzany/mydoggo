@@ -13,27 +13,26 @@ export class ReminderComponent implements OnInit {
 
   text:string = "";
   todaysDate: String = new Date().toISOString();
-
+  time:string = "";
 
   //set default timer, probably same as before
-  time:string = "";
+ 
 
   constructor(private localNotifications: LocalNotifications, private platform:Platform) { }
 
   ngOnInit() {
-
   }
 
   createNotification(){
+    let mergedDateTime = this.todaysDate.split("T")[0] + this.time.split("T")[1];
     try{
-      let x = this.localNotifications.schedule({
+      this.localNotifications.schedule({
         id: 1,
-        text: 'Single ILocalNotification',
+        text: this.text,
         sound: this.platform.is('android')? 'file://sound.mp3': 'file://beep.caf',
-        data: { secret: this.text }
+        data: { secret: this.text },
+        trigger: { at: new Date(mergedDateTime) }
       });
-
-      alert(x);
     }catch(e){
       alert(e);
     }finally{

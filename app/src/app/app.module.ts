@@ -10,8 +10,6 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
 import { IonicStorageModule, Storage } from '@ionic/storage';
-import { HttpClientModule, HttpClient  } from '@angular/common/http';
-
 import { SecureStorage} from '@ionic-native/secure-storage/ngx';
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 
@@ -20,6 +18,16 @@ import { TOKEN_KEY } from './services/api.service';
 import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 
 import { Camera } from '@ionic-native/camera/ngx';
+import { File } from '@ionic-native/file/ngx';
+import { Crop } from '@ionic-native/crop/ngx';
+import { WebView } from '@ionic-native/ionic-webview/ngx';
+import { Base64 } from '@ionic-native/base64/ngx';
+ 
+import {
+  HttpClientModule,
+  HttpClient,
+  HttpBackend
+} from '@angular/common/http';
 
 export function jwtOptionsFactory(storage) {
   return {
@@ -30,7 +38,7 @@ export function jwtOptionsFactory(storage) {
   }
 }
 
-//TRANSLATION
+// TRANSLATION
 
 import { TranslateModule, TranslateLoader, TranslateCompiler } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -39,9 +47,12 @@ export function LanguageLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
 }
 
-export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http);
+
+
+export function translateHttpLoaderFactory(httpBackend: HttpBackend): TranslateHttpLoader {
+  return new TranslateHttpLoader(new HttpClient(httpBackend));
 }
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -59,9 +70,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      },
+        deps: [HttpBackend],
+        useFactory: translateHttpLoaderFactory
+    },
       compiler: {
         provide: TranslateCompiler,
         useClass: TranslateMessageFormatCompiler
@@ -78,6 +89,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     SecureStorage,
     LocalNotifications,
     Camera,
+    File,
+    Crop,
+    WebView,
+    Base64,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

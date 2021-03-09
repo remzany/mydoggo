@@ -2,6 +2,14 @@ import { Component, OnInit, ElementRef, ViewChild, Renderer2 } from '@angular/co
 import {ApiService} from '../../services/api.service';
 import { ModalController } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { File } from '@ionic-native/file/ngx';
+import { ActionSheetController } from '@ionic/angular';
+import { Crop } from '@ionic-native/crop/ngx';
+import { Platform } from '@ionic/angular';
+import { WebView } from '@ionic-native/ionic-webview/ngx';
+import { Base64 } from '@ionic-native/base64/ngx';
+import { DomSanitizer } from '@angular/platform-browser';
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 
 @Component({
   selector: 'app-diagnose-add',
@@ -13,14 +21,40 @@ export class DiagnoseAddComponent implements OnInit {
   lastSelected_01:any = null;
   lastSelected_02:any = null;
 
-  item:{title:string, description:string} = {title:"", description:""};
+  item:{title:string, description:string, image:boolean} = {title:"", description:"", image: false};
   selectedTag:string = "";
+
+  imageItem: {display:string} = {display: "save"};
+  diagnoseID: string;
+
+  showCameraGalery: boolean = false;
+
+  ImagePath = "";
+  galleryImage:any;
+  
+  isLoading = false;
+
+  imagePickerOptions = {
+    maximumImagesCount: 1,
+    quality: 50
+  };
 
 
   ngAfterViewInit(){
   }
 
-  constructor(private renderer:Renderer2, private api:ApiService, private modal:ModalController, private camera:Camera) { }
+  constructor(
+    private renderer:Renderer2,
+     private api:ApiService,
+      private modal:ModalController,
+      private file: File,
+       private camera:Camera,
+       private crop:Crop,
+       private platform: Platform,
+       private webview:WebView,
+       private base64:Base64,
+       private domSanitizer:DomSanitizer,
+        public actionSheetController: ActionSheetController) { }
 
   ngOnInit() {}
 
@@ -64,45 +98,122 @@ export class DiagnoseAddComponent implements OnInit {
   }
 
   save(){
-    let x = 0;
+    if(this.item.title == "" && this.item.title == null) return;
+    if(this.item.description == "" && this.item.description == null) return;
+    if(this.selectedTag == "" && this.selectedTag == null) return;
 
-    if(this.item.title != "" && this.item.title != null)
-      x++;
-
-    if(this.item.description != "" && this.item.description != null)
-      x++;
-
-    if(this.selectedTag != "" && this.selectedTag != null)
-      x++;
-
-    if(x == 3)
-      this.createDiagnose();
+    this.createDiagnose();
   }
 
-  takePicture(){
+  changeValue(){
+    this.item.image != this.item.image;
+
+    this.imageItem.display = this.item.image ? "next" : "save";
+
+  }
+    
+  createDiagnose(){
+    this.api.createDiagnose(this.item.title, this.item.description, this.selectedTag).subscribe(res => {
+      this.diagnoseID = res._id;
+      
+      if(!this.item.image) this.modal.dismiss();
+      else this.showCameraGalery = true;
+    })
+  }
+
+  async selectImage() {
+    const actionSheet = await this.actionSheetController.create({
+      header: "Select Image source",
+      buttons: [
+      {
+        text: 'Use Camera',
+        handler: () => {
+          this.pickImage(this.camera.PictureSourceType.CAMERA);
+        }
+      },
+      {
+        text: 'Cancel',
+        role: 'cancel'
+      }
+      ]
+    });
+    await actionSheet.present();
+  }
+
+  pickImage(sourceType) {
     const options: CameraOptions = {
       quality: 100,
+      sourceType: sourceType,
       destinationType: this.camera.DestinationType.FILE_URI,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE
     }
-    
     this.camera.getPicture(options).then((imageData) => {
-      // imageData is either a base64 encoded string or a file URI
-      // If it's base64 (DATA_URL):
-      let base64Image = 'data:image/jpeg;base64,' + imageData;
-     }, (err) => {
+      this.cropImage(imageData, 'camera')
+
+    }, (err) => {
       // Handle error
-     });
+    });
   }
 
-  createDiagnose(){
-    this.api.createDiagnose(this.item.title, this.item.description, this.selectedTag).subscribe(res => {
-      console.log(res);
-      this.modal.dismiss();
-    })
 
+
+  public openGallery() {
+
+    const options: CameraOptions = {
+      quality: 100,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+    }; this.camera.getPicture(options).then((fileUri) => {
+      let nativePath = '';
+      fileUri = "file://" + fileUri;
+      window['resolveLocalFileSystemURL'](fileUri, (fileEntry: { toURL: () => string; }) => {
+        nativePath = fileEntry.toURL();
+        this.cropImage(nativePath, 'galery')
+      }, (err: any) => {
+      }); 
+    });
+  }
+
+
+  cropImage(url: string, source: string) {
+    this.crop.crop(url, { quality: 100, targetWidth: -1, targetHeight: -1 })
+      .then(
+        newImage => {
+          console.log('new image path is: ' + newImage);
+          source === 'camera' ? this.showImage(newImage) : this.setGalleryImage(newImage);
+        },
+        error => alert(JSON.stringify(error))
+      );
+  }
+
+  setGalleryImage(newImage: string) {
+    if (this.platform.is('ios')) {
+      newImage = this.webview.convertFileSrc(newImage);
+    }
+    this.base64.encodeFile(newImage).then((base64File: string) => {
+      const imageSrc = base64File.split(',');
+      this.galleryImage =
+        this.domSanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,' +
+          imageSrc[1]);
+    });
+ } 
+
+  showImage(ImagePath) {
+    this.isLoading = true;
+    var copyPath = ImagePath;
+    var splitPath = copyPath.split('/');
+    var imageName = splitPath[splitPath.length - 1].split("?")[0];
+    var filePath = ImagePath.split(imageName)[0];
     
-  }
+    this.file.readAsDataURL(filePath, imageName).then(base64 => {
+      this.ImagePath = base64;
+      this.isLoading = false;
+    }, error => {
+      this.isLoading = false;
+    });
 
+  }
 }

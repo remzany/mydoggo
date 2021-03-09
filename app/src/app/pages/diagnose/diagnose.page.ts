@@ -39,8 +39,7 @@ export class DiagnosePage implements OnInit {
     });
 
     popover.onDidDismiss().then(data => {
-      console.log(data);
-
+      
       if(data.data != null || data.data != ""){
         if(data.data == "newpost")
           this.openModal();
