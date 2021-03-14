@@ -1,7 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 
-import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { Platform } from '@ionic/angular';
+
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
+import { Calendar } from '@ionic-native/calendar/ngx';
+
+import { ModalController } from '@ionic/angular';
+
+interface Reminder{
+    title:string,
+    date:{
+      year:string, month:string, day: string, hour: string, minute: string
+    },
+    recurrence:string
+};
 
 @Component({
   selector: 'app-reminder',
@@ -11,35 +23,50 @@ import { Platform } from '@ionic/angular';
 
 export class ReminderComponent implements OnInit {
 
-  text:string = "";
-  todaysDate: String = new Date().toISOString();
+  text:string;
+  todaysDate: any;
+  time:any;
+  recurrence = false;
+  recurrenceValue:string;
+  reminders: Array<Reminder>
 
+  constructor(
+    private platform:Platform,
+    private localNotification:LocalNotifications,
+    private calendar: Calendar,
+    private modal:ModalController) { }
 
-  //set default timer, probably same as before
-  time:string = "";
+  async ngOnInit() {
+    if(!this.localNotification.hasPermission)
+      await this.localNotification.requestPermission()
 
-  constructor(private localNotifications: LocalNotifications, private platform:Platform) { }
-
-  ngOnInit() {
-
+      await this.calendar.requestReadWritePermission();
   }
 
-  createNotification(){
-    try{
-      let x = this.localNotifications.schedule({
-        id: 1,
-        text: 'Single ILocalNotification',
-        sound: this.platform.is('android')? 'file://sound.mp3': 'file://beep.caf',
-        data: { secret: this.text }
-      });
-
-      alert(x);
-    }catch(e){
-      alert(e);
-    }finally{
-
+  async createCalender(){
+    const dateObject = {
+      year: this.todaysDate.split('T')[0].split('-')[0],
+      month: this.todaysDate.split('T')[0].split('-')[1],
+      day: this.todaysDate.split('T')[0].split('-')[2],
+      hour: this.time.split('T')[1].split('.')[0].split(':')[0],
+      minute: this.time.split('T')[1].split('.')[0].split(':')[1],
+      second: 0,
+      miliseconds: 0
     }
 
+    const calOptions = this.calendar.getCalendarOptions();
+    calOptions.id = new Date().getTime().toString();
+    if(this.recurrence) calOptions.recurrence = this.recurrenceValue;
+    await this.calendar.createEventInteractively(this.text,'','',
+    new Date(dateObject.year,(dateObject.month-1),dateObject.day,dateObject.hour,dateObject.minute)).catch(err => {
+      alert(err)
+    });
+
+
+    this.modal.dismiss();
   }
 
+  segmentChanged(ev:any){
+    this.recurrenceValue = ev.target.value
+  }
 }

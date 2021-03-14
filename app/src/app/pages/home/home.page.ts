@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import {HttpRequestService} from '../../services/http-request.service';
 
 import { ModalController, AlertController } from '@ionic/angular';
 
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 
 import { SecureStorage, SecureStorageObject } from '@ionic-native/secure-storage/ngx';
 
@@ -15,7 +15,6 @@ import { TranslateConfigService } from '../../services/translate-config.service'
 import {TranslateService} from '@ngx-translate/core';
 
 import {ReminderComponent } from '../../components/reminder/reminder.component';
- 
 import { Platform } from '@ionic/angular';
 
 @Component({
@@ -23,22 +22,22 @@ import { Platform } from '@ionic/angular';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit{
 
-  dogName:string = "/";
-  dogBreed:string = "/";
+  dogName = '/';
+  dogBreed = '/';
   todos:Array<string> = [];
   user:User;
 
   selectedLanguage:string;
-  todo_label:string = "";
+  todo_label = '';
 
   constructor(
     private alert:AlertController,
-    private api:ApiService, 
-    private httpReq: HttpRequestService, 
+    private api:ApiService,
+    private httpReq: HttpRequestService,
     private modalController: ModalController,
-    private router:Router, 
+    private router:Router,
     private secureStorage: SecureStorage,
     private translateConfigService: TranslateConfigService,
     private translate:TranslateService,
@@ -46,7 +45,7 @@ export class HomePage {
     ){}
 
   ngOnInit(){
-    console.log("hello from home page");
+    console.log('hello from home page');
     this.loadUserData();
 
     this.translateConfigService.getDefaultLanguage();
@@ -58,7 +57,7 @@ export class HomePage {
       console.log(a);
       this.user = a;
 
-      if(a.dogBreed == "" && a.dogName == "" || a.dogBreed == null && a.dogName == null){
+      if(a.dogBreed === '' && a.dogName === '' || a.dogBreed === null && a.dogName === null){
         this.openAddDog();
       }else{
         this.dogBreed = this.user.dogBreed;
@@ -68,15 +67,14 @@ export class HomePage {
 
     })
   }
-  
   async openTOdo(){
 
     const alert = await this.alert.create({
       header: this.translate.instant('HOME.todo_label'),
       inputs:[
         {
-          name: "todo",
-          type: "text"
+          name: 'todo',
+          type: 'text'
         }
       ],
       buttons: [
@@ -84,7 +82,7 @@ export class HomePage {
           text: 'Ok',
           handler: (a) => {
             this.todos.push(a.todo);
-                this.api.updateUser(this.user._id, {"todos": this.todos}).subscribe(a => {
+                this.api.updateUser(this.user._id, {todos: this.todos}).subscribe(a => {
                   console.log(a);
                 })
               }
@@ -97,13 +95,12 @@ export class HomePage {
   signOut() {
     this.api.logout();
   }
-  
   delete(todo){
-    let index = this.todos.indexOf(todo);
+    const index = this.todos.indexOf(todo);
 
     if(index > -1){
       this.todos.splice(index, 1);
-      this.api.updateUser(this.user._id, {"todos": this.todos}).subscribe(a => {
+      this.api.updateUser(this.user._id, {todos: this.todos}).subscribe(a => {
         console.log(a);
       })
     }
@@ -111,11 +108,11 @@ export class HomePage {
   }
 
   done(todo){
-    let index = this.todos.indexOf(todo);
+    const index = this.todos.indexOf(todo);
 
     if(index > -1){
       this.todos.splice(index, 1);
-      this.api.updateUser(this.user._id, {"todos": this.todos}).subscribe(a => {
+      this.api.updateUser(this.user._id, {todos: this.todos}).subscribe(a => {
         console.log(a);
       })
     }
@@ -131,7 +128,7 @@ export class HomePage {
               this.router.navigateByUrl('/dog-form');
             }
           },
-          {text: "No"}
+          {text: 'No'}
         ]})
         await alert.present();
   }
@@ -173,6 +170,4 @@ export class HomePage {
     }, 2000);
 
   }
-  
-  
 }

@@ -31,7 +31,12 @@
 		"day" : "dan",
 		"time": "čas",
 		"timer" : "Izberi čas",
-		"useMobile" : "Za uporabo opomnika potrebujete mobilno napravo"
+		"useMobile" : "Za uporabo opomnika potrebujete mobilno napravo",
+		"recurrence": "Ponovitev",
+		"daily" : "Dnevno",
+		"weekly" : "Tedensko",
+		"monthly" : "Mesečno",
+		"yearly" : "Letno"
 
 	},
 	"BUTTON" : {

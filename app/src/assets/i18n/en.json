@@ -31,7 +31,12 @@
 		"description": "Please write description",
 		"time": "time",
 		"timer" : "select time",
-		"useMobile" : "You need mobile device to use notifications"
+		"useMobile" : "You need mobile device to use notifications",
+		"recurrence" : "Set Recurrence",
+		"daily" : "daily",
+		"weekly" : "weekly",
+		"monthly" : "monthly",
+		"yearly" : "yearly"
 	},
 	"BUTTON" : {
 		"create": "create",

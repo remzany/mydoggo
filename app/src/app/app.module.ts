@@ -19,6 +19,7 @@ import { TOKEN_KEY } from './services/api.service';
 import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 
 import { Camera } from '@ionic-native/camera/ngx';
+import { Calendar } from '@ionic-native/calendar/ngx';
 
 import {
   HTTP_INTERCEPTORS,
@@ -84,6 +85,7 @@ export function translateHttpLoaderFactory(httpBackend: HttpBackend): TranslateH
     SecureStorage,
     LocalNotifications,
     Camera,
+    Calendar,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     // {
     //   provide: HTTP_INTERCEPTORS,
