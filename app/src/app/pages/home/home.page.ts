@@ -49,7 +49,6 @@ export class HomePage implements OnInit{
     this.loadUserData();
 
     this.translateConfigService.getDefaultLanguage();
- 
   }
 
   loadUserData(){

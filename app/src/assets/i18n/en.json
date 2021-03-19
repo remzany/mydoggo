@@ -26,6 +26,7 @@
 		"usererror":"Something went wrong, please try again later"
 	},
 	"REMINDER": {
+		"name": "Reminder",
 		"date" : "select date",
 		"day" : "day",
 		"description": "Please write description",
