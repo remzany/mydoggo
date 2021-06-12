@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'api',
+  apiUrl: 'https://app.moj-ljubljencek.si/api',
   //apiUrl: 'api/'
 };
 

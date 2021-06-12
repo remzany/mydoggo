@@ -3,7 +3,8 @@
 		"title": "Home",
 		"todo_label": "Add task",
 		"todo_text": "{count, plural, =0{No tasks} one{There is only {count} task left} other{There are {count} tasks left to do}}",
-		"addDog": "Would you like to add a dog?"
+		"add_dog": "Would you like to add a dog?",
+		"no_dog_info": "You dont have a dog in the aplication"
 	},
 	"LOGIN": {
 		"username": "Username",
@@ -23,7 +24,9 @@
 		"login_label": "Login failed",
 		"usernone":"User not found",
 		"userwrong":"Wrong password",
-		"usererror":"Something went wrong, please try again later"
+		"usererror":"Something went wrong, please try again later",
+		"lang_slo": "slovenian",
+		"lang_ang": "english"
 	},
 	"REMINDER": {
 		"date" : "select date",
@@ -33,9 +36,17 @@
 		"timer" : "select time",
 		"useMobile" : "You need mobile device to use notifications"
 	},
+	"REGISTER": {
+		"information": "Account information"
+	},
 	"BUTTON" : {
 		"create": "create",
 		"skip": "skip",
-		"add": "add"
+		"add": "add",
+		"select": "select",
+		"cancel": "cancel",
+		"yes": "yes",
+		"no": "no",
+		"add_dog": "add dog"
 	}
 }

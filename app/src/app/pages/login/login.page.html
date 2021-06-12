@@ -4,20 +4,13 @@
 
     <ion-button class="ion-padding-end" slot="end">
 
-      <ion-select value="slo" (ionChange)="languageSettings($event)">
-        <ion-select-option value="slo" >Slovenian</ion-select-option>
-        <ion-select-option value="eng" >English</ion-select-option>
+      <ion-select value="slo" (ionChange)="languageSettings($event)" [okText]=" 'BUTTON.select' | translate " [cancelText]="'BUTTON.cancel' | translate">
+        <ion-select-option value="slo" > {{ 'LOGIN.lang_slo' | translate }} </ion-select-option>
+        <ion-select-option value="eng" > {{ 'LOGIN.lang_ang' | translate }}</ion-select-option>
       </ion-select>
 
       <ion-icon slot="icon-only" name="language"></ion-icon>
     </ion-button>
-
-
-
-
-
-
-      
   </ion-toolbar>
 </ion-header>
  

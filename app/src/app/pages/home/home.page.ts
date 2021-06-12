@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import {HttpRequestService} from '../../services/http-request.service';
 
@@ -16,14 +16,14 @@ import {TranslateService} from '@ngx-translate/core';
 
 import {ReminderComponent } from '../../components/reminder/reminder.component';
  
-import { Platform } from '@ionic/angular';
+import { Platform} from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit{
 
   dogName:string = "/";
   dogBreed:string = "/";
@@ -46,19 +46,16 @@ export class HomePage {
     ){}
 
   ngOnInit(){
-    console.log("hello from home page");
     this.loadUserData();
 
     this.translateConfigService.getDefaultLanguage();
- 
   }
 
   loadUserData(){
     this.api.getUserData().subscribe(a =>{
-      console.log(a);
       this.user = a;
 
-      if(a.dogBreed == "" && a.dogName == "" || a.dogBreed == null && a.dogName == null){
+      if(a.dogBreed === undefined && a.dogName === undefined){
         this.openAddDog();
       }else{
         this.dogBreed = this.user.dogBreed;
@@ -123,15 +120,15 @@ export class HomePage {
 
   async openAddDog(){
     const alert = await this.alert.create({
-      header: `Would you like to add a dog?`,
+      header: this.translate.instant('HOME.add_dog'),
         buttons: [
           {
-            text: 'Yes',
+            text: this.translate.instant('BUTTON.yes'),
             handler: () => {
               this.router.navigateByUrl('/dog-form');
             }
           },
-          {text: "No"}
+          {text: this.translate.instant('BUTTON.no'),}
         ]})
         await alert.present();
   }

@@ -16,12 +16,12 @@ import {TranslateService} from '@ngx-translate/core';
 })
 export class LoginPage implements OnInit {
   credentials = {
-    email: 'test1@test1.com',
-    password: 'marusa'
+    email: 'pinko@palinko.com',
+    password: 'Test_1234'
   };
 
   languages: Array<string> = ['Slovenian', 'English']
- 
+
   constructor(
     private api: ApiService,
     private router: Router,
@@ -30,11 +30,12 @@ export class LoginPage implements OnInit {
     private translateConfigService: TranslateConfigService,
     private translate:TranslateService
   ) {}
- 
+
   ngOnInit() {
-    this.translateConfigService.getDefaultLanguage();
+    // this.translateConfigService.getDefaultLanguage();
+    this.translateConfigService.setLanguage('sl');
    }
- 
+
   async login() {
     const loading = await this.loadingCtrl.create();
     loading.present();
@@ -53,7 +54,7 @@ export class LoginPage implements OnInit {
       const alert = await this.alertCtrl.create({
         header: this.translate.instant('LOGIN.login_label'),
         message: this.translate.instant(x),
-        buttons: ['OK']
+        buttons: ['ok']
       });
       await alert.present();
     });

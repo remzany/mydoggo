@@ -3,7 +3,8 @@
 		"title": "Domača stran",
 		"todo_label": "Dodaj opravilo",
 		"todo_text": "{count, plural, =0{Nimate opravil} one{Imate le še eno opravilo!} few{opraviti morate še {count} opravila} other{opraviti morate še {count} opravil}}",
-		"addDog": "Želite dodati psa?"
+		"add_dog": "Želite dodati psa?",
+		"no_dog_info": "Zasledili smo, da nimate psa v aplikaciji"
 	},
 	"LOGIN": {
 		"username": "Uporabniško ime",
@@ -23,7 +24,12 @@
 		"login_label": "Prijava neuspešna",
 		"usernone":"Račun ne obstaja",
 		"userwrong":"Napačno geslo",
-		"usererror":"Nakaj je šlo narobe, poskusite kasneje"
+		"usererror":"Nakaj je šlo narobe, poskusite kasneje",
+		"lang_slo": "slovenščina",
+		"lang_ang": "angleščina"
+	},
+	"REGISTER": {
+		"information": "Podatki o računu"
 	},
 	"REMINDER": {
 		"description": "vnesite besedilo",
@@ -32,11 +38,15 @@
 		"time": "čas",
 		"timer" : "Izberi čas",
 		"useMobile" : "Za uporabo opomnika potrebujete mobilno napravo"
-
 	},
 	"BUTTON" : {
 		"create": "ustvari",
 		"skip": "preskoči",
-		"add": "dodaj"
+		"add": "dodaj",
+		"select": "izberi",
+		"cancel": "zavrni",
+		"yes": "da",
+		"no": "ne",
+		"add_dog": "dodaj psa"
 	}
 }

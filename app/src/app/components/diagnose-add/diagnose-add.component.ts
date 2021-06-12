@@ -203,10 +203,10 @@ export class DiagnoseAddComponent implements OnInit {
 
   showImage(ImagePath) {
     this.isLoading = true;
-    var copyPath = ImagePath;
-    var splitPath = copyPath.split('/');
-    var imageName = splitPath[splitPath.length - 1].split("?")[0];
-    var filePath = ImagePath.split(imageName)[0];
+    const copyPath = ImagePath;
+    const splitPath = copyPath.split('/');
+    const imageName = splitPath[splitPath.length - 1].split("?")[0];
+    const filePath = ImagePath.split(imageName)[0];
     
     this.file.readAsDataURL(filePath, imageName).then(base64 => {
       this.ImagePath = base64;
