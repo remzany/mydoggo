@@ -22,14 +22,10 @@
           <img src="https://image.flaticon.com/icons/svg/616/616554.svg">
         </ion-avatar>
 
-        <div *ngIf="a.dogBreed !== undefined; showButton">
-          <ion-card-title class="ion-padding">{{dogName}}</ion-card-title>
-          <ion-card-subtitle >{{dogBreed}}</ion-card-subtitle>
-        </div>
-        <div #showButton>
-          <ion-button translate (click)="openAddDog()">dodaj psa</ion-button>
-          
-        </div>
+          <ion-card-title *ngIf="doesUserHaveDog" class="ion-padding">{{dogName}}</ion-card-title>
+          <ion-card-subtitle *ngIf="doesUserHaveDog" >{{dogBreed}}</ion-card-subtitle>
+
+          <ion-button class="ion-margin" *ngIf="!doesUserHaveDog" (click)="openAddDog()"> {{ 'BUTTON.add_dog' | translate }}</ion-button>
         
         
       </ion-item>

@@ -26,7 +26,7 @@ export class DogFormPage implements OnInit {
   breed:Array<string> = [];
   selectedBread: string = "";
   
-  dogData:DogFormData = {breed:"",name:""};
+  dogData:DogFormData = {breed:'',name:'', birthday: ''};
   user:User;
 
   constructor(private navCtrl:NavController, private alert:AlertController, private httpReq: HttpRequestService, private api:ApiService, private router:Router) { }
@@ -50,7 +50,7 @@ export class DogFormPage implements OnInit {
     this.api.updateUser(this.user._id, data).subscribe(res =>{
       console.log(res);
 
-      this.router.navigateByUrl('/tabs');
+      this.api.logout();
 
     })
   }

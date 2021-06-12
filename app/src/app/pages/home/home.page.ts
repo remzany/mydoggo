@@ -29,6 +29,7 @@ export class HomePage implements OnInit{
   dogBreed:string = "/";
   todos:Array<string> = [];
   user:User;
+  doesUserHaveDog = false;
 
   selectedLanguage:string;
   todo_label:string = "";
@@ -38,7 +39,7 @@ export class HomePage implements OnInit{
     private api:ApiService, 
     private httpReq: HttpRequestService, 
     private modalController: ModalController,
-    private router:Router, 
+    private router:Router,
     private secureStorage: SecureStorage,
     private translateConfigService: TranslateConfigService,
     private translate:TranslateService,
@@ -54,15 +55,15 @@ export class HomePage implements OnInit{
   loadUserData(){
     this.api.getUserData().subscribe(a =>{
       this.user = a;
-
       if(a.dogBreed === undefined && a.dogName === undefined){
         this.openAddDog();
+        this.doesUserHaveDog = false;
       }else{
         this.dogBreed = this.user.dogBreed;
         this.dogName = this.user.dogName;
         this.todos = this.user.todos;
+        this.doesUserHaveDog = true;
       }
-
     })
   }
   
@@ -161,8 +162,17 @@ export class HomePage implements OnInit{
 
   doRefresh(event){
     this.api.getUserData().subscribe(a =>{
-      console.log(a);
       this.todos = a.todos;
+
+      if(a.dogBreed === undefined && a.dogName === undefined){
+        this.doesUserHaveDog = false;
+      }else{
+        this.dogBreed = this.user.dogBreed;
+        this.dogName = this.user.dogName;
+        this.todos = this.user.todos;
+        this.doesUserHaveDog = true;
+      }
+
     });
 
     setTimeout(() => {
