@@ -96,8 +96,7 @@
   </ion-card>
 
 <ion-card *ngIf="showCameraGalery" class="animate__animated animate__fadeInRight">
-    <img src="{{ImagePath}}" />
-    <img src="{{galleryImage}}" />
+    <img *ngIf="ImagePath !=''" [src]="ImagePath" />
     <ion-button expand="full" (click)="selectImage()">Select image</ion-button>
 </ion-card>
 

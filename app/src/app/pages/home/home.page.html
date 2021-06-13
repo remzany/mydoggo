@@ -18,8 +18,9 @@
     <ion-card-header class="ion-padding">
       <ion-item lines="none">
 
-        <ion-avatar>
-          <img src="https://image.flaticon.com/icons/svg/616/616554.svg">
+        <ion-avatar (click)="openGallery()">
+          <img *ngIf="ImagePath == '' " src="https://image.flaticon.com/icons/svg/616/616554.svg">
+          <img *ngIf="ImagePath !=''" [src]="ImagePath" />
         </ion-avatar>
 
           <ion-card-title *ngIf="doesUserHaveDog" class="ion-padding">{{dogName}}</ion-card-title>
@@ -39,7 +40,7 @@
         <ion-card-header>
           <ion-item lines="none">
             <ion-icon slot="start" src="../assets/icon/task-icon.svg"></ion-icon>
-            <p translate [translateParams]="{ count: todos.length }"> {{ 'HOME.todo_text' | translate }} </p>
+            <p> {{ 'HOME.todo_text' | translate: { count: todos.length } }} </p>
             <ion-icon slot="end" name="add" (click)="openTOdo()"></ion-icon>
 
             <ion-icon (click)="reminder()" slot="end" name="alarm"></ion-icon>

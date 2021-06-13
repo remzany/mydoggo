@@ -1,5 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild, Renderer2 } from '@angular/core';
 import {ApiService} from '../../services/api.service';
+import {PhotoGalleryService} from '../../services/photo-gallery.service';
 import { ModalController } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { File } from '@ionic-native/file/ngx';
@@ -54,7 +55,8 @@ export class DiagnoseAddComponent implements OnInit {
        private webview:WebView,
        private base64:Base64,
        private domSanitizer:DomSanitizer,
-        public actionSheetController: ActionSheetController) { }
+      public actionSheetController: ActionSheetController,
+      private photoGalleryService: PhotoGalleryService) { }
 
   ngOnInit() {}
 
@@ -128,7 +130,13 @@ export class DiagnoseAddComponent implements OnInit {
       {
         text: 'Use Camera',
         handler: () => {
-          this.pickImage(this.camera.PictureSourceType.CAMERA);
+          this.pickImage(this.camera.PictureSourceType.CAMERA, 'camera');
+        }
+      },
+      {
+        text: 'Use Gallery',
+        handler: () => {
+          this.pickImage(this.camera.PictureSourceType.PHOTOLIBRARY, 'gallery');
         }
       },
       {
@@ -140,7 +148,7 @@ export class DiagnoseAddComponent implements OnInit {
     await actionSheet.present();
   }
 
-  pickImage(sourceType) {
+  pickImage(sourceType, type) {
     const options: CameraOptions = {
       quality: 100,
       sourceType: sourceType,
@@ -148,32 +156,30 @@ export class DiagnoseAddComponent implements OnInit {
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE
     }
-    this.camera.getPicture(options).then((imageData) => {
-      this.cropImage(imageData, 'camera')
+    
+    if(type === "camera"){
+      this.camera.getPicture(options).then((imageData) => {
+        this.cropImage(imageData, 'camera')
+  
+      }, (err) => {
+        // Handle error
+      });
+    }else{
+      this.openGallery();
+    }
 
-    }, (err) => {
-      // Handle error
-    });
   }
 
 
 
   public openGallery() {
-
     const options: CameraOptions = {
       quality: 100,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-      destinationType: this.camera.DestinationType.FILE_URI,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      saveToPhotoAlbum:false
     }; this.camera.getPicture(options).then((fileUri) => {
-      let nativePath = '';
-      fileUri = "file://" + fileUri;
-      window['resolveLocalFileSystemURL'](fileUri, (fileEntry: { toURL: () => string; }) => {
-        nativePath = fileEntry.toURL();
-        this.cropImage(nativePath, 'galery')
-      }, (err: any) => {
-      }); 
+      this.ImagePath = "data:image/jpeg;base64," + fileUri;
     });
   }
 

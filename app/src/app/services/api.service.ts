@@ -127,7 +127,7 @@ export class ApiService {
  
   logout() {
     this.storage.remove(TOKEN_KEY).then(() => {
-      this.router.navigateByUrl('/');
+      this.router.navigateByUrl('');
       this.userData.next(null);
     });
   }
@@ -227,5 +227,15 @@ export class ApiService {
     { headers: new HttpHeaders({Authorization: 'Bearer ' + this.fullToken})}).pipe(
       take(1)
     );
+  }
+
+  async getLocalDogBaseImage(key){
+    let x = await this.storage.get(key);
+    return x;
+  }
+
+  async saveLocalDogBaseImage(key, value){
+    let x = await this.storage.set(key, value);
+    return x;
   }
 }

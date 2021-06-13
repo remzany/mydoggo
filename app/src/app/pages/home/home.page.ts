@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import {HttpRequestService} from '../../services/http-request.service';
+import {PhotoGalleryService} from '../../services/photo-gallery.service';
 
 import { ModalController, AlertController } from '@ionic/angular';
 
@@ -33,6 +34,7 @@ export class HomePage implements OnInit{
 
   selectedLanguage:string;
   todo_label = '';
+  ImagePath:string = "";
 
   constructor(
     private alert:AlertController,
@@ -43,12 +45,15 @@ export class HomePage implements OnInit{
     private secureStorage: SecureStorage,
     private translateConfigService: TranslateConfigService,
     private translate:TranslateService,
-    private platform: Platform
+    private platform: Platform,
+    private photoLibrary: PhotoGalleryService
     ){}
 
-  ngOnInit(){
+  async ngOnInit(){
     this.loadUserData();
-
+    let x = await this.api.getLocalDogBaseImage('dog_image');
+    this.ImagePath = x == null ? "" : x;
+    
     this.translateConfigService.getDefaultLanguage();
   }
 
@@ -115,6 +120,14 @@ export class HomePage implements OnInit{
         console.log(a);
       })
     }
+  }
+
+  async openGallery(){
+    
+    this.photoLibrary.openGallery().then(res => {
+      this.ImagePath = res;
+      this.api.saveLocalDogBaseImage("dog_image", this.ImagePath);
+    });
   }
 
   async openAddDog(){

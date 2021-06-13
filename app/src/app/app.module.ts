@@ -23,6 +23,7 @@ import { Crop } from '@ionic-native/crop/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { Base64 } from '@ionic-native/base64/ngx';
 import { Calendar } from '@ionic-native/calendar/ngx';
+import { PhotoLibrary } from '@ionic-native/photo-library/ngx';
 
 import {
   HttpClientModule,
@@ -35,7 +36,7 @@ export function jwtOptionsFactory(storage) {
     tokenGetter: () => {
       return storage.get(TOKEN_KEY);
     },
-    whitelistedDomains: ['83.212.82.27:80'] // Add your Heroku URL in here!
+    whitelistedDomains: ['https://app.moj-ljubljencek.si/api'] // Add your Heroku URL in here!
   }
 }
 
@@ -95,7 +96,8 @@ export function translateHttpLoaderFactory(httpBackend: HttpBackend): TranslateH
     WebView,
     Base64,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    Calendar
+    Calendar,
+    PhotoLibrary
     // {
     //   provide: HTTP_INTERCEPTORS,
     //   useClass: AuthConfigInterceptor,
