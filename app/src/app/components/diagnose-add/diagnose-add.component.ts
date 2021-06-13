@@ -31,7 +31,7 @@ export class DiagnoseAddComponent implements OnInit {
   showCameraGalery: boolean = false;
 
   ImagePath = "";
-  galleryImage:any;
+  // galleryImage:any;
   
   isLoading = false;
 
@@ -104,7 +104,8 @@ export class DiagnoseAddComponent implements OnInit {
     if(this.item.description == "" && this.item.description == null) return;
     if(this.selectedTag == "" && this.selectedTag == null) return;
 
-    this.createDiagnose();
+    if(this.item.image) this.showCameraGalery = true;
+    else this.createDiagnose(this.item.title, this.item.description, this.selectedTag);
   }
 
   changeValue(){
@@ -113,13 +114,17 @@ export class DiagnoseAddComponent implements OnInit {
     this.imageItem.display = this.item.image ? "next" : "save";
 
   }
+
+  confirmImage(){
+    this.createDiagnose(this.item.title, this.item.description, this.selectedTag, this.ImagePath)
+  }
     
-  createDiagnose(){
-    this.api.createDiagnose(this.item.title, this.item.description, this.selectedTag).subscribe(res => {
+  createDiagnose(title, description, tag, image?){
+    this.api.createDiagnose(title, description, tag, image ).subscribe(res => {
       this.diagnoseID = res._id;
       
-      if(!this.item.image) this.modal.dismiss();
-      else this.showCameraGalery = true;
+      this.modal.dismiss();
+
     })
   }
 
@@ -189,23 +194,23 @@ export class DiagnoseAddComponent implements OnInit {
       .then(
         newImage => {
           console.log('new image path is: ' + newImage);
-          source === 'camera' ? this.showImage(newImage) : this.setGalleryImage(newImage);
+          if(source === 'camera') this.showImage(newImage);
         },
         error => alert(JSON.stringify(error))
       );
   }
 
-  setGalleryImage(newImage: string) {
-    if (this.platform.is('ios')) {
-      newImage = this.webview.convertFileSrc(newImage);
-    }
-    this.base64.encodeFile(newImage).then((base64File: string) => {
-      const imageSrc = base64File.split(',');
-      this.galleryImage =
-        this.domSanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,' +
-          imageSrc[1]);
-    });
- } 
+  // setGalleryImage(newImage: string) {
+  //   if (this.platform.is('ios')) {
+  //     newImage = this.webview.convertFileSrc(newImage);
+  //   }
+  //   this.base64.encodeFile(newImage).then((base64File: string) => {
+  //     const imageSrc = base64File.split(',');
+  //     this.galleryImage =
+  //       this.domSanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,' +
+  //         imageSrc[1]);
+  //   });
+  // } 
 
   showImage(ImagePath) {
     this.isLoading = true;

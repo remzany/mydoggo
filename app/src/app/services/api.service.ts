@@ -160,13 +160,14 @@ export class ApiService {
   }
 
 
-  createDiagnose(title:string, description:string, tag:string): Observable<Diagnose>{
+  createDiagnose(title:string, description:string, tag:string, image?:string): Observable<Diagnose>{
     let data = {
       "title": title,
       "description" : description,
       "tag": tag,
       "likeArray" : this.getUserToken()['id'],
-      "ownership": this.getUserToken()['id']
+      "ownership": this.getUserToken()['id'],
+      "dogImageBase": image
     };
 
 
