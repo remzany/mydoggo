@@ -22,6 +22,7 @@ import { File } from '@ionic-native/file/ngx';
 import { Crop } from '@ionic-native/crop/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { Base64 } from '@ionic-native/base64/ngx';
+import { Calendar } from '@ionic-native/calendar/ngx';
 
 import {
   HttpClientModule,
@@ -93,7 +94,13 @@ export function translateHttpLoaderFactory(httpBackend: HttpBackend): TranslateH
     Crop,
     WebView,
     Base64,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    Calendar
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: AuthConfigInterceptor,
+    //   multi: true
+    // }
   ],
   bootstrap: [AppComponent]
 })

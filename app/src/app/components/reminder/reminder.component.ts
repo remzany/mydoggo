@@ -2,8 +2,18 @@ import { Component, OnInit } from '@angular/core';
 
 import { Platform } from '@ionic/angular';
 
-import { Plugins } from '@capacitor/core';
-const { LocalNotifications } = Plugins;
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
+import { Calendar } from '@ionic-native/calendar/ngx';
+
+import { ModalController } from '@ionic/angular';
+
+interface Reminder{
+    title:string,
+    date:{
+      year:string, month:string, day: string, hour: string, minute: string
+    },
+    recurrence:string
+};
 
 @Component({
   selector: 'app-reminder',
@@ -13,52 +23,50 @@ const { LocalNotifications } = Plugins;
 
 export class ReminderComponent implements OnInit {
 
-  text:string = "";
+  text:string;
   todaysDate: any;
   time:any;
+  recurrence = false;
+  recurrenceValue:string;
+  reminders: Array<Reminder>
 
-  //set default timer, probably same as before
- 
+  constructor(
+    private platform:Platform,
+    private localNotification:LocalNotifications,
+    private calendar: Calendar,
+    private modal:ModalController) { }
 
-  constructor(private platform:Platform) { }
+  async ngOnInit() {
+    if(!this.localNotification.hasPermission)
+      await this.localNotification.requestPermission()
 
-  ngOnInit() {
+      await this.calendar.requestReadWritePermission();
   }
 
-  async createNotification(){
-    // let mergedDateTime = this.todaysDate.split("T")[0] + this.time.split("T")[1];
-
-    // TRY TO USE ON LOAD NOTIFICATION; MAYBE THEN IT WILL WORK
-
-    let dateObject = {
-      year: this.todaysDate.split("T")[0].split("-")[0],
-      month: this.todaysDate.split("T")[0].split("-")[1],
-      day: this.todaysDate.split("T")[0].split("-")[2],
-      hour: this.time.split("T")[1].split(".")[0].split(":")[0],
-      minute: this.time.split("T")[1].split(".")[0].split(":")[1],
+  async createCalender(){
+    const dateObject = {
+      year: this.todaysDate.split('T')[0].split('-')[0],
+      month: this.todaysDate.split('T')[0].split('-')[1],
+      day: this.todaysDate.split('T')[0].split('-')[2],
+      hour: this.time.split('T')[1].split('.')[0].split(':')[0],
+      minute: this.time.split('T')[1].split('.')[0].split(':')[1],
       second: 0,
       miliseconds: 0
     }
 
-    alert(JSON.stringify(LocalNotifications));
+    const calOptions = this.calendar.getCalendarOptions();
+    calOptions.id = new Date().getTime().toString();
+    if(this.recurrence) calOptions.recurrence = this.recurrenceValue;
+    await this.calendar.createEventInteractively(this.text,'','',
+    new Date(dateObject.year,(dateObject.month-1),dateObject.day,dateObject.hour,dateObject.minute)).catch(err => {
+      alert(err)
+    });
 
-    // await LocalNotifications.requestPermissions();
-    // const notifs = await LocalNotifications.schedule({
-    //   notifications: [
-    //     {
-    //       title: "Title",
-    //       body: "Body",
-    //       id: 1,
-    //       schedule: { at: new Date(Date.now() + 1000 * 5) },
-    //       sound: null,
-    //       attachments: null,
-    //       actionTypeId: "",
-    //       extra: null
-    //     }
-    //   ]
-    // });
 
-    //   alert(notifs)
+    this.modal.dismiss();
   }
 
+  segmentChanged(ev:any){
+    this.recurrenceValue = ev.target.value
+  }
 }

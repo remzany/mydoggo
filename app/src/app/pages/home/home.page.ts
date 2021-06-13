@@ -4,7 +4,7 @@ import {HttpRequestService} from '../../services/http-request.service';
 
 import { ModalController, AlertController } from '@ionic/angular';
 
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 
 import { SecureStorage, SecureStorageObject } from '@ionic-native/secure-storage/ngx';
 
@@ -25,19 +25,19 @@ import { Platform} from '@ionic/angular';
 })
 export class HomePage implements OnInit{
 
-  dogName:string = "/";
-  dogBreed:string = "/";
+  dogName = '/';
+  dogBreed = '/';
   todos:Array<string> = [];
   user:User;
   doesUserHaveDog = false;
 
   selectedLanguage:string;
-  todo_label:string = "";
+  todo_label = '';
 
   constructor(
     private alert:AlertController,
-    private api:ApiService, 
-    private httpReq: HttpRequestService, 
+    private api:ApiService,
+    private httpReq: HttpRequestService,
     private modalController: ModalController,
     private router:Router,
     private secureStorage: SecureStorage,
@@ -66,15 +66,14 @@ export class HomePage implements OnInit{
       }
     })
   }
-  
   async openTOdo(){
 
     const alert = await this.alert.create({
       header: this.translate.instant('HOME.todo_label'),
       inputs:[
         {
-          name: "todo",
-          type: "text"
+          name: 'todo',
+          type: 'text'
         }
       ],
       buttons: [
@@ -82,7 +81,7 @@ export class HomePage implements OnInit{
           text: 'Ok',
           handler: (a) => {
             this.todos.push(a.todo);
-                this.api.updateUser(this.user._id, {"todos": this.todos}).subscribe(a => {
+                this.api.updateUser(this.user._id, {todos: this.todos}).subscribe(a => {
                   console.log(a);
                 })
               }
@@ -95,13 +94,12 @@ export class HomePage implements OnInit{
   signOut() {
     this.api.logout();
   }
-  
   delete(todo){
-    let index = this.todos.indexOf(todo);
+    const index = this.todos.indexOf(todo);
 
     if(index > -1){
       this.todos.splice(index, 1);
-      this.api.updateUser(this.user._id, {"todos": this.todos}).subscribe(a => {
+      this.api.updateUser(this.user._id, {todos: this.todos}).subscribe(a => {
         console.log(a);
       })
     }
@@ -109,11 +107,11 @@ export class HomePage implements OnInit{
   }
 
   done(todo){
-    let index = this.todos.indexOf(todo);
+    const index = this.todos.indexOf(todo);
 
     if(index > -1){
       this.todos.splice(index, 1);
-      this.api.updateUser(this.user._id, {"todos": this.todos}).subscribe(a => {
+      this.api.updateUser(this.user._id, {todos: this.todos}).subscribe(a => {
         console.log(a);
       })
     }
@@ -180,6 +178,4 @@ export class HomePage implements OnInit{
     }, 2000);
 
   }
-  
-  
 }

@@ -12,7 +12,7 @@
     <ion-card-content>
       <ion-item>
         <ion-label> {{ 'REMINDER.date' | translate }}</ion-label>
-        <ion-datetime [(ngModel)]="todaysDate" displayFormat="MM DD YY" placeholder="{{ 'REMINDER.day' | translate }}"></ion-datetime>
+        <ion-datetime [(ngModel)]="todaysDate" displayFormat="DD MM YY" placeholder="{{ 'REMINDER.day' | translate }}"></ion-datetime>
       </ion-item>
 
       <ion-item>
@@ -25,7 +25,29 @@
         <ion-input [(ngModel)]="text"></ion-input>
       </ion-item>
 
-      <ion-button class="ion-margin-top ion-padding-horizontal" (click)="createNotification()" expand="block" [disabled]="text == '' && time == ''">{{ 'BUTTON.create' | translate }}</ion-button>
+      <ion-item>
+        <ion-label>{{ 'REMINDER.recurrence' | translate }}</ion-label>
+        <ion-toggle [(ngModel)]="recurrence"></ion-toggle>
+      </ion-item>
+
+      <ion-segment *ngIf="recurrence" (ionChange)="segmentChanged($event)">
+        <ion-segment-button value="daily">
+          <ion-label>{{ 'REMINDER.daily' | translate }}</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="weekly">
+          <ion-label>{{ 'REMINDER.weekly' | translate }}</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="monthly">
+          <ion-label>{{ 'REMINDER.monthly' | translate }}</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="yearly">
+          <ion-label>{{ 'REMINDER.yearly' | translate }}</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+
+
+
+      <ion-button class="ion-margin-top ion-padding-horizontal" (click)="createCalender()" expand="block" [disabled]="text == '' && time == ''">{{ 'BUTTON.create' | translate }}</ion-button>
         
 
     </ion-card-content>
