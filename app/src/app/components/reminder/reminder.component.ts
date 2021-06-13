@@ -57,10 +57,11 @@ export class ReminderComponent implements OnInit {
     const calOptions = this.calendar.getCalendarOptions();
     calOptions.id = new Date().getTime().toString();
     if(this.recurrence) calOptions.recurrence = this.recurrenceValue;
-    await this.calendar.createEventInteractively(this.text,'','',
-    new Date(dateObject.year,(dateObject.month-1),dateObject.day,dateObject.hour,dateObject.minute)).catch(err => {
-      alert(err)
-    });
+    this.calendar.createEventInteractively(this.text,'','',
+    new Date(dateObject.year,(dateObject.month-1),dateObject.day,dateObject.hour,dateObject.minute))
+    .then(()=>{
+      alert('Event is set');
+    })
 
 
     this.modal.dismiss();

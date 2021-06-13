@@ -29,6 +29,7 @@
 		"lang_ang": "english"
 	},
 	"REMINDER": {
+		"name": "Reminder",
 		"date" : "select date",
 		"day" : "day",
 		"description": "Please write description",

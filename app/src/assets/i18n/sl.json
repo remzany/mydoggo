@@ -2,9 +2,10 @@
 	"HOME": {
 		"title": "Domača stran",
 		"todo_label": "Dodaj opravilo",
-		"todo_text": "{count, plural, =0{Nimate opravil} one{Imate le še eno opravilo!} few{opraviti morate še {count} opravila} other{opraviti morate še {count} opravil}}",
 		"add_dog": "Želite dodati psa?",
-		"no_dog_info": "Zasledili smo, da nimate psa v aplikaciji"
+		"no_dog_info": "Zasledili smo, da nimate psa v aplikaciji",
+		"todo_text": "{count, plural, =0{Nimate opravil} one{Imate le še eno opravilo} =2{Imate še 2 opravili} few{opraviti morate {count} opravila} other{Imate še {count} opravil}}",
+		"addDog": "Želite dodati psa?"
 	},
 	"LOGIN": {
 		"username": "Uporabniško ime",
@@ -32,6 +33,7 @@
 		"information": "Podatki o računu"
 	},
 	"REMINDER": {
+		"name": "Opomnik",
 		"description": "vnesite besedilo",
 		"date" : "Izberi dan",
 		"day" : "dan",

@@ -39,7 +39,7 @@
         <ion-card-header>
           <ion-item lines="none">
             <ion-icon slot="start" src="../assets/icon/task-icon.svg"></ion-icon>
-            <p translate [translateParams]="{ count: todos.length }"> HOME.todo_text </p>
+            <p translate [translateParams]="{ count: todos.length }"> {{ 'HOME.todo_text' | translate }} </p>
             <ion-icon slot="end" name="add" (click)="openTOdo()"></ion-icon>
 
             <ion-icon (click)="reminder()" slot="end" name="alarm"></ion-icon>
