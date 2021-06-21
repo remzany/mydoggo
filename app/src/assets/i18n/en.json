@@ -54,5 +54,11 @@
 		"yes": "yes",
 		"no": "no",
 		"add_dog": "add dog"
+	},
+	"DIAGNOSE" : {
+		"title": "Diagnose"
+	},
+	"DOG": {
+		"title": "Add your dog"
 	}
 }

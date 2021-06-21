@@ -16,16 +16,19 @@
 
       <ion-card>
         <ion-card-header>
-          <ion-card-title class="ion-text-center">Add your dog</ion-card-title>
+          <ion-card-title class="ion-text-center"> {{ 'DOG.title' | translate}}</ion-card-title>
         </ion-card-header>
 
 
         <ion-card-content>
 
-          <ion-item [hidden]=breadCardHidden >
+          <ion-item [hidden]=breadCardHidden lines="none">
             <ion-searchbar showCancelButton="focus" (ionChange)="filterDogsBread($event)" (ionFocus)="emptyBreadSelection()"></ion-searchbar>
-            <div *ngFor="let item of breed; let i = index">
-                <p (click)="selectBread(i)">{{item}}</p>
+          </ion-item>
+
+          <ion-item *ngIf="breed.length >= 1">
+            <div class="dog-list" *ngFor="let item of breed; let i = index">
+              <p (click)="selectBread(i)">{{item}}</p>
             </div>
           </ion-item>
 

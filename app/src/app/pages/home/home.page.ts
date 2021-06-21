@@ -18,6 +18,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {ReminderComponent } from '../../components/reminder/reminder.component';
  
 import { Platform} from '@ionic/angular';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-home',
@@ -46,20 +47,21 @@ export class HomePage implements OnInit{
     private translateConfigService: TranslateConfigService,
     private translate:TranslateService,
     private platform: Platform,
-    private photoLibrary: PhotoGalleryService
+    private photoLibrary: PhotoGalleryService,
+    private storage: Storage
     ){}
 
   async ngOnInit(){
     this.loadUserData();
     let x = await this.api.getLocalDogBaseImage('dog_image');
     this.ImagePath = x == null ? "" : x;
-    
     this.translateConfigService.getDefaultLanguage();
   }
 
   loadUserData(){
     this.api.getUserData().subscribe(a =>{
       this.user = a;
+      this.storage.set("user", this.user);
       if(a.dogBreed === undefined && a.dogName === undefined){
         this.openAddDog();
         this.doesUserHaveDog = false;
@@ -165,9 +167,6 @@ export class HomePage implements OnInit{
         await alert.present();
         return null;
     }
-
-
-
   }
 
 
@@ -185,10 +184,10 @@ export class HomePage implements OnInit{
       }
 
     });
-
-    setTimeout(() => {
-      event.target.complete();
-    }, 2000);
-
+    if(event != null){
+      setTimeout(() => {
+        event.target.complete();
+      }, 2000);
+    }
   }
 }

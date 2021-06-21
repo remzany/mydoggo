@@ -98,11 +98,11 @@
 <ion-card *ngIf="showCameraGalery" class="animate__animated animate__fadeInRight">
     <img *ngIf="ImagePath !=''" [src]="ImagePath" />
     <ion-button expand="full" (click)="selectImage()">Select image</ion-button>
-    <!-- <ion-button expand="full" (click)="confirmImage()">Confirm</ion-button> -->
 </ion-card>
 
 </ion-content>
 
 <ion-footer>
-<ion-button expand="full" (click)="save()">{{imageItem.display}}</ion-button>
+  <ion-button *ngIf="showCameraGalery" expand="full" (click)="confirmImage()">Confirm</ion-button>
+  <ion-button *ngIf="!showCameraGalery" expand="full" (click)="save()">{{imageItem.display}}</ion-button>
 </ion-footer>

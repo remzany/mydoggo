@@ -35,11 +35,6 @@ export class DiagnoseAddComponent implements OnInit {
   
   isLoading = false;
 
-  imagePickerOptions = {
-    maximumImagesCount: 1,
-    quality: 50
-  };
-
 
   ngAfterViewInit(){
   }
@@ -105,7 +100,7 @@ export class DiagnoseAddComponent implements OnInit {
     if(this.selectedTag == "" && this.selectedTag == null) return;
 
     if(this.item.image) this.showCameraGalery = true;
-    else this.createDiagnose(this.item.title, this.item.description, this.selectedTag);
+    else this.createDiagnose(this.item.title, this.item.description, this.selectedTag, "");
   }
 
   changeValue(){
@@ -119,8 +114,8 @@ export class DiagnoseAddComponent implements OnInit {
     this.createDiagnose(this.item.title, this.item.description, this.selectedTag, this.ImagePath)
   }
     
-  createDiagnose(title, description, tag, image?){
-    this.api.createDiagnose(title, description, tag, image ).subscribe(res => {
+  createDiagnose(title, description, tag, image){
+    this.api.createDiagnose(title, description, tag, image).subscribe(res => {
       this.diagnoseID = res._id;
       
       this.modal.dismiss();
@@ -159,7 +154,9 @@ export class DiagnoseAddComponent implements OnInit {
       sourceType: sourceType,
       destinationType: this.camera.DestinationType.FILE_URI,
       encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
+      mediaType: this.camera.MediaType.PICTURE,
+      targetWidth: 516,
+      correctOrientation: true
     }
     
     if(type === "camera"){
@@ -175,14 +172,14 @@ export class DiagnoseAddComponent implements OnInit {
 
   }
 
-
-
   public openGallery() {
     const options: CameraOptions = {
       quality: 100,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
       destinationType: this.camera.DestinationType.DATA_URL,
-      saveToPhotoAlbum:false
+      saveToPhotoAlbum:false,
+      targetWidth: 516,
+      correctOrientation: true
     }; this.camera.getPicture(options).then((fileUri) => {
       this.ImagePath = "data:image/jpeg;base64," + fileUri;
     });

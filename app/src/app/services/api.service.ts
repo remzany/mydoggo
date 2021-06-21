@@ -24,6 +24,7 @@ export interface User {
   dogName?: string;
   dogBreed?: string;
   todos?: Array<string>;
+  username?: string;
 }
 
 
@@ -35,6 +36,7 @@ export class ApiService {
   public user: Observable<any>;
   private userData = new BehaviorSubject(null);
   private fullToken = '';
+  private username = "";
 
   constructor(private storage: Storage, private http: HttpClient, private platform: Platform, private router: Router) { 
     this.loadStoredToken();
@@ -161,6 +163,7 @@ export class ApiService {
 
 
   createDiagnose(title:string, description:string, tag:string, image?:string): Observable<Diagnose>{
+    image = (image == undefined || image == null) ? '' : image;
     let data = {
       "title": title,
       "description" : description,
@@ -194,10 +197,12 @@ export class ApiService {
   };
 
 
-  addComment(x:{_id: string, comment:string} ){
-    const id = this.getUserToken()['id'];
+  addComment(x:{_id: string, comment:string, username:string} ){
+
+    let ownerid = this.getUserToken()['id'];
+
     return this.http.put<{errors:number, msg:string, comment: Array<{"content": string, "owner": string, "_id": string}>}>
-    (`${environment.apiUrl}/diagnose/addcomment/${x._id}`, {'content': x.comment, 'owner': "bine", '_ownerid': id},
+    (`${environment.apiUrl}/diagnose/addcomment/${x._id}`, {'content': x.comment, 'owner': x.username, '_ownerid': ownerid},
     { headers: new HttpHeaders({Authorization: 'Bearer ' + this.fullToken})}).pipe(
       take(1)
     );
@@ -238,5 +243,12 @@ export class ApiService {
   async saveLocalDogBaseImage(key, value){
     let x = await this.storage.set(key, value);
     return x;
+  }
+
+  async getUsername(){
+    let data = await this.storage.get('user').then(res => {
+      return res.username;
+    });
+    return data;
   }
 }

@@ -7,7 +7,7 @@ import { RouterModule } from '@angular/router';
 import { HomePage } from './home.page';
 import { SecureStorage} from '@ionic-native/secure-storage/ngx';
 import { TranslateModule } from '@ngx-translate/core';
-
+import { IonicStorageModule} from '@ionic/storage';
 import { ReminderComponent } from '../../components/reminder/reminder.component';
 import { DogProfileComponent } from '../../components/dog-profile/dog-profile.component';
 
@@ -17,6 +17,7 @@ import { DogProfileComponent } from '../../components/dog-profile/dog-profile.co
     CommonModule,
     FormsModule,
     IonicModule,
+    IonicStorageModule,
     TranslateModule.forChild(),
     RouterModule.forChild([
       {

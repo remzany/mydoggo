@@ -12,4 +12,5 @@ export interface Diagnose{
     comments:Array<{"content":string, "owner":string, "_id": string}>;
     likeArray:Array<string>;
     likeCount:Number;
+    dogImageBase: string;
   }

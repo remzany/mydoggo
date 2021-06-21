@@ -14,15 +14,15 @@
   <ion-card (click)="openDiagnose()">
     <ion-card-header class="ion-padding">
       <ion-img src="../assets/icon/diagnose-new-icon.svg" ></ion-img>
-      <ion-card-title>Diagnose</ion-card-title>
-      <ion-card-subtitle> {{diagnoseLength}} diagnoses</ion-card-subtitle>
+      <ion-card-title> {{ 'DIAGNOSE.title' | translate }}</ion-card-title>
+      <ion-card-subtitle> {{diagnoseLength}}</ion-card-subtitle>
 
 
     </ion-card-header>
   </ion-card>
 
   <!-- Items down there are hidden -->
-  <ion-card class="ion-hide">
+  <!-- <ion-card class="ion-hide">
     <ion-card-header class="ion-padding">
       <ion-img src="../assets/icon/forum-icon.svg" ></ion-img>
       <ion-card-title> Have a question?</ion-card-title>
@@ -37,5 +37,5 @@
       <ion-card-title> Shere your tips</ion-card-title>
       <ion-card-subtitle>0 tips</ion-card-subtitle>
     </ion-card-header>
-  </ion-card>
+  </ion-card> -->
 </ion-content>

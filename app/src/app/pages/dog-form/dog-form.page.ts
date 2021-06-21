@@ -21,7 +21,7 @@ import { Router } from '@angular/router';
 })
 export class DogFormPage implements OnInit {
 
-  breadCardHidden:boolean = true;
+  breadCardHidden:boolean = false;
   requestedData:Array<string> = [];
   breed:Array<string> = [];
   selectedBread: string = "";

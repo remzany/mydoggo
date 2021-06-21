@@ -24,6 +24,7 @@
       <!-- <ion-img style="max-width: 256px;" src="../../../assets/images/doghurt.jpg"></ion-img> -->
       <ion-card-title>{{diag.title}} - [{{diag.tag}}]</ion-card-title>
       <ion-card-subtitle>{{diag.description}}</ion-card-subtitle>
+      <img *ngIf="diag.dogImageBase != '' && diag.dogImageBase != undefined " [src]="diag.dogImageBase" />
       
     </ion-card-header>
     <ion-card-content>

@@ -55,8 +55,7 @@ export class DiagnosePage implements OnInit {
     })
 
     modal.onDidDismiss().then(res => {
-      console.log(res.data);
-      this.diagnose.unshift(res.data);
+      this.doRefresh(null);
     })
     return await modal.present();
   }
@@ -65,6 +64,7 @@ export class DiagnosePage implements OnInit {
   getDiagnoses(){
     this.api.getAllDiagnoses().subscribe( res => {
       this.diagnose = res;
+      this.diagnose.reverse();
       console.log(this.diagnose);
     })
   }
@@ -83,11 +83,14 @@ export class DiagnosePage implements OnInit {
   doRefresh(event){
     this.api.getAllDiagnoses().subscribe( res => {
       this.diagnose = res;
+      this.diagnose.reverse();
     });
 
-    setTimeout(() => {
-      event.target.complete();
-    }, 2000);
+    if(event != null){
+      setTimeout(() => {
+        event.target.complete();
+      }, 2000);
+    }
   }
 
   upVote(i: number){
@@ -114,8 +117,9 @@ export class DiagnosePage implements OnInit {
   async addComment(i: number){
 
     let data = {
-      "_id" : this.diagnose[i]._id,
-      "comment": ""
+      _id : this.diagnose[i]._id,
+      comment: "",
+      username: ""
     }
 
     let alert = await this.alert.create({
@@ -134,6 +138,8 @@ export class DiagnosePage implements OnInit {
     await alert.onDidDismiss().then(res => {
       data.comment = res.data.values.comment;
     });
+
+    data.username = await this.api.getUsername();
 
     this.api.addComment(data).subscribe(res => {
       this.diagnose[i].comments = res.comment;

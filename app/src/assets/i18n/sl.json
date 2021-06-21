@@ -56,5 +56,11 @@
 		"yes": "da",
 		"no": "ne",
 		"add_dog": "dodaj psa"
+	},
+	"DIAGNOSE" : {
+		"title": "Diagnoze"
+	},
+	"DOG": {
+		"title": "Dodajte psa"
 	}
 }
