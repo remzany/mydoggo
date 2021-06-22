@@ -58,7 +58,13 @@
 		"add_dog": "dodaj psa"
 	},
 	"DIAGNOSE" : {
-		"title": "Diagnoze"
+		"title": "Diagnoza",
+		"add_new": "Dodaj diagnozo",
+		"add_new_title": "naslov",
+		"description": "opis",
+		"add_new_image": "dodaj sliko",
+		"select_image": "izberi sliko",
+		"confirm": "potrdi"
 	},
 	"DOG": {
 		"title": "Dodajte psa"

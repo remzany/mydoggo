@@ -11,6 +11,7 @@ import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { Base64 } from '@ionic-native/base64/ngx';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-diagnose-add',
@@ -35,6 +36,12 @@ export class DiagnoseAddComponent implements OnInit {
   
   isLoading = false;
 
+  title = "";
+  description = "";
+  add_image = "";
+  select_image = "";
+  confirm = "";
+
 
   ngAfterViewInit(){
   }
@@ -50,10 +57,17 @@ export class DiagnoseAddComponent implements OnInit {
        private webview:WebView,
        private base64:Base64,
        private domSanitizer:DomSanitizer,
+       private translate:TranslateService,
       public actionSheetController: ActionSheetController,
       private photoGalleryService: PhotoGalleryService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.title = this.translate.instant('DIAGNOSE.title');
+    this.description = this.translate.instant('DIAGNOSE.description');
+    this.add_image = this.translate.instant('DIAGNOSE.add_new_image');
+    this.select_image = this.translate.instant('DIAGNOSE.select_image');
+    this.confirm = this.translate.instant('DIAGNOSE.confirm');
+  }
 
   click(ev:any){
     let x;

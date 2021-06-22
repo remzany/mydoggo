@@ -12,17 +12,17 @@
 
   <ion-card *ngIf="!showCameraGalery" >
     <ion-item lines="none">
-      <ion-label position="floating">Title</ion-label>
+      <ion-label position="floating">{{title}}</ion-label>
       <ion-input [(ngModel)]="item.title"></ion-input>
     </ion-item>
 
     <ion-item lines="none">
-      <ion-label position="floating">Description</ion-label>
+      <ion-label position="floating">{{description}}</ion-label>
       <ion-input [(ngModel)]="item.description"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label>Add image </ion-label>
+      <ion-label>{{add_image}} </ion-label>
       <ion-checkbox slot="end" [(ngModel)]="item.image" color="primary" (ionChange)="changeValue()"></ion-checkbox>
     </ion-item>
 
@@ -97,12 +97,12 @@
 
 <ion-card *ngIf="showCameraGalery" class="animate__animated animate__fadeInRight">
     <img *ngIf="ImagePath !=''" [src]="ImagePath" />
-    <ion-button expand="full" (click)="selectImage()">Select image</ion-button>
+    <ion-button expand="full" (click)="selectImage()">{{select_image}}</ion-button>
 </ion-card>
 
 </ion-content>
 
 <ion-footer>
-  <ion-button *ngIf="showCameraGalery" expand="full" (click)="confirmImage()">Confirm</ion-button>
+  <ion-button *ngIf="showCameraGalery" expand="full" (click)="confirmImage()">{{confirm}}</ion-button>
   <ion-button *ngIf="!showCameraGalery" expand="full" (click)="save()">{{imageItem.display}}</ion-button>
 </ion-footer>

@@ -56,7 +56,13 @@
 		"add_dog": "add dog"
 	},
 	"DIAGNOSE" : {
-		"title": "Diagnose"
+		"title": "Diagnose",
+		"add_new": "Add new diagnose",
+		"add_new_title": "title",
+		"description": "description",
+		"add_new_image": "add image",
+		"select_image": "select image",
+		"confirm": "confirm"
 	},
 	"DOG": {
 		"title": "Add your dog"

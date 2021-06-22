@@ -169,6 +169,15 @@ export class HomePage implements OnInit{
     }
   }
 
+  languageSettings(val:any){
+
+    if(val.detail.value == "slo")
+      this.translateConfigService.setLanguage("sl");
+
+    if(val.detail.value == "eng")
+    this.translateConfigService.setLanguage("en");
+
+  }
 
   doRefresh(event){
     this.api.getUserData().subscribe(a =>{

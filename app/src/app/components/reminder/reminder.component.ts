@@ -28,7 +28,7 @@ export class ReminderComponent implements OnInit {
   time:any;
   recurrence = false;
   recurrenceValue:string;
-  reminders: Array<Reminder>
+  reminders: Array<Reminder>;
 
   constructor(
     private platform:Platform,

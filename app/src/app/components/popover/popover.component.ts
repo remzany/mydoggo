@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PopoverController} from '@ionic/angular';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-popover',
@@ -8,9 +9,13 @@ import { PopoverController} from '@ionic/angular';
 })
 export class PopoverComponent implements OnInit {
 
-  constructor(private popover:PopoverController) { }
+  text = ""
 
-  ngOnInit() {}
+  constructor(private popover:PopoverController, private translate:TranslateService) { }
+
+  ngOnInit() {
+    this.text = this.translate.instant('DIAGNOSE.add_new');
+  }
 
   newPost(){
     this.popover.dismiss("newpost");
